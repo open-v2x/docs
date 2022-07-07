@@ -1,0 +1,56 @@
+version: '3.1'
+services:
+ dandelion:
+  container_name: 'dandelion'
+  image: 'openv2x/dandelion:latest'
+  restart: 'always'
+  network_mode: 'host'
+  volumes:
+   - '/etc/localtime:/etc/localtime'
+   - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
+   - '/var/log/dandelion:/var/log/dandelion'
+ cerebrum:
+  container_name: 'cerebrum'
+  image: 'openv2x/cerebrum:latest'
+  restart: 'always'
+  environment:
+   redis-host: '127.0.0.1'
+   mqtt_host: '127.0.0.1'
+   cloud_url: 'http://127.0.0.1:8888/api'
+  volumes:
+   - '/etc/localtime:/etc/localtime'
+ edgeview:
+  container_name: 'edgeview'
+  image: 'openv2x/edgeview:latest'
+  network_mode: 'host'
+  environment:
+   API_SERVER: 'http://127.0.0.1/api'
+   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
+  volumes:
+   - '/etc/localtime:/etc/localtime'
+   - '/etc/edgeview/nginx.conf:/etc/nginx/nginx.conf'
+   - '/etc/edgeview/edgeview.conf:/etc/nginx/conf.d/default.conf'
+   - '/data/public/uploadData:/var/www/edgeview/uploadData'
+ centerview:
+  container_name: 'centerview'
+  image: 'openv2x/centerview:latest'
+  network_mode: 'host'
+  environment:
+   API_SERVER: 'http://127.0.0.1/api'
+   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
+   MQTT_URL: 'mqtt://127.0.0.1:15675'
+   MQTT_PATH: '/mqtt'
+   MQTT_USERNAME: 'root'
+   MQTT_PASSWORD: 'abc@1234'
+  volumes:
+   - '/etc/localtime:/etc/localtime'
+   - '/etc/centerview/nginx.conf:/etc/nginx/nginx.conf'
+   - '/etc/centerview/centerview.conf:/etc/nginx/conf.d/default.conf'
+   - '/data/public/uploadData:/var/www/centerview/uploadData'
+ rse-simulator:
+  container_name: 'rse-simulator'
+  image: 'openv2x/roadmocker:latest'
+  ports:
+   - '6688:80'
+  volumes:
+   - '/etc/localtime:/etc/localtime'
