@@ -1,0 +1,41 @@
+{
+  "rsuId": "ID01",
+  "rsuEsn": "ESN01",
+  "rsuName": "NAME01",
+  "rsuStatus": true,
+  "version": "v1",
+  "location": {
+    "lon": 118.840897,
+    "lat": 31.88335
+  },
+  "config": {
+    "mapConfig": {
+      "mapSlice": "slice",
+      "eTag": "tag"
+    },
+    "bsmConfig": {
+      "sampleMode": "ByAll",
+      "sampleRate": 0,
+      "actualSampleRate": 0,
+      "upLimit": 0
+    },
+    "rsiConfig": {
+      "maxRsiNum": 1,
+      "curRsiNum": 1,
+      "downRsis": [
+        {
+          "alertID": "EVENT01",
+          "eTag": "TAG01"
+        }
+      ]
+    },
+    "spatConfig": {
+      "upLimit": 0,
+      "downLimit": 0
+    },
+    "rsmConfig": {
+      "upLimit": 0,
+      "downLimit": 0
+    }
+  }
+}
