@@ -1,0 +1,5 @@
+[gerrit]
+host=review.sh.99cloud.net
+port=29418
+project=v2x/docs
+defaultbranch=master

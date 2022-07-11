@@ -1,0 +1,55 @@
+version: '2.2'
+services:
+ emqx:
+  container_name: 'emqx'
+  image: 'emqx/emqx:v4.0.0'
+  restart: 'always'
+  shm_size: '1G'
+  environment:
+   TZ: 'Asia/Shanghai'
+  ports:
+   - '1883:1883'
+   - '8081:8081'
+   - '15675:8083'
+   - '8883:8883'
+   - '8084:8084'
+   - '18083:18083'
+  logging:
+   driver: 'json-file'
+   options:
+    max-size: '100M'
+ redis:
+  image: 'redis:6.2.4-alpine'
+  container_name: 'redis'
+  restart: 'always'
+  environment:
+    TZ: 'Asia/Shanghai'
+  command: 'redis-server --requirepass redis12345'
+  volumes:
+   - '/config/redis/conf/:/usr/redis/'
+   - '/data/:/data/'
+  ports:
+   - '6379:6379'
+ mariadb:
+  image: 'mariadb:10.5.5'
+  container_name: 'mariadb1'
+  restart: 'always'
+  environment:
+   MYSQL_USER: 'dandelion'
+   MYSQL_PASSWORD: 'dandelion123'
+   MYSQL_ROOT_PASSWORD: 'abc@1234'
+   TZ: 'Asia/Shanghai'
+  ports:
+   - '3306:3306'
+  volumes:
+   - '/data/mariadb/:/var/lib/mysql'
+   - '/log/mariadb/:/var/log/mysql'
+ dandelion_bootstrap:
+  container_name: 'dandelion_bootstrap'
+  image: 'openv2x/dandelion:latest'
+  environment:
+   KOLLA_BOOTSTRAP: '\"\"'
+  network_mode: 'host'
+  volumes:
+   - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
+   - '/var/log/dandelion:/var/log/dandelion'
