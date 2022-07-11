@@ -12,7 +12,7 @@ action.
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Architecture](#architecture)
-  - [Installation](#installation)
+  - [Quick Install](#quick-install)
   - [Quick Starts](#quick-starts)
   - [Documents](#documents)
 
@@ -34,14 +34,14 @@ application scenarios, enabling autonomous driving and autonomous transportation
 
 ![](src/images/v2x-arch-details.svg)
 
-- [OpenV2X 1.0.0 Architectural Design](src/v2x-1.0.0-architectural-design.md)
+- [OpenV2X 1.0.126 Architectural Design](src/v2x-1.0.126-architectural-design.md)
 
 ## Quick Install
 
-- [OpenV2X 1.0.0 QuickInstall Guide](src/v2x-1.0.0-quick-install.md)
+- [OpenV2X 1.0.126 QuickInstall Guide](src/v2x-1.0.126-quick-install.md)
 
 ## Quick Starts
 
-- [OpenV2X 1.0.0 QuickStart Guide](src/v2x-1.0.0-quick-start.md)
+- [OpenV2X 1.0.126 QuickStart Guide](src/v2x-1.0.126-quick-start.md)
 
 ## Documents
