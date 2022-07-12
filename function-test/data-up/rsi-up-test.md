@@ -14,7 +14,7 @@ ClientID:  R328328
 Username:  root
 Password: abc@1234
 Publish Topic:  V2X/RSU/R328328/RSI/UP/DAWNLINE
-Subscribe Topic:  V2X/DEVICE/R328328/RSI/UP
+Subscribe Topic:  V2X/RSU/R328328/RSI/UP
 ```
 
 ## 3. 测试数据
