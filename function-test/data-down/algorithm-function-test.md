@@ -291,7 +291,7 @@ Subscribe Topic:  V2X/RSU/DNP/R328328/DOWN
 ```
 Publish:
         {"msgCnt": "2", "id": "39", "refPos": {"lon": 1188219331, "lat": 319353469, "ele": 100}, "secMark": 33400, "timeStamp": 1653016893400, "intAndReq": {"currentBehavior": 1, "reqs": {"reqID": 2, "status": 2, "targetRSU": "R328328", "info": {"retrograde": {"upstreamNode": "", "downstreamNode": "", "targetLane": 1}}, "lifeTime": 500}}}
-Subscribe:      
+Subscribe:
         {'msgCnt': '2', 'id': '39', 'secMark': 33400, 'refPos': {'lon': 1188219331, 'lat': 319353469, 'ele': 100}, 'coordinates': {'vehId': '39', 'driveSuggestion': {'suggestion': 1, 'lifeTime': 900}, 'pathGuidance': [], 'info': 0}}
 ```
 
