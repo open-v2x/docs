@@ -13,12 +13,12 @@ action.
   - [Introduction](#introduction)
   - [Architecture](#architecture)
   - [Quick Install](#quick-install)
-  - [Quick Starts](#quick-starts)
+  - [Quick Start](#quick-start)
   - [Documents](#documents)
 
 ## Introduction
 
-The OpenV2X open source project will realizes a V2X edge cloud control platform that supports
+The OpenV2X open source project will realize a V2X edge cloud control platform that supports
 roadside, vehicle and comprehensive data fusion perception analysis, North-South interface of
 transaction data, North-South interface of operation and maintenance management; 52 basic functions
 such as equipment, GIS and comprehensive visualization management will be realized; Openv2x will
@@ -40,8 +40,10 @@ application scenarios, enabling autonomous driving and autonomous transportation
 
 - [OpenV2X 1.0.126 QuickInstall Guide](src/v2x-1.0.126-quick-install.md)
 
-## Quick Starts
+## Quick Start
 
 - [OpenV2X 1.0.126 QuickStart Guide](src/v2x-1.0.126-quick-start.md)
 
 ## Documents
+
+- [OpenV2X 1.0.126 Algorithm Documents](src/v2x-1.0.126-algorithm.md)
