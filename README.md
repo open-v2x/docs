@@ -15,6 +15,7 @@ action.
   - [Quick Install](#quick-install)
   - [Quick Start](#quick-start)
   - [Documents](#documents)
+  - [Contributing](#contributing)
 
 ## Introduction
 
@@ -47,3 +48,8 @@ application scenarios, enabling autonomous driving and autonomous transportation
 ## Documents
 
 - [OpenV2X 1.0.126 Algorithm Documents](src/v2x-1.0.126-algorithm.md)
+
+## Contributing
+
+- Please take a look at our [Contribution guidelines](src/v2x_contribution.md) to learn how to
+  contribute to the OpenV2X project.
