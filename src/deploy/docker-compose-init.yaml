@@ -9,3 +9,4 @@ services:
   volumes:
    - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
    - '/var/log/dandelion:/var/log/dandelion'
+   

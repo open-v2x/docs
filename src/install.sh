@@ -1,5 +1,6 @@
 #!/bin/sh
-
+unalias cp 2> /dev/null
+alias docker-compose='docker compose'
 
 set_password() {
   read -p "Enter your install-environment-ip-adress: " ip
@@ -31,11 +32,6 @@ verify_input() {
     exit 1
   fi
 
-}
-
-set_system() {
-  unalias cp 2> /dev/null
-  alias docker-compose='docker compose'
 }
 
 verify_uninstall() {
@@ -127,7 +123,6 @@ verify_install() {
 {
   set_password
   verify_input
-  verify_system
   verify_uninstall
   set_env
   verify_install
