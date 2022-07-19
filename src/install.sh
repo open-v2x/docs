@@ -107,7 +107,15 @@ verify_install() {
 (  <_> )|  |_> >\  ___/ |   |  \\   / /       \  >    <  
  \____/ |   __/  \___  >|___|  / \_/  \_______ \/__/\_ \ 
         |__|         \/      \/               \/      \/ 
-    repository: openv2x
+    repository: https://github.com/open-v2x
+    portal: https://openv2x.org
+
+  OpenV2X Edge Portal (Edgeview): http://$ip
+  OpenV2X Central Portal (Centerview): http://$ip:8080
+
+  username: admin
+  password: dandelion
+
   $(tput sgr0)"
 }
 
