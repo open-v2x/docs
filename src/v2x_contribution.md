@@ -1,5 +1,7 @@
 # Contributing to OpenV2X
 
+English | [简体中文](./v2x_contribution-zh_CN.md)
+
 The OpenV2X team is glad to accept contributions from anybody willing to collaborate. There are
 different ways to contribute to the project, depending on the capabilities of the contributor. The
 team will work as much as possible so that contributions are successfully integrated in OpenV2X.
@@ -73,12 +75,16 @@ intermediate branch named `dev`. This Gitflow branching model makes it easier to
 Always keep your `dev` branch updated with the lastest changes. Develop the contribution in child
 branch from `dev` named as `username/name_of_the_contribution`. Once the contribution is ready,
 submit a pull-request from your branch to `dev`. Try to be as descriptive as possible when filling
-the description. Note that there are some checks that the new code is required to pass before
-merging. The checks are automatically run by the continuous integration system. A green tick mark
-will appear if the checks are successful. If a red mark, please correct the code accordingly. Once
-the contribution is merged in `dev`, it can be tested with the rest of new features. By the time of
-the next release, the `dev` branch will be merged to `master`, and the contribution will be
-available and announced.
+the description. Please
+[link your **pull request** to the cooresponding
+issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue),
+you can either link a pull request to an issue using a keyword or manually link a pull request to an
+issue. For more details about `pull request`, please refer to the [Pull Request Standard](). Note
+that there are some checks that the new code is required to pass before merging. The checks are
+automatically run by the continuous integration system. A green tick mark will appear if the checks
+are successful. If a red mark, please correct the code accordingly. Once the contribution is merged
+in `dev`, it can be tested with the rest of new features. By the time of the next release, the `dev`
+branch will be merged to `master`, and the contribution will be available and announced.
 
 ### Checklist
 
