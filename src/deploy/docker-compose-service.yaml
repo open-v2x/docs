@@ -14,9 +14,14 @@ services:
   image: 'openv2x/cerebrum:latest'
   restart: 'always'
   environment:
-   redis-host: '127.0.0.1'
+   redis_host: '127.0.0.1'
    mqtt_host: '127.0.0.1'
+   mysql_host: '127.0.0.1'
    cloud_url: 'http://127.0.0.1:28300/api/v1'
+   mysql_root_password: 'mysql@1234'
+   emqx_password: 'abc@1234'
+   redis_password: 'redis12345'
+
   volumes:
    - '/etc/localtime:/etc/localtime'
  edgeview:
