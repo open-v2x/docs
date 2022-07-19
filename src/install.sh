@@ -1,18 +1,20 @@
 #!/bin/sh
-unalias cp 2> /dev/null
+# set -e # TODO
+
+unalias cp 2>/dev/null
 alias docker-compose='docker compose'
 
 set_password() {
-  read -p "Enter your install-environment-ip-adress: " ip
-  read -p "Enter your redis root password: " redis_root
-  read -p "Enter your mariadb1 root password: " mariadb1_root
-  read -p "Enter your mariadb1 dandelion password: " mariadb1_dandelion
-  read -p "Enter your emqx root password: " emqx_root
+  read -p "Enter your openv2x external ip: " ip
+  read -p "Enter your redis root password (do not include @): " redis_root
+  read -p "Enter your mariadb1 root password (do not include @): " mariadb1_root # TODO add url encode
+  read -p "Enter your mariadb1 dandelion password (do not include @): " mariadb1_dandelion
+  read -p "Enter your emqx root password (do not include @): " emqx_root
 }
 
 verify_input() {
   if [ ! -n "$ip" ] ;then
-    echo "you have not input install-environment-ip-adress!"
+    echo "you have not input openv2x external ip!"
     exit 1
   fi
   if [ ! -n "$redis_root" ] ;then
@@ -35,27 +37,11 @@ verify_input() {
 }
 
 verify_uninstall() {
-  docker stop redis || true 2> /dev/null
-  docker rm redis || true 2> /dev/null
-  docker stop emqx || true 2> /dev/null
-  docker rm emqx || true 2> /dev/null
-  docker stop mariadb1 || true 2> /dev/null
-  docker rm mariadb1 || true 2> /dev/null
-  docker stop dandelion || true 2> /dev/null
-  docker rm dandelion || true 2> /dev/null
-  docker stop edgeview || true 2> /dev/null
-  docker rm edgeview || true 2> /dev/null
-  docker stop centerview || true 2> /dev/null
-  docker rm centerview || true 2> /dev/null
-  docker stop cerebrum || true 2> /dev/null
-  docker rm cerebrum || true 2> /dev/null
-  docker stop rse-simulator || true 2> /dev/null
-  docker rm rse-simulator || true 2> /dev/null
-  docker rmi openv2x/dandelion:latest || true 2> /dev/null
-  docker rmi openv2x/cerebrum:latest || true 2> /dev/null
-  docker rmi openv2x/edgeview:latest || true 2> /dev/null
-  docker rmi openv2x/centerview:latest || true 2> /dev/null
-  docker rmi openv2x/roadmocker:latest || true 2> /dev/null
+  containers=(redis emqx mariadb1 dandelion edgeview centerview cerebrum rse-simulator)
+  for i in ${containers[@]}; do
+    docker stop $i 2>/dev/null || true
+    docker rm $i 2>/dev/null || true
+  done
 }
 
 set_env() {
@@ -89,7 +75,7 @@ set_env() {
 verify_mysql(){
   while true
   do
-    databases=`docker exec mariadb1 mysql -uroot -p$mariadb1_root -e 'show databases;' 2> /dev/null`
+    databases=`docker exec mariadb1 mysql -uroot -p$mariadb1_root -e 'show databases;' 2>/dev/null`
     target="dandelion"
     result=$(echo $databases | grep "${target}")
     if [[ "$result" != "" ]]
@@ -102,6 +88,11 @@ verify_mysql(){
 }
 
 verify_install() {
+  images=(dandelion cerebrum edgeview centerview roadmocker)
+  for i in ${images[@]}; do
+    docker pull openv2x/$i:latest
+  done
+
   docker-compose -f /tmp/pre/docker-compose-pre.yaml up -d
   verify_mysql
   docker-compose -f /tmp/init/docker-compose-init.yaml up -d
