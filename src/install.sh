@@ -90,7 +90,7 @@ verify_mysql(){
 verify_install() {
   images=(dandelion cerebrum edgeview centerview roadmocker)
   for i in ${images[@]}; do
-    docker pull openv2x/$i:latest
+    docker pull openv2x/$i:albany
   done
 
   docker-compose -f /tmp/pre/docker-compose-pre.yaml up -d

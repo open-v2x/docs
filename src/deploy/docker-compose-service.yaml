@@ -2,7 +2,7 @@ version: '3.1'
 services:
  dandelion:
   container_name: 'dandelion'
-  image: 'openv2x/dandelion:latest'
+  image: 'openv2x/dandelion:albany'
   restart: 'always'
   network_mode: 'host'
   volumes:
@@ -11,7 +11,7 @@ services:
    - '/var/log/dandelion:/var/log/dandelion'
  cerebrum:
   container_name: 'cerebrum'
-  image: 'openv2x/cerebrum:latest'
+  image: 'openv2x/cerebrum:albany'
   restart: 'always'
   environment:
    redis_host: '127.0.0.1'
@@ -27,7 +27,7 @@ services:
    - '/etc/localtime:/etc/localtime'
  edgeview:
   container_name: 'edgeview'
-  image: 'openv2x/edgeview:latest'
+  image: 'openv2x/edgeview:albany'
   network_mode: 'host'
   environment:
    API_SERVER: 'http://127.0.0.1/api'
@@ -39,7 +39,7 @@ services:
    - '/data/public/uploadData:/var/www/edgeview/uploadData'
  centerview:
   container_name: 'centerview'
-  image: 'openv2x/centerview:latest'
+  image: 'openv2x/centerview:albany'
   network_mode: 'host'
   environment:
    API_SERVER: 'http://127.0.0.1/api'
@@ -55,7 +55,7 @@ services:
    - '/data/public/uploadData:/var/www/centerview/uploadData'
  rse-simulator:
   container_name: 'rse-simulator'
-  image: 'openv2x/roadmocker:latest'
+  image: 'openv2x/roadmocker:albany'
   ports:
    - '6688:80'
   volumes:
