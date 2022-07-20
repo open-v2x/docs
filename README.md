@@ -54,4 +54,5 @@ application scenarios, enabling autonomous driving and autonomous transportation
 - Please take a look at our [Contribution guidelines](src/v2x_contribution.md) to learn how to
   contribute to the OpenV2X project.
 - For this repo, please run `dprint fmt` before commit. For example, in macos:
-  `dprint-0.15.0-darwin fmt`.
+  `dprint-0.15.0-darwin fmt`. Please visit [Install dprint](https://dprint.dev/install/) to get more
+  details.
