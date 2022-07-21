@@ -67,6 +67,9 @@ Pull Request（以下用 pr 代称） 需要严格遵循以下原则**：
 
 如果这个 pr 解决了某个 issue 提出的 bug 或者 feature，则应在 pr 中将此 issue 关联起来
 
+参考:
+<https://docs.github.com/cn/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue>
+
 在 pr 描述中 使用如下关键字可将 issue 关联起来：
 
 - close
