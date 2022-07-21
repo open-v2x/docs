@@ -87,6 +87,21 @@ verify_mysql(){
   done
 }
 
+verify_bootstrap(){
+  while true
+  do
+    info=`docker ps -a | grep dandelion_bootstrap 2>/dev/null`
+    status="Exited (0)"
+    result=$(echo $info | grep "${status}")
+    if [[ "$result" != "" ]]
+    then
+      break
+    else
+      sleep 3
+    fi
+  done
+}
+
 verify_install() {
   images=(dandelion cerebrum edgeview centerview roadmocker)
   for i in ${images[@]}; do
@@ -96,7 +111,7 @@ verify_install() {
   docker-compose -f /tmp/pre/docker-compose-pre.yaml up -d
   verify_mysql
   docker-compose -f /tmp/init/docker-compose-init.yaml up -d
-  sleep 5
+  verify_bootstrap
   docker rm dandelion_bootstrap || true
   docker-compose -f /tmp/service/docker-compose-service.yaml up -d
   printf "%40s\n" "$(tput setaf 4)
