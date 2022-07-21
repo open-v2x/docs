@@ -1,4 +1,3 @@
-# OpenV2X Docs
 
 OpenV2X is a open source platform based on the v2x standard interface, using 5G, AI, MEC and other
 technologies, integrating the contributions of all parties in industry, education and research, and
