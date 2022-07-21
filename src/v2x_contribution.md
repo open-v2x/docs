@@ -79,12 +79,13 @@ the description. Please
 [link your **pull request** to the cooresponding
 issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue),
 you can either link a pull request to an issue using a keyword or manually link a pull request to an
-issue. For more details about `pull request`, please refer to the [Pull Request Standard](). Note
-that there are some checks that the new code is required to pass before merging. The checks are
-automatically run by the continuous integration system. A green tick mark will appear if the checks
-are successful. If a red mark, please correct the code accordingly. Once the contribution is merged
-in `dev`, it can be tested with the rest of new features. By the time of the next release, the `dev`
-branch will be merged to `master`, and the contribution will be available and announced.
+issue. For more details about `pull request`, please refer to the
+[Pull Request Standard](./v2x_pull_request_standard-zh_CN.md). Note that there are some checks that
+the new code is required to pass before merging. The checks are automatically run by the continuous
+integration system. A green tick mark will appear if the checks are successful. If a red mark,
+please correct the code accordingly. Once the contribution is merged in `dev`, it can be tested with
+the rest of new features. By the time of the next release, the `dev` branch will be merged to
+`master`, and the contribution will be available and announced.
 
 ### Checklist
 

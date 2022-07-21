@@ -1,0 +1,12 @@
+version: '2.4'
+services:
+ dandelion_bootstrap:
+  container_name: 'dandelion_bootstrap'
+  image: 'openv2x/dandelion:latest'
+  environment:
+   KOLLA_BOOTSTRAP: '\"\"'
+  network_mode: 'host'
+  volumes:
+   - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
+   - '/var/log/dandelion:/var/log/dandelion'
+   
