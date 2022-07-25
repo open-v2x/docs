@@ -11,4 +11,3 @@ jobs:
           source-repo: "https://github.com/open-v2x/docs.git"
           destination-repo: "git@gitee.com:open-v2x/docs.git"
           
-          
