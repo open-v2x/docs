@@ -1,4 +1,4 @@
-# V2X 1.0.126 All in One 部署文档
+# OpenV2X All-in-One 部署文档
 
 ## 1. 基本环境
 
@@ -61,6 +61,12 @@ cd docs-master/src/
 ## 5. 一键部署服务
 
 ```shell
+export external_ip=100.100.100.100
+# 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
+export redis_root=password
+export mariadb_root=password
+export mariadb_dandelion=password
+export emqx_root=password
 sh ./install.sh
 ```
 
@@ -68,12 +74,6 @@ sh ./install.sh
 
 ```console
 [root@v2x-demo src]# sh ./install.sh 
-Enter your openv2x external ip: 100.100.100.100
-这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
-Enter your redis root password (do not include @): password
-Enter your mariadb1 root password (do not include @): password
-Enter your mariadb1 dandelion password (do not include @): password
-Enter your emqx root password (do not include @): password
 
 ...
 
@@ -96,7 +96,7 @@ Enter your emqx root password (do not include @): password
 
 上述提示中包含了 Edge Portal 和 Central Portal 的访问路径，以及用户名密码。此时可以从客户端，通过 Chrome 浏览器（其它浏览器未测试）访问试用。
 
-欢迎试用～，参考：[快速入门](v2x-1.0.126-quick-start.md)。
+欢迎试用～，参考：[快速入门](v2x-quick-start.md)。
 
 如果遇到问题，欢迎在 github 提交
 issue：<https://github.com/open-v2x/docs/issues/new/choose>，参考：[提交注意事项](v2x_contribution-zh_CN.md)。

@@ -2,7 +2,7 @@ version: '2.4'
 services:
  mariadb:
   image: 'mariadb:10.5.5'
-  container_name: 'mariadb1'
+  container_name: 'mariadb'
   restart: 'always'
   environment:
    MYSQL_USER: 'dandelion'
