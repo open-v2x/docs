@@ -45,7 +45,7 @@ request** 按钮并按照模板要求填写必要的信息 ![](images/issues_but
 
 ### 开始之前
 
-查看[OpenV2X 架构设计文档](v2x-1.0.126-architectural-design.md)，了解组成 OpenV2X
+查看[OpenV2X 架构设计文档](v2x-architectural-design.md)，了解组成 OpenV2X
 的不同模块。选择最合适的一个来加入新功能。如果在此过程中出现任何问题，请随时与我们的团队联系。
 
 ### 代码规范

@@ -35,19 +35,19 @@ application scenarios, enabling autonomous driving and autonomous transportation
 
 ![](src/images/v2x-arch-details.svg)
 
-- [OpenV2X 1.0.126 Architectural Design](src/v2x-1.0.126-architectural-design.md)
+- [OpenV2X Architectural Design](src/v2x-architectural-design.md)
 
 ## Quick Install
 
-- [OpenV2X 1.0.126 QuickInstall Guide](src/v2x-1.0.126-quick-install.md)
+- [OpenV2X QuickInstall Guide](src/v2x-quick-install.md)
 
 ## Quick Start
 
-- [OpenV2X 1.0.126 QuickStart Guide](src/v2x-1.0.126-quick-start.md)
+- [OpenV2X QuickStart Guide](src/v2x-quick-start.md)
 
 ## Documents
 
-- [OpenV2X 1.0.126 Algorithm Documents](src/v2x-1.0.126-algorithm.md)
+- [OpenV2X Algorithm Documents](src/v2x-algorithm.md)
 
 ## Contributing
 

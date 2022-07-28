@@ -58,9 +58,9 @@ with the original repository.
 
 ### Before getting started
 
-Check out the [OpenV2X Architectural Design document](v2x-1.0.126-architectural-design.md) to get an
-idea on the different modules that compose OpenV2X. Choose the most appropriate one to hold the new
-feature. Feel free to contact the team in case any doubt arises during the process.
+Check out the [OpenV2X Architectural Design document](v2x-architectural-design.md) to get an idea on
+the different modules that compose OpenV2X. Choose the most appropriate one to hold the new feature.
+Feel free to contact the team in case any doubt arises during the process.
 
 ### Coding standard
 
