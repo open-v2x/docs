@@ -7,6 +7,7 @@ OpenV2X 团队很乐意接受任何愿意合作的组织和个人的代码贡献
 - [OpenV2X 代码贡献指南](#openv2x-代码贡献指南)
   - [报告错误](#报告错误)
   - [提出需求](#提出需求)
+  - [项目问题看板](#项目问题看板)
   - [贡献代码](#贡献代码)
     - [开始之前](#开始之前)
     - [代码规范](#代码规范)
@@ -36,9 +37,29 @@ OpenV2X 团队很乐意接受任何愿意合作的组织和个人的代码贡献
 request** 按钮并按照模板要求填写必要的信息 ![](images/issues_button.png) ![](images/feature_request_button.png)
 ![](images/feature_request_template.png)
 
+## 项目问题看板
+
+如果您暂时不清楚想要报告的错误或提出的需求具体属于哪一个模块，您可以选择在[项目问题看板](https://github.com/orgs/open-v2x/projects/3)中的 Todo
+列表里先添加错误或需求，等确认模块之后再将此错误或需求转换至对应仓库中的 issue。转换为 issue 后您还可以设置此 issue 的状态 (Todo/In Progress/Done)和标签
+(Bug/Feature)。
+
+![](images/add_issue_on_issueboard.png)
+
+![](images/draft_issue.png)
+
+**转换为 issue 示例:**
+
+![](images/convert_to_issue.png)
+
+![](images/select_repo.png)
+
+**设置状态和标签示例:**
+
+![](images/setup_status_and_label.png)
+
 ## 贡献代码
 
-在开始动手写代码之前, 请查看 **issue board** 以确认团队目前正在进行的工作, 从而避免重复。 如有疑问请联系我们 (或者发送邮件至 contact@openv2x。org)。
+在开始动手写代码之前, 请查看 **issue board** 以确认团队目前正在进行的工作, 从而避免重复。 如有疑问请联系我们 (或者发送邮件至 contact@openv2x.org)。
 
 为了顺利地开展您的工作, 首先需要 `fork` **对应的 OpenV2X 仓库**, 并将此 `fork` `clone` 至本地。 记得让您的 `fork`
 跟原仓库[保持同步]((https://docs.github.com/en/enterprise/2.13/user/articles/syncing-a-fork))。
