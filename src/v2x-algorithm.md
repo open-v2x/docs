@@ -214,20 +214,20 @@ msg_SSM = {
 
 ### 3.1 多源感知数据融合算法 (Fusion)
 
-[多源感知数据融合算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/pre_process_algorithm_documents/v2x-1.0.0-algorithm-Fusion.md)
+[多源感知数据融合算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/pre_process_algorithm_documents/v2x-algorithm-Fusion.md)
 
 多源数据融合指对不同设备的检测结果进行时空判别与匹配，对于不同设备检测到的同一目标，进行定位修正、信息互补、id 重构等工作，实现大范围内的车辆连续检测跟踪。
 
 ### 3.2 在线轨迹补全算法 (Complement)
 
-[在线轨迹补全算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/pre_process_algorithm_documents/v2x-1.0.0-algorithm-Complement.md)
+[在线轨迹补全算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/pre_process_algorithm_documents/v2x-algorithm-Complement.md)
 
 在线轨迹补全指对于由车辆遮挡、检测丢失等问题引起的车辆轨迹断续的情况进行修正与填补。本方案提供两种补全算法：①差值补全算法，②基于 LSTM 的 AI 补全算法。两种算法中通过牺牲 3-5
 帧(12-20ms)的实时性，获取车辆的历史轨迹点，实现对中间缺失值的差值补全或 LSTM 补全。
 
 ### 3.3 在线轨迹平滑算法 (Smooth)
 
-[在线轨迹算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/pre_process_algorithm_documents/v2x-1.0.0-algorithm-Smooth.md)
+[在线轨迹算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/pre_process_algorithm_documents/v2x-algorithm-Smooth.md)
 
 本方案提供两种平滑算法。
 
@@ -236,14 +236,14 @@ msg_SSM = {
 
 ### 3.4 碰撞预警算法 (Collision Warning)
 
-[碰撞预警算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/scenario_algorithm_documents/v2x-1.0.0-algorithm-Collision-Warning.md)
+[碰撞预警算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/scenario_algorithm_documents/v2x-algorithm-Collision-Warning.md)
 
 现有工程类解决方案缺少交通领域的专业应用，如合理的碰撞指标选取与阈值确定；同时缺少灵活的可配置性以及针对不同场景与情况的自适应能力，如轨迹预测模型的自动切换与指标选取的自动切换能力。项目开发了多场景
 V2X 碰撞风险研判与预警算法，实现了自适应未来轨迹推演、未来轨迹碰撞冲突检查、碰撞指标与危险度估计以及碰撞指标阈值判别与预警信息生成四大功能。
 
 ### 3.5 感知数据共享算法 (Sensor Data Sharing)
 
-[感知数据共享算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/scenario_algorithm_documents/v2x-1.0.0-algorithm-Sensor-Data-Sharing.md)
+[感知数据共享算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/scenario_algorithm_documents/v2x-algorithm-Sensor-Data-Sharing.md)
 
 感知数据共享指接收 OBU
 的感知数据请求，基于请求车辆信息，自适应筛选与之交互的人、车及障碍物的多种类信息。**开发的数据共享算法，实现了请求车辆重定位，自适应交互缓冲区构建，交互参与主体智能筛选三大功能**。优势在于：
@@ -253,14 +253,14 @@ V2X 碰撞风险研判与预警算法，实现了自适应未来轨迹推演、�
 
 ### 3.6 车辆协同换道算法 (Cooperative Lane Change)
 
-[车辆协同换道算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/scenario_algorithm_documents/v2x-1.0.0-algorithm-Cooperative-Lane-Change.md)
+[车辆协同换道算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/scenario_algorithm_documents/v2x-algorithm-Cooperative-Lane-Change.md)
 
 车辆协同换道指接收 OBU
 的协同换道请求，基于请求车辆信息及周围信息，生成合理的换道建议与推荐换道轨迹。开发的车辆协同换道算法，基于车辆历史运动数据和驾驶行为假设研判瞬时计划路径风险，并对请求车辆发布动态的引导路径信息，在线保障车辆驾驶安全。
 
 ### 3.7 逆向超车预警算法(Do Not Pass Warning)
 
-[逆向超车预警算法模型文档](https://github.com/open-v2x/cerebrum/blob/master/docs/scenario_algorithm_documents/v2x-1.0.0-algorithm-Do-Not-Pass-Warning.md)
+[逆向超车预警算法模型文档](https://github.com/open-v2x/cerebrum/blob/albany/docs/scenario_algorithm_documents/v2x-algorithm-Do-Not-Pass-Warning.md)
 
 逆向超车预警指接收 OBU 的逆向超车请求，基于请求车辆信息及周围信息，生成合理的逆向超车许可建议。
 
