@@ -45,7 +45,7 @@ services:
   environment:
    API_SERVER: 'http://external_ip/api'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-   MQTT_URL: 'mqtt://127.0.0.1:15675'
+   MQTT_URL: 'mqtt://external_ip:15675'
    MQTT_PATH: '/mqtt'
    MQTT_USERNAME: 'root'
    MQTT_PASSWORD: 'abc@1234'
