@@ -253,7 +253,7 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
 
 7. 在 Send Messages 模块，可查看发送消息的代码。
 
-![a](images/Simulator1.png)
+![a](images/Simulator10.png)
 
 8. 在 RSU Setting 模块，输入消息配置参数，包括 BSM、RSI、RSM、MAP、SpaT，根据该配置，向服务器发送 BSM、RSI、RSM、MAP、SpaT的规则。
 
