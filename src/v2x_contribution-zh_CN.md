@@ -62,7 +62,7 @@ request** 按钮并按照模板要求填写必要的信息 ![](images/issues_but
 在开始动手写代码之前, 请查看 **issue board** 以确认团队目前正在进行的工作, 从而避免重复。 如有疑问请联系我们 (或者发送邮件至 contact@openv2x.org)。
 
 为了顺利地开展您的工作, 首先需要 `fork` **对应的 OpenV2X 仓库**, 并将此 `fork` `clone` 至本地。 记得让您的 `fork`
-跟原仓库[保持同步]((https://docs.github.com/en/enterprise/2.13/user/articles/syncing-a-fork))。
+跟原仓库[保持同步](https://docs.github.com/en/enterprise/2.13/user/articles/syncing-a-fork)。
 
 ### 开始之前
 
