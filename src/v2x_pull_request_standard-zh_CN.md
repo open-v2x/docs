@@ -86,7 +86,7 @@ Pull Request（以下用 pr 代称） 需要严格遵循以下原则**：
 
 然后在下图中设置关联issue：
 
-![](./images/link-issue-drop-down.png)
+![](images/link-issue-drop-down.png)
 
 > 关联 issue 的好处：
 
