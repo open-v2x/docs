@@ -1,0 +1,34 @@
+<mxfile host="65bd71144e">
+    <diagram id="hgjCBGGHYym0OjrEldh4" name="第 1 页">
+        <mxGraphModel dx="411" dy="327" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-4" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#FFFFFF;fontColor=#000000;fillColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="170" width="370" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-1" value="&lt;font color=&quot;#000000&quot;&gt;Function Flow Chain&lt;br&gt;(Cerebrum)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-2" value="&lt;font color=&quot;#000000&quot;&gt;Device Management&lt;br&gt;(Dandelion)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-3" value="&lt;font color=&quot;#000000&quot;&gt;MariaDB&lt;/font&gt;" style="shape=datastore;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="300" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-5" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;fontColor=#000000;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.15;exitY=0.05;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#000000;" parent="1" source="O9msMOSY3dTgGm_L-oh_-3" target="O9msMOSY3dTgGm_L-oh_-1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="330" as="sourcePoint"/>
+                        <mxPoint x="440" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="O9msMOSY3dTgGm_L-oh_-6" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;fontColor=#000000;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.85;exitY=0.05;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#000000;" parent="1" source="O9msMOSY3dTgGm_L-oh_-3" target="O9msMOSY3dTgGm_L-oh_-2" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="330" as="sourcePoint"/>
+                        <mxPoint x="440" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
