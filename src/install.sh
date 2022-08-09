@@ -56,7 +56,7 @@ pre_install() {
   cp -f deploy/docker-compose-pre.yaml /tmp/pre/docker-compose-pre.yaml
   cp -f deploy/docker-compose-init.yaml /tmp/init/docker-compose-init.yaml
   cp -f deploy/docker-compose-service.yaml /tmp/service/docker-compose-service.yaml
-  sed -i "s/127.0.0.1/$external_ip/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/external_ip/$external_ip/" /tmp/service/docker-compose-service.yaml
   sed -i "s/redis12345/$redis_root/" /tmp/pre/docker-compose-pre.yaml
   sed -i "s/mysql@1234/$mariadb_root/" /tmp/pre/docker-compose-pre.yaml
   sed -i "s/dandelion123/$mariadb_dandelion/" /tmp/pre/docker-compose-pre.yaml

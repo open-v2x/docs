@@ -13,6 +13,7 @@ services:
   container_name: 'cerebrum'
   image: 'openv2x/cerebrum:albany'
   restart: 'always'
+  network_mode: 'host'
   environment:
    redis_host: '127.0.0.1'
    mqtt_host: '127.0.0.1'
@@ -30,7 +31,7 @@ services:
   image: 'openv2x/edgeview:albany'
   network_mode: 'host'
   environment:
-   API_SERVER: 'http://127.0.0.1/api'
+   API_SERVER: 'http://external_ip/api'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
   volumes:
    - '/etc/localtime:/etc/localtime'
@@ -42,7 +43,7 @@ services:
   image: 'openv2x/centerview:albany'
   network_mode: 'host'
   environment:
-   API_SERVER: 'http://127.0.0.1/api'
+   API_SERVER: 'http://external_ip/api'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
    MQTT_URL: 'mqtt://external_ip:15675'
    MQTT_PATH: '/mqtt'
