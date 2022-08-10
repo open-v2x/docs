@@ -12,8 +12,8 @@ password:dandelion)可登录平台。 进入设备管理-RSU设备界面
 
 ## 3. RSE Simulator 发送数据
 
-点击RSU_INFO 中 preview 查看数据，将数据复制到 publish 的 message 中，修改rsuEsn字段，点击publish发送数据
+点击 RSU_INFO 中 preview 查看数据，将数据复制到 publish 的 message 中，修改 rsuEsn 字段，点击 publish 发送数据
 
-## 4. 查看 边缘云控平台RSU设备
+## 4. 查看边缘云控平台RSU设备
 
-在设备管理页面RSU设备中查看，新增未注册RSU数据
+在设备管理页面 RSU 设备中查看，新增未注册 RSU 数据
