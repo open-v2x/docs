@@ -17,16 +17,16 @@ services:
    - '/data/mysql/init:/docker-entrypoint-initdb.d/'
  emqx:
   container_name: 'emqx'
-  image: 'emqx/emqx:v4.0.0'
+  image: 'emqx/emqx:4.3.0'
   restart: 'always'
   shm_size: '1G'
   environment:
-   EMQX_LOADED_PLUGINS: 'emqx_auth_username,emqx_dashboard,emqx_management,emqx_recon,emqx_retainer,emqx_rule_engine'
+   EMQX_LOADED_PLUGINS: 'emqx_auth_mnesia'
    TZ: 'Asia/Shanghai'
    EMQX_ALLOW_ANONYMOUS: 'false'
    EMQX_AUTH__USER__1__USERNAME: 'root'
    EMQX_AUTH__USER__1__PASSWORD: 'abc@1234'
-   EMQX_AUTH__USER__PASSWORD_HASH: 'plain'
+   EMQX_AUTH__USER__PASSWORD_HASH: 'sha256'
   ports:
    - '1883:1883'
    - '8081:8081'
