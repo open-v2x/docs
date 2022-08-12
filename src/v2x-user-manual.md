@@ -132,6 +132,27 @@ password:dandelion)可登录平台。 进入设备管理-RSU设备界面
 
 在设备管理页面 RSU 设备中查看，新增未注册 RSU 数据
 
+#### 5. RSU 心跳上报
+
+##### 5.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+
+OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin
+password:dandelion)可登录平台。
+
+点击设备管理- RSU 设备界面
+
+##### 5.2 RSE Simulator 发送数据
+
+在 Heartbeat 中点击 Start 进行发送
+
+![a](./images/heartbeats.png)
+
+##### 5.3 查看 RSU 设备界面
+
+在RSU 设备界面上看到 RSU 设备在线状态为“在线”
+
+![a](./images/online.png)
+
 ### 事件管理
 
 #### 1. 查看历史数据统计分析结果
@@ -163,6 +184,48 @@ dandelion)可登录平台。
 
 7. 点击进入“协作式变道 (CLC)”，可查看 CLC 消息的历史数据，支持根据“协调信息类型”进行过滤查询。![a](./images/history_data-8-1.png)
    ![a](./images/history_data-8-2.png)
+
+#### 2. RSM 上报云控中心
+
+##### 2.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+
+OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
+
+点击事件管理-路侧安全消息（RSM)界面
+
+##### 2.2 配置 RSE Simulator 建立监听
+
+打开 RSE Similator http://\<ip-address\>:6688，配置 Username、password、clientID 建立连接
+
+点击 Subscribe 建立监听
+
+##### 2.3 RSE Simulator 发送数据
+
+在 DataSet 中选择 video_track 或者 radar_track 数据，点击 Publish 进行发送
+
+##### 2.4 查看 RSE Simulator 接收数据及 RSM 界面
+
+在 事件管理-路侧安全消息 (RSM) 界面查看数据
+
+![a](./images/RSM_data.png)
+
+#### 3. RSM 下发 RSU
+
+##### 3.1 配置 RSE Simulator 建立监听
+
+打开 RSE Similator http://\<ip-address\>:6688，配置 Username、password、clientID 建立连接后在 Subscriptions
+中添加监听主题 V2X/RSU/R328328/RSM/DOWN，点击 Subscribe 进行监听
+
+##### 3.2 RSE Simulator 发送数据
+
+在 DataSet 中选择 video_track 或者 radar_track 数据，点击 Publish 进行发送
+
+##### 3.3 查看 RSE Simulator 接收数据
+
+在Receive Messages 中看到接收的 RSM 下发的消息内容
+
+![a](./images/RSM-to-RSU.png)
 
 ### 运维管理
 
