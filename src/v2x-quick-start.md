@@ -288,3 +288,7 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
    Portal】’，即可查看该区域的路况信息。
 
 ![a](images/EdgeSite3.png)
+
+---
+
+详细使用说明，请参考用户手册: [OpenV2X 用户手册](./v2x-user-manual.md)
