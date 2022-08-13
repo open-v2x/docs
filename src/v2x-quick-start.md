@@ -286,3 +286,7 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
 5. 登录 V2X Central Portal 平台，在边缘站点列表页，选择您需要查看的边缘站点的路口信息，在该边缘站点右侧点击‘前往【区域Edge Portal】’，即可查看该区域的路况信息。
 
 ![a](images/EdgeSite3.png)
+
+---
+
+详细使用说明，请参考用户手册: [OpenV2X 用户手册](./v2x-user-manual.md)
