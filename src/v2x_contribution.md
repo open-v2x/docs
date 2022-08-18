@@ -11,6 +11,7 @@ Take a look and don't hesitate!
 - [Contributing to OpenV2X](#contributing-to-openv2x)
   - [Report bugs](#report-bugs)
   - [Request features](#request-features)
+  - [Project issue board](#project-issue-board)
   - [Code contributions](#code-contributions)
     - [Before getting started](#before-getting-started)
     - [Coding standard](#coding-standard)
@@ -44,6 +45,28 @@ users' experience can be submitted in the corresponding GitHub section. These se
 same as the issue sections mentioned above. Please click the **feature request** button and follow
 the template requirements to fill in the necessary information. ![](images/issues_button.png)
 ![](images/feature_request_button.png) ![](images/feature_request_template.png)
+
+## Project issue board
+
+If you are not sure which module the bug or feature you want to report belongs to, you can choose to
+add the bug or feature to the Todo list in the
+[project issue board](https://github.com/orgs/open-v2x/projects/3), and then convert the bug or
+feature to the issue in the corresponding repository after confirming the module. You can also set
+the status(Todo/In Progress/Done) and label(Bug/Feature) of this issue after converting.
+
+![](images/add_issue_on_issueboard.png)
+
+![](images/draft_issue.png)
+
+**example of converting draft to issue:**
+
+![](images/convert_to_issue.png)
+
+![](images/select_repo.png)
+
+**example of setting status and label:**
+
+![](images/setup_status_and_label.png)
 
 ## Code contributions
 

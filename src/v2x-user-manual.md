@@ -170,8 +170,25 @@ dandelion)可登录平台。
 2. 点击进入“事件管理-路侧单元消息（RSI）”， 可查看 RSI 消息的历史数据，支持根据“事件类型”进行过滤查询。![a](./images/history_data-3-1.png)
    ![a](./images/history_data-3-2.png)
 
-3. 点击进入“逆向超车预警 (DNPW)”，可查看 DNPW 消息的历史数据，支持根据“协调信息类型”进行过滤查询。![a](./images/history_data-6-1.png)
+<<<<<<< HEAD 3. 点击进入“逆向超车预警 (DNPW)”，可查看 DNPW
+消息的历史数据，支持根据“协调信息类型”进行过滤查询。![a](./images/history_data-6-1.png) ![a](./images/history_data-6-2.png)
+
+======= 3. 点击进入“交叉路口碰撞预警 (ICW)”，可查看 ICW 消息的历史数据，支持根据“碰撞类型”进行过滤查询。![a](./images/history_data-4-1.png)
+![a](./images/history_data-4-2.png)
+
+4. 点击进入“弱势交通参与者碰撞预警 (VRUCW)”，可查看 VRUCW 消息的历史数据，支持根据“碰撞类型”进行过滤查询。![a](./images/history_data-5-1.png)
+   ![a](./images/history_data-5-2.png)
+
+5. 点击进入“逆向超车预警 (DNPW)”，可查看 DNPW 消息的历史数据，支持根据“协调信息类型”进行过滤查询。![a](./images/history_data-6-1.png)
    ![a](./images/history_data-6-2.png)
+
+6. 点击进入“感知数据共享 (SDS)”，可查看 SDS 消息的历史数据，支持根据“设备类型”进行过滤查询。![a](./images/history_data-7-1.png)
+   ![a](./images/history_data-7-2.png)
+
+7. 点击进入“协作式变道 (CLC)”，可查看 CLC 消息的历史数据，支持根据“协调信息类型”进行过滤查询。![a](./images/history_data-8-1.png)
+   ![a](./images/history_data-8-2.png)
+
+> > > > > > > master
 
 #### 2. RSM 上报云控中心
 
