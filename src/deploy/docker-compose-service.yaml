@@ -20,9 +20,9 @@ services:
    mysql_host: '127.0.0.1'
    cloud_url: 'http://127.0.0.1:28300/api/v1'
    mysql_user: 'root'
-   mysql_password: 'mysql@1234'
-   emqx_password: 'abc@1234'
-   redis_password: 'redis12345'
+   mysql_password: mysql@1234
+   emqx_password: abc@1234
+   redis_password: redis12345
 
   volumes:
    - '/etc/localtime:/etc/localtime'
@@ -50,7 +50,7 @@ services:
    MQTT_URL: 'mqtt://external_ip:15675'
    MQTT_PATH: '/mqtt'
    MQTT_USERNAME: 'root'
-   MQTT_PASSWORD: 'abc@1234'
+   MQTT_PASSWORD: abc@1234
   volumes:
    - '/etc/localtime:/etc/localtime'
    - '/etc/centerview/nginx.conf:/etc/nginx/nginx.conf'

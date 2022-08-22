@@ -7,7 +7,7 @@ services:
   environment:
    MYSQL_USER: 'dandelion'
    MYSQL_PASSWORD: 'dandelion123'
-   MYSQL_ROOT_PASSWORD: 'mysql@1234'
+   MYSQL_ROOT_PASSWORD: mysql@1234
    TZ: 'Asia/Shanghai'
   ports:
    - '3306:3306'
@@ -25,7 +25,7 @@ services:
    TZ: 'Asia/Shanghai'
    EMQX_ALLOW_ANONYMOUS: 'false'
    EMQX_AUTH__USER__1__USERNAME: 'root'
-   EMQX_AUTH__USER__1__PASSWORD: 'abc@1234'
+   EMQX_AUTH__USER__1__PASSWORD: abc@1234
    EMQX_AUTH__USER__PASSWORD_HASH: 'sha256'
   ports:
    - '1883:1883'
@@ -44,7 +44,7 @@ services:
   restart: 'always'
   environment:
     TZ: 'Asia/Shanghai'
-  command: 'redis-server --requirepass redis12345'
+  command: redis-server --requirepass redis12345
   volumes:
    - '/config/redis/conf/:/usr/redis/'
    - '/data/:/data/'
