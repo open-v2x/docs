@@ -1,14 +1,15 @@
-# V2X 边缘云控平台用户快速操作手册
+# OpenV2X 边缘云控平台用户快速操作手册
 
-## 1. 登录 V2X 边缘云控平台（OpenV2X Edge Portal）
+## 1. 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
 
-V2X 边缘云控平台网址：`http://{host}:80/user/login` 输入正确的用户名、密码(username: admin password: dandelion)可登录平台。
+OpenV2X 边缘云控平台网址：`http://{host}:80/user/login` 输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
 
 ## 2. RSU 的快速注册和配置
 
-本部分主要描述如果将部署好的 RSU 设备接入 V2X 边缘云控平台，以及接入后可对 RSU 设备进行相关配置等操作。
+本部分主要描述如果将部署好的 RSU 设备接入 OpenV2X 边缘云控平台，以及接入后可对 RSU 设备进行相关配置等操作。
 
-若您尚未实际部署 RSU 设备，仅仅是想体验 V2X 边缘云控平台系统，您也可以直接下拉到‘RSU 模拟器操作’部分，我们为您提供了 RSU 模拟器，您可通过模拟器体验 RSU
+若您尚未实际部署 RSU 设备，仅仅是想体验 OpenV2X 边缘云控平台系统，您也可以直接下拉到‘RSE 模拟器操作’部分，我们为您提供了 RSE 模拟器，您可通过模拟器体验 RSU
 设备的一些数据上传、下发的操作及数据展示信息。
 
 ### 2.1 RSU 设备快速接入
@@ -18,9 +19,79 @@ V2X 边缘云控平台网址：`http://{host}:80/user/login` 输入正确的用�
 - RSU 设备完成现场部署后，获取 RSU 设备信息，其中设备序列号信息必须和 RSU 设备一致，否则 RSU 无法完成接入。
 - 获取云控平台设备侧接入地址及端口，并在 RSU 上完成配置。
 
-接入步骤：
+如果您想使用 RSE 模拟器部署一个虚拟 RSU，可以通过以下步骤实现:
 
-1. 进入 V2X 边缘云控平台，在左侧栏选择“设备管理-RSU 设备->添加 RSU”。
+1. 打开 RSE 模拟器: `http://{host}:6688`
+
+2. 在 Connection 模块，点击 ‘Connect’，连接 MQTT 服务器。
+
+![a](images/Simulator1.png) ![a](images/Simulator2.png) 若连接成功，则红色未连接标识 ‘disconnected’
+会变为绿色连接标识‘connected’，此时代表您已成功连接 MQTT 服务器。
+
+Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有服务器，输入服务器对应的信息。
+
+| 字段        | 释义     |
+| --------- | ------ |
+| Host      | 服务器地址  |
+| Path      |        |
+| Port      |        |
+| ClientID  |        |
+| Username  | 服务器用户名 |
+| Password  | 服务器密码  |
+| KeepAlive |        |
+
+3. 在 Subscriptions 中添加监听主题 V2X/RSU/INFO/UP，点击 Subscribe 进行监听。
+
+![a](images/Simulator3.png)
+
+| 字段    | 释义       |
+| ----- | -------- |
+| Topic | 主题，可修改   |
+| Qos   | 服务质量水平   |
+| Color | 主题颜色，可选择 |
+
+4. 点击 RSU_INFO 中 preview 查看数据，将数据复制到 publish 的 message 中，修改 rsuEsn 字段，点击 publish 发送数据。
+
+![a](images/Simulator49.png)
+
+![a](images/Simulator50.png)
+
+![a](images/Simulator53.png)
+
+注意：用 RSE 模拟器发送消息，需要先订阅消息主题。
+
+| 字段      | 释义                     |
+| ------- | ---------------------- |
+| Topic   | 主题，需符合新四跨协议，中间用 ‘/’ 间隔 |
+| Qos     | 服务质量水平                 |
+| Retain  | 消息是否会被保存               |
+| Message | 消息内容，需符合新四跨协议          |
+
+5. 查看边缘云控平台RSU设备，此时在设备管理页面 RSU 设备中查看，应能发现新增未注册 RSU 数据。可以通过一键注册按钮进行注册，并仅需填入或选择：安装区域、具体位置、RSU
+   IP、这三个必要信息。录入信息后，点击一键注册，注册成功后，会在设备管理页面中查看到注册成功的提示。
+
+![a](images/not_registered_rsu.png)
+
+![a](images/quick_register.png)
+
+![a](images/register_success.png)
+
+6. 使用 RSE 模拟器模拟 RSU 心跳上报。首先在 Connection 模块中点击 ‘Disconnect’ 断开之前的连接，将 ClientID 替换成刚注册的 RSU 的 Esn
+   编码，然后点击 ‘Connect’，连接 MQTT 服务器。
+
+![a](images/Simulator51.png)
+
+接下来在 Heartbeat 模块，可修改设置 RSU 心跳频率，点击 ‘Start’，开始发送设置的心跳频率，并可查看每次发送成功的时间；点击 ‘Pause’，停止发送心跳频率。
+
+![a](images/Simulator6.png)
+
+最后可以在RSU 设备界面上看到 RSU 设备在线状态为“在线”
+
+![a](images/Simulator52.png)
+
+RSU 接入步骤：
+
+1. 进入 OpenV2X 边缘云控平台，在左侧栏选择“设备管理-RSU 设备->添加 RSU”。
 
 ![a](images/RSU.png)
 
@@ -50,7 +121,7 @@ V2X 边缘云控平台网址：`http://{host}:80/user/login` 输入正确的用�
 
 添加参数模板：
 
-1. 进入 V2X 边缘云控平台，点击“运维管理-> RSU 业务配置->添加模板”；
+1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 业务配置->添加配置”；
 
 ![a](images/RSUService.png)
 
@@ -108,7 +179,7 @@ SpatConfig(信号灯消息配置)：
 
 可对设备进行远程配置，包括心跳上报频率、运行状态上报频率等。
 
-1. 进入 V2X 边缘云控平台，点击“运维管理-> RSU 运维配置->运维列表->操作‘编辑’”；
+1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 运维配置->运维列表->操作‘编辑’”；
 
 ![a](images/RSUfunction.png)
 
@@ -136,7 +207,7 @@ SpatConfig(信号灯消息配置)：
 
 添加下发配置：
 
-1. 进入 V2X 边缘云控平台，点击“运维管理-> RSU 日志下发配置->添加配置”
+1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 日志下发配置->添加配置”
 
 ![a](images/RSULogdistribution.png)
 
@@ -158,7 +229,7 @@ SpatConfig(信号灯消息配置)：
 
 ### 2.5 RSU 信息查询
 
-1. 进入 V2X 边缘云控平台，点击“运维管理-> RSU 信息查询->查询指令”
+1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 信息查询->查询指令”
 
 ![a](images/RSUInformationService.png)
 
@@ -174,93 +245,7 @@ SpatConfig(信号灯消息配置)：
 
 3. 点击“确定”，完成查询指令的下发。回到信息查询列表中，在列表的操作栏点击‘详情’，可查看对应设备响应的信息。
 
-## 3. RSU 模拟器操作
-
-若您尚未实际部署 RSU 设备，仅仅想体验 V2X 边缘云控平台，您可通过 RSU 模拟器进行操作。
-
-RSU 模拟器：`http://{host}:6688`
-
-我们已为您预置了一些数据，您可修改一些您需要的数据后，前往 V2X 边缘云控平台查看对应数据的变化，以下将为您进行详细的介绍。
-
-1. 在 Connection 模块，点击 ‘Connect’，连接 MQTT 服务器。
-
-![a](images/Simulator1.png) ![a](images/Simulator2.png) 若连接成功，则红色未连接标识 ‘disconnected’
-会变为绿色连接标识‘connected’，此时代表您已成功连接 MQTT 服务器。
-
-Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有服务器，输入服务器对应的信息。
-
-| 字段        | 释义     |
-| --------- | ------ |
-| Host      | 服务器地址  |
-| Path      |        |
-| Port      |        |
-| ClientID  |        |
-| Username  | 服务器用户名 |
-| Password  | 服务器密码  |
-| KeepAlive |        |
-
-2. 在 Subscriptions 模块，点击 ‘Subscribe’，订阅消息主题。
-
-![a](images/Simulator3.png)
-
-| 字段    | 释义       |
-| ----- | -------- |
-| Topic | 主题，可修改   |
-| Qos   | 服务质量水平   |
-| Color | 主题颜色，可选择 |
-
-3. 在 Publish 模块，在 ‘Message’ 输入框中，根据新四跨协议，输入符合标准的消息内容，输入后点击 ‘Publish’。
-
-![a](images/Simulator4.png)
-
-注意：用 RSU 模拟器发送消息，需要先订阅消息主题。
-
-| 字段      | 释义                     |
-| ------- | ---------------------- |
-| Topic   | 主题，需符合新四跨协议，中间用 ‘/’ 间隔 |
-| Qos     | 服务质量水平                 |
-| Retain  | 消息是否会被保存               |
-| Message | 消息内容，需符合新四跨协议          |
-
-4. 在 Receive Messages 模块，展示发送的消息的样式，可删除。
-
-![a](images/Simulator5.png)
-
-5. 在 Heartbeat 模块，可修改设置 RSU 心跳频率，点击 ‘Start’，开始发送设置的心跳频率，并可查看每次发送成功的时间；点击 ‘Pause’，停止发送心跳频率。
-
-![a](images/Simulator6.png)
-
-6. 在 DataSet 模块，主要模拟的是 RSU 设备采集到的交通路口车辆协同、碰撞等信息上传至 V2X
-   云控平台后的展示。我们已为您内置了一些数据集信息（暂不支持修改），您可点击‘Preview’ 进行预览；也可选择一些数据，点击 ‘Publish’，发送消息。
-
-勾选需要模拟的车辆轨迹数据，可在 V2X 云控中心平台查看模拟的车辆行驶轨迹展示。具体路径： 步骤1：勾选车辆轨迹模拟数据，如`CLC_track`、`msg_VIR_CLC`等； 步骤2：点击
-‘Publish’；
-
-![a](images/Simulator7.png)
-
-步骤3：登录 V2X 云控中心；
-
-![a](images/Simulator8.png)
-
-步骤4：点击路口标志（黄色图标）；
-
-![a](images/Simulator9.png)
-
-步骤5：进入路口页面，查看车辆轨迹模拟展示。
-
-![a](images/Simulator12.png)
-
-7. 在 Send Messages 模块，可查看发送消息的代码。
-
-![a](images/Simulator10.png)
-
-8. 在 RSU Setting 模块，输入消息配置参数，包括 BSM、RSI、RSM、MAP、SpaT，根据该配置，向服务器发送 BSM、RSI、RSM、MAP、SpaT的规则。
-
-![a](images/Simulator11.png)
-
-具体配置参数的填写可参考上方‘RSU 业务配置’模块的说明。
-
-## 4. EdgePortal 和 CentralPortal 的快速联动
+## 3. EdgePortal 和 CentralPortal 的快速联动
 
 1. 登录 OpenV2X Edge Portal 平台后，在左侧栏选择“系统配置-边缘站点配置”。
 
@@ -270,23 +255,46 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
 
 ![a](images/EdgeSite1.png)
 
-- 请尽量完善边缘站点的名称，并方便辨识，这将方便您在 V2X Central Portal 平台中进行边缘站点的选择查看。
+- 请尽量完善边缘站点的名称，并方便辨识，这将方便您在 OpenV2X Central Portal 平台中进行边缘站点的选择查看。
 
-3. 配置云控中心连接信息，点击‘配置’，在弹出的对话框中输入MQTT服务器的相关信息。
+3. 配置云控中心连接信息，点击‘配置’，在弹出的对话框中输入 MQTT 服务器的相关信息，这里 Port 为 1883。
 
 ![a](images/EdgeSite2.png)
 
-- 必须配置云控中心连接信息，否则该边缘站点信息及数据您无法自动上报至 V2X Central Portal 平台，也无法在 V2X Central Portal 平台中搜索到该区域 Edge
+- 必须配置云控中心连接信息，否则该边缘站点信息及数据您无法自动上报至 OpenV2X Central Portal 平台，也无法在 V2X Central Portal 平台中搜索到该区域 Edge
   Portal 的信息。
 
-4. 在 OpenV2X Edge Portal 平台将边缘站点信息配置完成后，可前往V2X Central Portal 平台。
+4. 在 OpenV2X Edge Portal 平台将边缘站点信息配置完成后，可前往 OpenV2X Central Portal 平台。
 
-- V2X Central Portal 平台链接：`http://{host}:8080/cloud`
+- OpenV2X Central Portal 平台链接：`http://{host}:8080/cloud`
 
-5. 登录 V2X Central Portal 平台，在边缘站点列表页，选择您需要查看的边缘站点的路口信息，在该边缘站点右侧点击‘前往【区域Edge Portal】’，即可查看该区域的路况信息。
+5. 登录 OpenV2X Central Portal 平台，在边缘站点列表页，选择您需要查看的边缘站点的路口信息，在该边缘站点右侧点击‘前往【区域Edge
+   Portal】’，即可查看该区域的路况信息。
 
 ![a](images/EdgeSite3.png)
+
+6. 使用 RSE 模拟器发送交通信息，在 RSE 模拟器的 DataSet 模块中，主要模拟的是 RSU 设备采集到的交通路口车辆协同、碰撞等信息上传至 OpenV2X
+   云控平台后的展示。我们已为您内置了一些数据集信息（暂不支持修改），您可点击‘Preview’ 进行预览；也可选择一些数据，点击 ‘Publish’，发送消息。
+
+勾选需要模拟的车辆轨迹数据，可在 OpenV2X 云控中心平台查看模拟的车辆行驶轨迹展示。具体路径： 步骤1：勾选车辆轨迹模拟数据，如`CLC_track`、`msg_VIR_CLC`等；
+步骤2：点击 ‘Publish’；
+
+![a](images/Simulator7.png)
+
+步骤3：点击路口标志（黄色图标）；
+
+![a](images/Simulator9.png)
+
+步骤4：进入路口页面，查看车辆轨迹模拟展示。
+
+![a](images/Simulator12.png)
+
+步骤5：在 Send Messages 模块，可查看发送消息的代码。
+
+![a](images/Simulator10.png)
 
 ---
 
 详细使用说明，请参考用户手册: [OpenV2X 用户手册](./v2x-user-manual.md)
+
+关于 RSE 模拟器的详细使用说明，请参考 [RSE 模拟器使用说明](./v2x_rse_simulator_instruction.md)
