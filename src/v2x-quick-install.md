@@ -63,7 +63,6 @@ cd docs-albany/src/
 ```shell
 # 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
 export external_ip=100.100.100.100
-# 这里的密码注意不要有 @ ' " 等符号，避免和连接字符串混淆，后续会优化
 export redis_root=password
 export mariadb_root=password
 export mariadb_dandelion=password

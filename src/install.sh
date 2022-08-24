@@ -6,10 +6,10 @@ alias docker-compose='docker compose'
 
 set_env() {
   [[ ! -n "$external_ip" ]] && read -p "Enter your openv2x external ip: " external_ip
-  [[ ! -n "$redis_root" ]] && read -p "Enter your redis root password (do not include @): " redis_root
-  [[ ! -n "$mariadb_root" ]] && read -p "Enter your mariadb root password (do not include @): " mariadb_root # TODO add url encode
-  [[ ! -n "$mariadb_dandelion" ]] && read -p "Enter your mariadb dandelion password (do not include @): " mariadb_dandelion
-  [[ ! -n "$emqx_root" ]] && read -p "Enter your emqx root password (do not include @): " emqx_root
+  [[ ! -n "$redis_root" ]] && read -p "Enter your redis root password: " redis_root
+  [[ ! -n "$mariadb_root" ]] && read -p "Enter your mariadb root password: " mariadb_root
+  [[ ! -n "$mariadb_dandelion" ]] && read -p "Enter your mariadb dandelion password: " mariadb_dandelion
+  [[ ! -n "$emqx_root" ]] && read -p "Enter your emqx root password: " emqx_root
 
   echo "export external_ip=$external_ip"
   echo "export redis_root=$redis_root"
@@ -17,6 +17,30 @@ set_env() {
   echo "export mariadb_dandelion=$mariadb_dandelion"
   echo "export emqx_root=$emqx_root"
 }
+
+convert() {
+  redis_root_convert=${redis_root//\"/\\\\\"}
+  redis_root_convert=${redis_root_convert//\'/\\\\\'}
+  redis_root_convert=${redis_root_convert//\//\\\/}
+
+  mariadb_root_convert=${mariadb_root//\"/\\\"}
+  mariadb_root_convert=${mariadb_root_convert//\'/\\\\\'}
+  mariadb_root_convert=${mariadb_root_convert//\//\\\/}
+  mariadb_root_verify=${mariadb_root//\"/\\\"}
+  mariadb_root_verify=${mariadb_root_verify//\'/\\\'}
+  rm -rf /tmp/bashrc && touch /tmp/bashrc
+  echo "export mariadb_root_verify=$mariadb_root_verify" > /tmp/bashrc
+  source /tmp/bashrc
+
+  mariadb_dandelion_convert=${mariadb_dandelion//\"/\\\"}
+  mariadb_dandelion_convert=${mariadb_dandelion_convert//\'/\\\\\'}
+  mariadb_dandelion_convert=${mariadb_dandelion_convert//\//\\\/}
+
+  emqx_root_convert=${emqx_root//\"/\\\"}
+  emqx_root_convert=${emqx_root_convert//\'/\\\\\'}
+  emqx_root_convert=${emqx_root_convert//\//\\\/}
+}
+
 
 verify_input() {
   if [[ ! -n "$external_ip" ]] ;then
@@ -57,30 +81,30 @@ pre_install() {
   cp -f deploy/docker-compose-init.yaml /tmp/init/docker-compose-init.yaml
   cp -f deploy/docker-compose-service.yaml /tmp/service/docker-compose-service.yaml
   sed -i "s/external_ip/$external_ip/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/redis12345/$redis_root/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/mysql@1234/$mariadb_root/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/dandelion123/$mariadb_dandelion/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/abc@1234/$emqx_root/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/abc@1234/$emqx_root/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/mysql@1234/$mariadb_root/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/redis12345/$redis_root/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/redis12345/$redis_root_convert/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/mysql@1234/$mariadb_root_convert/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/abc@1234/$emqx_root_convert/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/abc@1234/$emqx_root_convert/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/mysql@1234/$mariadb_root_convert/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/redis12345/$redis_root_convert/" /tmp/service/docker-compose-service.yaml
   cp -rf deploy/edgeview /etc/
   cp -rf deploy/centerview /etc/
   cp -rf deploy/dandelion /etc/
-  sed -i "s/redis12345/$redis_root/" /etc/dandelion/dandelion.conf
-  sed -i "s/dandelion123/$mariadb_dandelion/" /etc/dandelion/dandelion.conf
-  sed -i "s/abc@1234/$emqx_root/" /etc/dandelion/dandelion.conf
+  sed -i "s/redis12345/$redis_root_convert/" /etc/dandelion/dandelion.conf
+  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /etc/dandelion/dandelion.conf
+  sed -i "s/abc@1234/$emqx_root_convert/" /etc/dandelion/dandelion.conf
   rm -rf /var/log/dandelion && mkdir -p /var/log/dandelion
   rm -rf /data && mkdir -pv /data
   cp -rf deploy/mysql /data/
-  sed -i "s/dandelion123/$mariadb_dandelion/" /data/mysql/init/init.sql
+  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /data/mysql/init/init.sql
   touch /var/log/dandelion/dandelion.log
 }
 
 verify_mysql(){
   while true
   do
-    databases=`docker exec mariadb mysql -uroot -p$mariadb_root -e 'show databases;' 2>/dev/null || true`
+    databases=`docker exec mariadb mysql -uroot -p$mariadb_root_verify -e 'show databases;' 2>/dev/null || true`
     target="dandelion"
     result=$(echo $databases | grep "${target}" || true)
     if [[ "$result" != "" ]]
@@ -142,6 +166,7 @@ verify_install() {
 {
   set_env
   verify_input
+  convert
   verify_uninstall
   pre_install
   verify_install
