@@ -41,6 +41,9 @@ application scenarios, enabling autonomous driving and autonomous transportation
 ## Quick Install
 
 - [OpenV2X QuickInstall Guide](src/v2x-quick-install.md)
+- Please click
+  [here](https://github.com/open-v2x/docs/releases/download/albany-1.0.126/aio-deploy.tar.gz) to
+  download the aio-deploy scripts.
 
 ## Quick Start
 
