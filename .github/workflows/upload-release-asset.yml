@@ -1,0 +1,40 @@
+name: Upload Release Asset
+on: push
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get Current Release
+        id: get_current_release
+        uses: joutvhu/get-release@v1
+        with:
+          latest: true
+          # Including pre-release
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print
+        run: echo ${{ steps.get_current_release.outputs.upload_url }}
+      - name: Build project
+        run: |
+          tar czvf aio-deploy.tar.gz src/deploy/ src/install.sh src/v2x-quick-install.md
+      - name: Delete old release assets
+        uses: mknejp/delete-release-assets@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ steps.get_current_release.outputs.tag_name }}
+          assets: aio-deploy.tar.gz
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_current_release.outputs.upload_url }}
+          asset_path: ./aio-deploy.tar.gz
+          asset_name: aio-deploy.tar.gz
+          asset_content_type: application/zip
