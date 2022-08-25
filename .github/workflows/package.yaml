@@ -1,0 +1,22 @@
+name: Upload AIO package
+on: push
+
+jobs:
+  build:
+    name: Upload AIO package to Aliyun OSS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build tarball package
+        run: |
+          tar czvf openv2x-aio-master.tar.gz src/deploy/ src/install.sh
+      - name: Upload tarball to OSS
+        uses: Yanghanlin/oss-deployment-action@v1
+        with:
+          oss-endpoint: oss-ap-southeast-1.aliyuncs.com
+          oss-path: oss://openv2x/deploy/
+          oss-accesskey-id: ${{ secrets.OSS_ACCESSKEY_ID }}
+          oss-accesskey-secret: ${{ secrets.OSS_ACCESSKEY_SECRET }}
+          local-path: './openv2x-aio-master.tar.gz'
+          delete-first: true
