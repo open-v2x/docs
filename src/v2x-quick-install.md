@@ -53,9 +53,12 @@ docker-compose version
 
 ```shell
 yum install unzip -y
-rm -rf albany.zip && wget https://gitee.com/open-v2x/docs/repository/archive/albany.zip
-rm -rf docs-albany && unzip albany.zip
-cd docs-albany/src/
+rm -rf openv2x-aio-albany.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/openv2x-aio-albany.tar.gz
+rm -rf src && tar zxvf openv2x-aio-albany.tar.gz
+cd src
+# rm -rf albany.zip && wget https://gitee.com/open-v2x/docs/repository/archive/albany.zip
+# rm -rf docs-albany && unzip albany.zip
+# cd docs-albany/src/
 ```
 
 ## 5. 一键部署服务
