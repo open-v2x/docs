@@ -53,9 +53,13 @@ docker-compose version
 
 ```shell
 yum install unzip -y
-rm -rf master.zip && wget https://gitee.com/open-v2x/docs/repository/archive/master.zip
-rm -rf docs-master && unzip master.zip
-cd docs-master/src/
+rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/openv2x-aio-master.tar.gz
+rm -rf src && tar zxvf openv2x-aio-master.tar.gz
+cd src
+
+# rm -rf master.zip && wget https://gitee.com/open-v2x/docs/repository/archive/master.zip
+# rm -rf docs-master && unzip master.zip
+# cd docs-master/src/
 ```
 
 ## 5. 一键部署服务
