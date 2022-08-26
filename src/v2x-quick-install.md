@@ -52,7 +52,7 @@ docker-compose version
 ## 4. 下载安装包
 
 ```shell
-rm -rf openv2x-aio-albany.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/openv2x-aio-albany.tar.gz
+rm -rf openv2x-aio-albany.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/albany/openv2x-aio-albany.tar.gz
 rm -rf src && tar zxvf openv2x-aio-albany.tar.gz
 cd src
 
