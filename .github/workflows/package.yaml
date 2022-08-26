@@ -15,7 +15,7 @@ jobs:
         uses: Yanghanlin/oss-deployment-action@v1
         with:
           oss-endpoint: oss-ap-southeast-1.aliyuncs.com
-          oss-path: oss://openv2x/deploy/matser/
+          oss-path: oss://openv2x/deploy/master/
           oss-accesskey-id: ${{ secrets.OSS_ACCESSKEY_ID }}
           oss-accesskey-secret: ${{ secrets.OSS_ACCESSKEY_SECRET }}
           local-path: './openv2x-aio-master.tar.gz'
