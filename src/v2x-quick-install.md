@@ -52,11 +52,11 @@ docker-compose version
 ## 4. 下载安装包
 
 ```shell
-yum install unzip -y
-rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/openv2x-aio-master.tar.gz
+rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
 rm -rf src && tar zxvf openv2x-aio-master.tar.gz
 cd src
 
+# yum install unzip -y
 # rm -rf master.zip && wget https://gitee.com/open-v2x/docs/repository/archive/master.zip
 # rm -rf docs-master && unzip master.zip
 # cd docs-master/src/
