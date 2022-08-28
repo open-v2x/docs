@@ -34,21 +34,21 @@ application scenarios, enabling autonomous driving and autonomous transportation
 
 ## Architecture
 
-![](src/images/v2x-arch-details.svg)
+![](docs/images/v2x-arch-details.svg)
 
-- [OpenV2X Architectural Design](src/v2x-architectural-design.md)
+- [OpenV2X Architectural Design](docs/v2x-architectural-design.md)
 
 ## Quick Install
 
-- [OpenV2X QuickInstall Guide](src/v2x-quick-install.md)
+- [OpenV2X QuickInstall Guide](docs/v2x-quick-install.md)
 
 ## Quick Start
 
-- [OpenV2X QuickStart Guide](src/v2x-quick-start.md)
+- [OpenV2X QuickStart Guide](docs/v2x-quick-start.md)
 
 ## User Manual
 
-- [OpenV2X UserManual Guide](src/v2x-user-manual.md)
+- [OpenV2X UserManual Guide](docs/v2x-user-manual.md)
 
 ## Documents
 
@@ -56,7 +56,7 @@ application scenarios, enabling autonomous driving and autonomous transportation
 
 ## Contributing
 
-- Please take a look at our [Contribution guidelines](src/v2x_contribution.md) to learn how to
+- Please take a look at our [Contribution guidelines](docs/v2x_contribution.md) to learn how to
   contribute to the OpenV2X project.
 - For this repo, please run `dprint fmt` before commit. For example, in macos:
   `dprint-0.15.0-darwin fmt`. Please visit [Install dprint](https://dprint.dev/install/) to get more
