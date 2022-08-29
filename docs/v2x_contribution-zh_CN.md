@@ -66,7 +66,7 @@ request** 按钮并按照模板要求填写必要的信息 ![](images/issues_but
 
 ### 开始之前
 
-查看[OpenV2X 架构设计文档](v2x-architectural-design.md)，了解组成 OpenV2X
+查看 [OpenV2X 架构设计文档](v2x-architectural-design.md)，了解组成 OpenV2X
 的不同模块。选择最合适的一个来加入新功能。如果在此过程中出现任何问题，请随时与我们的团队联系。
 
 ### 代码规范
@@ -75,15 +75,11 @@ request** 按钮并按照模板要求填写必要的信息 ![](images/issues_but
 
 ### 提交代码
 
-贡献的代码和新的功能并不会直接合并进 `master` 分支, 而是合并进一个名为 `dev` 的临时分支。 这样的 Git 流程可以让我们更容易维护一个稳定的 `master` 分支。
-
-始终保持您的 `dev` 分支更新到最新修改的版本。在名为 `username/name_of_the_contribution` 的子分支中进行开发。 一旦贡献准备就绪，从您的子分支向 `dev`
-分支提交 `pull-request`。请将您的
+贡献的代码和新的功能先提交到您自己 fork 的仓库中，然后再从您自己的仓库创建 `pull-request`。请将您的
 [`pull-request` 关联到对应的 `issue`](https://docs.github.com/cn/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)，您可以使用关键词将
 `pull-request` 链接到 `issue`，也可以用手动的方式将 `pull-request` 链接到 `issue`。请尽量使用具有描述性的语句来填写 `description`。关于
 `pull-request` 的更多详细信息，请参考
-[`pull-request` 规范](./v2x_pull_request_standard-zh_CN.md)。请注意，在新代码通过合并之前会有一些检查要求。检查由持续集成系统自动运行。如果检查成功，将出现绿色标记。如果出现红色标记，请相应地更正代码。一旦在
-`dev` 分支合并代码后，可以使用其他新功能对其进行测试。等到下一个版本发布时，`dev` 分支将会被合并到 `master` 分支，并将宣布贡献。
+[`pull-request` 规范](./v2x_pull_request_standard-zh_CN.md)。请注意，在新代码通过合并之前会有一些检查要求。检查由持续集成系统自动运行。如果检查成功，将出现绿色标记。如果出现红色标记，请相应地更正代码。
 
 ### 检查清单
 
