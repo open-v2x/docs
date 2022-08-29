@@ -20,6 +20,7 @@ services:
    mysql_host: '127.0.0.1'
    cloud_url: 'http://127.0.0.1:28300/api/v1'
    mysql_user: 'root'
+   db_server: 'mariadb'
    mysql_password: mysql@1234
    emqx_password: abc@1234
    redis_password: redis12345
