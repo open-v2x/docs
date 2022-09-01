@@ -94,9 +94,9 @@ pre_install() {
   sed -i "s/dandelion123/$mariadb_dandelion_convert/" /etc/dandelion/dandelion.conf
   sed -i "s/abc@1234/$emqx_root_convert/" /etc/dandelion/dandelion.conf
   rm -rf /var/log/dandelion && mkdir -p /var/log/dandelion
-  rm -rf /data && mkdir -pv /data
-  cp -rf deploy/mysql /data/
-  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /data/mysql/init/init.sql
+  rm -rf /openv2x/data && mkdir -pv /openv2x/data
+  cp -rf deploy/mysql /openv2x/data/
+  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /openv2x/data/mysql/init/init.sql
   touch /var/log/dandelion/dandelion.log
 }
 
