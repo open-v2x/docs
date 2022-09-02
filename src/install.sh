@@ -163,9 +163,9 @@ verify_install() {
 }
 
 set_edge_site_config(){
-  token=$(curl -X POST "http://$external_ip/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){if($i~/'${access_token}'\042/){print $(i+1)}}}' | tr -d '"' | sed -n 1p)
-  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}'
-  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${external_ip}'", "password": "'${emqx_root_convert}'", "port": "1883", "username": "root"} }'
+  token=$(curl -X POST "http://$external_ip/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
+  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${external_ip}'", "password": "'${emqx_root_convert}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
 {
