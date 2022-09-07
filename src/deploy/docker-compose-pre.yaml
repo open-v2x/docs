@@ -12,9 +12,9 @@ services:
   ports:
    - '3306:3306'
   volumes:
-   - '/data/mariadb/:/var/lib/mysql'
+   - '/openv2x/data/mariadb/:/var/lib/mysql'
    - '/log/mariadb/:/var/log/mysql'
-   - '/data/mysql/init:/docker-entrypoint-initdb.d/'
+   - '/openv2x/data/mysql/init:/docker-entrypoint-initdb.d/'
  emqx:
   container_name: 'emqx'
   image: 'emqx/emqx:4.3.0'
@@ -47,7 +47,7 @@ services:
   command: redis-server --requirepass redis12345
   volumes:
    - '/config/redis/conf/:/usr/redis/'
-   - '/data/:/data/'
+   - '/openv2x/data/:/data/'
   ports:
    - '6379:6379'
 
