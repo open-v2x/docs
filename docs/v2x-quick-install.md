@@ -77,13 +77,13 @@ export redis_root=password
 export mariadb_root=password
 export mariadb_dandelion=password
 export emqx_root=password
-sh ./install.sh
+bash ./install.sh
 ```
 
 安装效果如下：
 
 ```console
-[root@v2x-demo src]# sh ./install.sh 
+[root@v2x-demo src]# bash ./install.sh 
 
 ...
 
