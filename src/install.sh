@@ -95,9 +95,9 @@ pre_install() {
   sed -i "s/dandelion123/$mariadb_dandelion_convert/" /etc/dandelion/dandelion.conf
   sed -i "s/abc@1234/$emqx_root_convert/" /etc/dandelion/dandelion.conf
   rm -rf /var/log/dandelion && mkdir -p /var/log/dandelion
-  rm -rf /data && mkdir -pv /data
-  cp -rf deploy/mysql /data/
-  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /data/mysql/init/init.sql
+  rm -rf /openv2x/data && mkdir -pv /openv2x/data
+  cp -rf deploy/mysql /openv2x/data/
+  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /openv2x/data/mysql/init/init.sql
   touch /var/log/dandelion/dandelion.log
 }
 
@@ -163,6 +163,12 @@ verify_install() {
   $(tput sgr0)"
 }
 
+set_edge_site_config(){
+  token=$(curl -X POST "http://$external_ip/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
+  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${external_ip}'", "password": "'${emqx_root_convert}'", "port": "1883", "username": "root"} }' 1>/dev/null
+}
+
 {
   set_env
   verify_input
@@ -170,4 +176,5 @@ verify_install() {
   verify_uninstall
   pre_install
   verify_install
+  set_edge_site_config
 }
