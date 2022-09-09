@@ -49,7 +49,13 @@ docker version
 docker-compose version
 ```
 
-## 4. 下载安装包
+## 4. 安装 curl
+
+```shell
+yum install curl
+```
+
+## 5. 下载安装包
 
 ```shell
 rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
@@ -62,7 +68,7 @@ cd src
 # cd docs-master/src/
 ```
 
-## 5. 一键部署服务
+## 6. 一键部署服务
 
 ```shell
 # 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
@@ -71,13 +77,13 @@ export redis_root=password
 export mariadb_root=password
 export mariadb_dandelion=password
 export emqx_root=password
-sh ./install.sh
+bash ./install.sh
 ```
 
 安装效果如下：
 
 ```console
-[root@v2x-demo src]# sh ./install.sh 
+[root@v2x-demo src]# bash ./install.sh 
 
 ...
 

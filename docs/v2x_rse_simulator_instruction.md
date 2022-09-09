@@ -4,7 +4,7 @@
 
 **1、RSE Simulator 应用范围**
 
-RSE Simulator 为开发者在未部署实际 RSU 的情况下，可使用该 RSU 模拟器对 Publish 的消息进行模拟测试。如下图为可联调测试的消息类别及提供的 DataSet，除了默认提供的
+RSE Simulator 为开发者在未部署实际 RSU 的情况下，可使用 RSE 模拟器来模拟 RSU 设备发送消息。如下图为可联调测试的消息类别及提供的 DataSet，除了默认提供的
 DataSet 外，开发者也可自定义消息进行测试。
 
 ![](images/Simulator13.png)
@@ -13,7 +13,7 @@ DataSet 外，开发者也可自定义消息进行测试。
 
 2.1 RSU 的 DataSet 消息发布操作步骤
 
-在浏览器输入 RSE Simulator 地址 http://\<ip-address\>:6688，进入 RSU 模拟器页面。
+在浏览器输入 RSE Simulator 地址 http://\<ip-address\>:6688，进入 RSE 模拟器页面。
 
 在 Connetion 的面板中填写 MQTT 和 RSU 的信息，点击 connect 创建连接。
 

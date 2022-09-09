@@ -91,14 +91,8 @@ Follow the current coding standard when submitting new code.
 
 ### Submission
 
-Contributions and new features are not merged directly to the `master` branch, but to an
-intermediate branch named `dev`. This Gitflow branching model makes it easier to maintain a stable
-`master` branch. This model requires a specific workflow for contributions.
-
-Always keep your `dev` branch updated with the lastest changes. Develop the contribution in child
-branch from `dev` named as `username/name_of_the_contribution`. Once the contribution is ready,
-submit a pull-request from your branch to `dev`. Try to be as descriptive as possible when filling
-the description. Please
+First commit your patch to your forked repo. Once the contribution is ready, submit a pull-request
+from your forked repo. Please
 [link your **pull request** to the cooresponding
 issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue),
 you can either link a pull request to an issue using a keyword or manually link a pull request to an
@@ -106,9 +100,7 @@ issue. For more details about `pull request`, please refer to the
 [Pull Request Standard](./v2x_pull_request_standard-zh_CN.md). Note that there are some checks that
 the new code is required to pass before merging. The checks are automatically run by the continuous
 integration system. A green tick mark will appear if the checks are successful. If a red mark,
-please correct the code accordingly. Once the contribution is merged in `dev`, it can be tested with
-the rest of new features. By the time of the next release, the `dev` branch will be merged to
-`master`, and the contribution will be available and announced.
+please correct the code accordingly.
 
 ### Checklist
 
