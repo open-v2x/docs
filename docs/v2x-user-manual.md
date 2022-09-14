@@ -17,7 +17,7 @@ dandelion)可登录平台。
 
    ![a](./images/operate_rsu_device-2.png)
 
-2. 点击进入“设备管理 - RSU 设备”，点击“未注册 RSU”，未注册 RSU 列表中选择一个 RSU 设备点击一键注册。
+2. 点击进入“设备管理 - RSU 设备”，RSU 设备列表中最后一行看到新增的 RSU 。
 
 ##### 1.3 编辑 RSU 设备
 
@@ -126,7 +126,8 @@ password:dandelion)可登录平台。 进入设备管理-RSU设备界面
 
 ##### 4.3 RSE Simulator 发送数据
 
-点击 RSU_INFO 中 preview 查看数据，将数据复制到 publish 的 message 中，修改 rsuEsn 字段，点击 publish 发送数据
+点击 RSU_INFO 中 preview 查看数据，将数据复制到 Publish 的 message 中，修改 rsuEsn 字段，在 Publish 的 Topic 中输入
+V2X/RSU/INFO/UP，点击 publish 发送数据
 
 ##### 4.4 查看边缘云控平台RSU设备
 
@@ -387,9 +388,8 @@ password:dandelion)可登录平台。
 
 ##### 4.2 配置 RSE Simulator 建立监听
 
-打开 RSE Similator http://\<ip-address\>:6688，配置 Username、password、clientID 建立连接
-
-点击 Subscribe 建立监听
+打开 RSE Similator http://\<ip-address\>:6688，配置 Username、password、clientID 建立连接，在 Subscriptions
+中添加监听主题 V2X/RSU/R328328/MAP/UP，点击 Subscribe 进行监听
 
 ##### 4.3 RSE Simulator 发送数据
 
@@ -425,7 +425,8 @@ Subscriptions 中添加监听主题 V2X/RSU/R328328/MAP/DOWN，点击 Subscribe 
 
 ##### 5.5 RSE Simulator 发送应答数据
 
-添加发送主题：V2X/RSU/R328328/MAP/DOWN/ACK ，并发送`{"seqNum": "8", "errorCode": 0}`消息确认
+添加发送主题：V2X/RSU/R328328/MAP/DOWN/ACK ，并发送`{"seqNum": "9", "errorCode": 0}`消息确认。这里的 seqNum 需要和 Receive
+Messages 中数据内容最后的 seqNum 相同。
 
 ![a](./images/ack.png)
 
@@ -496,7 +497,8 @@ Subscriptions 中添加监听主题 V2X/RSU/R329329/CONFIG/DOWN，点击 Subscri
 
 ##### 8.5 RSE Simulator 发送应答数据
 
-添加发送主题：V2X/RSU/R329329/CONFIG/DOWN/ACK，并发送`{"seqNum": "8", "errorCode": 0}`消息确认
+添加发送主题：V2X/RSU/R329329/CONFIG/DOWN/ACK，并发送`{"seqNum": "2", "errorCode": 0}`消息确认。这里的 seqNum 需要和
+Receive Messages 中数据内容最后的 seqNum 相同。
 
 ![a](./images/rsu_ack.png)
 
