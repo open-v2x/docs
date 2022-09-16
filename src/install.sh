@@ -2,6 +2,7 @@
 set -e
 
 unalias cp 2>/dev/null || true
+alias docker-compose='docker compose'
 
 set_env() {
   [[ ! -n "$external_ip" ]] && read -p "Enter your openv2x external ip: " external_ip
@@ -134,13 +135,15 @@ verify_install() {
   for i in ${images[@]}; do
     docker pull openv2x/$i:latest
   done
-
-  docker compose -f /tmp/pre/docker-compose-pre.yaml up -d
+  args="-f /tmp/pre/docker-compose-pre.yaml up -d"
+  docker-compose $args || docker compose $args
   verify_mysql
-  docker compose -f /tmp/init/docker-compose-init.yaml up -d
+  args="-f /tmp/init/docker-compose-init.yaml up -d"
+  docker-compose $args || docker compose $args
   verify_bootstrap
   docker rm dandelion_bootstrap || true
-  docker compose -f /tmp/service/docker-compose-service.yaml up -d
+  args="-f /tmp/service/docker-compose-service.yaml up -d"
+  docker-compose $args || docker compose $args
   printf "%40s\n" "$(tput setaf 4)
   openv2x has been installed successfully!
                                        ________           
