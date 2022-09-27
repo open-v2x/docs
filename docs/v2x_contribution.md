@@ -79,6 +79,8 @@ your computer. Remember to
 [keep your fork in sync](https://docs.github.com/en/enterprise/2.13/user/articles/syncing-a-fork)
 with the original repository.
 
+**Rerfer to: [Developer Guide](v2x_developer_guide.md)**
+
 ### Before getting started
 
 Check out the [OpenV2X Architectural Design document](v2x-architectural-design.md) to get an idea on
