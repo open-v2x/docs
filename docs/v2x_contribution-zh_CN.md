@@ -64,6 +64,8 @@ request** 按钮并按照模板要求填写必要的信息 ![](images/issues_but
 为了顺利地开展您的工作, 首先需要 `fork` **对应的 OpenV2X 仓库**, 并将此 `fork` `clone` 至本地。 记得让您的 `fork`
 跟原仓库[保持同步](https://docs.github.com/en/enterprise/2.13/user/articles/syncing-a-fork)。
 
+**参考: [开发者指南](v2x_developer_guide-zh_CN.md)**
+
 ### 开始之前
 
 查看 [OpenV2X 架构设计文档](v2x-architectural-design.md)，了解组成 OpenV2X

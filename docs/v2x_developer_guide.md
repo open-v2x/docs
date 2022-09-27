@@ -2,6 +2,8 @@
 
 English | [简体中文](/src/v2x_developer_guide-zh_CN.md)
 
+**Refer to technical blog: [OpenV2X development on hands](https://openv2x.org/posts/2022-08-27-1/)**
+
 ## Dandelion
 
 If you would like to participate in the development of the **Dandelion** module, please refer to
