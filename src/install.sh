@@ -172,6 +172,12 @@ set_edge_site_config(){
   curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${external_ip}'", "password": "'${emqx_root_convert}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
+clean_garbage_images(){
+  if [[ ${clean_garbage_images} == true ]] ;then
+    docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi {}
+  fi
+}
+
 {
   set_env
   verify_input
@@ -180,4 +186,5 @@ set_edge_site_config(){
   pre_install
   verify_install
   set_edge_site_config
+  clean_garbage_images
 }
