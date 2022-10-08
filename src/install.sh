@@ -172,7 +172,7 @@ set_edge_site_config(){
 
 clean_garbage_images(){
   if [[ ${clean_garbage_images} == true ]] ;then
-    docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi {}
+    docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi -f {}
   fi
 }
 
