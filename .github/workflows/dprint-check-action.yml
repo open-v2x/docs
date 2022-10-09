@@ -1,6 +1,6 @@
 name: 'dprint-check-action'
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   style:
