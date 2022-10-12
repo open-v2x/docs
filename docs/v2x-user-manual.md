@@ -59,7 +59,7 @@ dandelion)可登录平台。
 
 ##### 2.2 新增雷达设备
 
-点击进入“设备管理 - 雷达设备”，点击“添加雷达”，填入雷达名称、雷达序列号、经度、维度、海拔(m)、朝向(°)、关联 RSU、雷达 IP 以及描述信息，点击“提交”。
+点击进入“设备管理 - 雷达设备”，点击“添加雷达”，填入雷达名称、雷达序列号、经度、纬度、海拔(m)、朝向(°)、关联 RSU、雷达 IP 以及描述信息，点击“提交”。
 
 ![a](./images/operate_radar_device-2.png)
 
@@ -90,7 +90,7 @@ dandelion)可登录平台。
 
 ##### 3.2 新增摄像头设备
 
-点击进入“设备管理 - 摄像头设备”，点击“添加摄像头”，填入摄像头名称、摄像头序列号、视频流地址、经度、维度、海拔(m)、朝向(°)、关联 RSU 以及描述信息，点击“提交”。
+点击进入“设备管理 - 摄像头设备”，点击“添加摄像头”，填入摄像头名称、摄像头序列号、视频流地址、经度、纬度、海拔(m)、朝向(°)、关联 RSU 以及描述信息，点击“提交”。
 
 ![a](./images/operate_camera_device-2.png)
 
@@ -112,43 +112,118 @@ dandelion)可登录平台。
 
 ![a](./images/operate_camera_device-5.png)
 
-#### 4. RSU 信息上报
+#### 4. 操作路侧激光雷达设备
 
 ##### 4.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+
+OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
+
+##### 4.2 新增激光雷达设备
+
+点击进入“设备管理 - 激光雷达设备”，点击“添加激光雷达传感器”，填入激光雷达传感名称、激光雷达传感器序列号、经度、纬度、海拔(m)、朝向(°)、关联 RSU、激光雷达 IP
+、点位、杆位以及描述信息，点击“提交”。
+
+![a](./images/operate_lidar_device-2.png)
+
+##### 4.3 编辑激光雷达设备
+
+点击进入“设备管理 - 激光雷达设备”，在雷达列表中选择一个雷达设备点击“编辑”，修改相关信息，点击“提交”。
+
+![a](./images/operate_lidar_device-3.png)
+
+##### 4.4 查看激光雷达设备详情信息
+
+点击进入“设备管理 - 激光雷达设备”，在雷达设备列表中点击雷达设备详情，可查看到雷达设备的配置详情。
+
+![a](./images/operate_lidar_device-4.png)
+
+##### 4.5 启用激光雷达设备
+
+点击进入“设备管理 - 激光雷达设备”，在雷达设备列表中点击启用雷达设备。
+
+![a](./images/operate_lidar_device-6.png)
+
+##### 4.6 删除激光雷达设备
+
+点击进入“设备管理 - 激光雷达设备”，在激光雷达设备列表中点击删除雷达设备。
+
+![a](./images/operate_lidar_device-5.png)
+
+#### 5. 操作路侧信号灯设备
+
+##### 5.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+
+OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
+
+##### 5.2 新增信号灯设备
+
+点击进入“设备管理 - 信号灯设备”，点击“添加信号灯”，填入信号灯名称、信号灯序列号、信号灯相位 ID 、信号灯相位灯色状态、关联 RSU 、信号灯网络地址、点位以及描述信息，点击“提交”。
+
+![a](./images/operate_spat_device-2.png)
+
+##### 5.3 编辑信号灯设备
+
+点击进入“设备管理 - 信号灯设备”，在信号灯列表中选择一个信号灯设备点击“编辑”，修改相关信息，点击“提交”。
+
+![a](./images/operate_spat_device-3.png)
+
+##### 5.4 查看信号灯设备详情信息
+
+点击进入“设备管理 - 信号灯设备”，在信号灯设备列表中点击信号灯设备详情，可查看到信号灯设备的配置详情。
+
+![a](./images/operate_spat_device-4.png)
+
+##### 5.5 启用信号灯设备
+
+点击进入“设备管理 - 信号灯设备”，在信号灯设备列表中点击启用信号灯设备。
+
+![a](./images/operate_spat_device-6.png)
+
+##### 5.6 删除信号灯设备
+
+点击进入“设备管理 - 信号灯设备”，在信号灯设备列表中点击删除信号灯设备。
+
+![a](./images/operate_spat_device-5.png)
+
+#### 6. RSU 信息上报
+
+##### 6.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
 
 OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin
 password:dandelion)可登录平台。 进入设备管理-RSU设备界面
 
-##### 4.2 配置 RSE Simulator 建立监听
+##### 6.2 配置 RSE Simulator 建立监听
 
 打开 RSE Similator http://\<ip-address\>:6688，配置Username、password、clientID 建立连接后在 Subscriptions
 中添加监听主题 V2X/RSU/INFO/UP，点击 Subscribe 进行监听
 
-##### 4.3 RSE Simulator 发送数据
+##### 6.3 RSE Simulator 发送数据
 
 点击 RSU_INFO 中 preview 查看数据，将数据复制到 Publish 的 message 中，修改 rsuEsn 字段，在 Publish 的 Topic 中输入
 V2X/RSU/INFO/UP，点击 publish 发送数据
 
-##### 4.4 查看边缘云控平台RSU设备
+##### 6.4 查看边缘云控平台RSU设备
 
 在设备管理页面 RSU 设备中查看，新增未注册 RSU 数据
 
-#### 5. RSU 心跳上报
+#### 7. RSU 心跳上报
 
-##### 5.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+##### 7.1 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
 
 OpenV2X 边缘云控平台网址：http://\<ip-address\>:80/user/login，输入正确的用户名、密码(username: admin
 password:dandelion)可登录平台。
 
 点击设备管理- RSU 设备界面
 
-##### 5.2 RSE Simulator 发送数据
+##### 7.2 RSE Simulator 发送数据
 
 在 Heartbeat 中点击 Start 进行发送
 
 ![a](./images/heartbeats.png)
 
-##### 5.3 查看 RSU 设备界面
+##### 7.3 查看 RSU 设备界面
 
 在RSU 设备界面上看到 RSU 设备在线状态为“在线”
 
