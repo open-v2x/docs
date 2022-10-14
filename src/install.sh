@@ -5,61 +5,61 @@ unalias cp 2>/dev/null || true
 alias docker-compose='docker compose'
 
 set_env() {
-  [[ ! -n "$external_ip" ]] && read -p "Enter your openv2x external ip: " external_ip
-  [[ ! -n "$redis_root" ]] && read -p "Enter your redis root password: " redis_root
-  [[ ! -n "$mariadb_root" ]] && read -p "Enter your mariadb root password: " mariadb_root
-  [[ ! -n "$mariadb_dandelion" ]] && read -p "Enter your mariadb dandelion password: " mariadb_dandelion
-  [[ ! -n "$emqx_root" ]] && read -p "Enter your emqx root password: " emqx_root
+  [[ ! -n "$OPENV2X_EXTERNAL_IP" ]] && read -p "Enter your openv2x external ip: " OPENV2X_EXTERNAL_IP
+  [[ ! -n "$OPENV2X_REDIS_ROOT" ]] && read -p "Enter your redis root password: " OPENV2X_REDIS_ROOT
+  [[ ! -n "$OPENV2X_MARIADB_ROOT" ]] && read -p "Enter your mariadb root password: " OPENV2X_MARIADB_ROOT
+  [[ ! -n "$OPENV2X_MARIADB_DANDELION" ]] && read -p "Enter your mariadb dandelion password: " OPENV2X_MARIADB_DANDELION
+  [[ ! -n "$OPENV2X_EMQX_ROOT" ]] && read -p "Enter your emqx root password: " OPENV2X_EMQX_ROOT
 
-  echo "export external_ip=$external_ip"
-  echo "export redis_root=$redis_root"
-  echo "export mariadb_root=$mariadb_root"
-  echo "export mariadb_dandelion=$mariadb_dandelion"
-  echo "export emqx_root=$emqx_root"
+  echo "export OPENV2X_EXTERNAL_IP=$OPENV2X_EXTERNAL_IP"
+  echo "export OPENV2X_REDIS_ROOT=$OPENV2X_REDIS_ROOT"
+  echo "export OPENV2X_MARIADB_ROOT=$OPENV2X_MARIADB_ROOT"
+  echo "export OPENV2X_MARIADB_DANDELION=$OPENV2X_MARIADB_DANDELION"
+  echo "export OPENV2X_EMQX_ROOT=$OPENV2X_EMQX_ROOT"
 }
 
 convert() {
-  redis_root_convert=${redis_root//\"/\\\\\"}
-  redis_root_convert=${redis_root_convert//\'/\\\\\'}
-  redis_root_convert=${redis_root_convert//\//\\\/}
+  REDIS_ROOT_CONVERT=${OPENV2X_REDIS_ROOT//\"/\\\\\"}
+  REDIS_ROOT_CONVERT=${REDIS_ROOT_CONVERT//\'/\\\\\'}
+  REDIS_ROOT_CONVERT=${REDIS_ROOT_CONVERT//\//\\\/}
 
-  mariadb_root_convert=${mariadb_root//\"/\\\"}
-  mariadb_root_convert=${mariadb_root_convert//\'/\\\\\'}
-  mariadb_root_convert=${mariadb_root_convert//\//\\\/}
-  mariadb_root_verify=${mariadb_root//\"/\\\"}
-  mariadb_root_verify=${mariadb_root_verify//\'/\\\'}
+  MARIADB_ROOT_CONVERT=${OPENV2X_MARIADB_ROOT//\"/\\\"}
+  MARIADB_ROOT_CONVERT=${MARIADB_ROOT_CONVERT//\'/\\\\\'}
+  MARIADB_ROOT_CONVERT=${MARIADB_ROOT_CONVERT//\//\\\/}
+  MARIADB_ROOT_VERIFY=${OPENV2X_MARIADB_ROOT//\"/\\\"}
+  MARIADB_ROOT_VERIFY=${MARIADB_ROOT_VERIFY//\'/\\\'}
   rm -rf /tmp/bashrc && touch /tmp/bashrc
-  echo "export mariadb_root_verify=$mariadb_root_verify" > /tmp/bashrc
+  echo "export MARIADB_ROOT_VERIFY=$MARIADB_ROOT_VERIFY" > /tmp/bashrc
   source /tmp/bashrc
 
-  mariadb_dandelion_convert=${mariadb_dandelion//\"/\\\"}
-  mariadb_dandelion_convert=${mariadb_dandelion_convert//\'/\\\\\'}
-  mariadb_dandelion_convert=${mariadb_dandelion_convert//\//\\\/}
+  MARIADB_DANDELION_CONVERT=${OPENV2X_MARIADB_DANDELION//\"/\\\"}
+  MARIADB_DANDELION_CONVERT=${MARIADB_DANDELION_CONVERT//\'/\\\\\'}
+  MARIADB_DANDELION_CONVERT=${MARIADB_DANDELION_CONVERT//\//\\\/}
 
-  emqx_root_convert=${emqx_root//\"/\\\"}
-  emqx_root_convert=${emqx_root_convert//\'/\\\\\'}
-  emqx_root_convert=${emqx_root_convert//\//\\\/}
+  EMQX_ROOT_CONVERT=${OPENV2X_EMQX_ROOT//\"/\\\"}
+  EMQX_ROOT_CONVERT=${EMQX_ROOT_CONVERT//\'/\\\\\'}
+  EMQX_ROOT_CONVERT=${EMQX_ROOT_CONVERT//\//\\\/}
 }
 
 
 verify_input() {
-  if [[ ! -n "$external_ip" ]] ;then
+  if [[ ! -n "$OPENV2X_EXTERNAL_IP" ]] ;then
     echo "you have not input openv2x external ip!"
     exit 1
   fi
-  if [[ ! -n "$redis_root" ]] ;then
+  if [[ ! -n "$OPENV2X_REDIS_ROOT" ]] ;then
     echo "you have not input redis root password!"
     exit 1
   fi
-  if [[ ! -n "$mariadb_root" ]] ;then
+  if [[ ! -n "$OPENV2X_MARIADB_ROOT" ]] ;then
     echo "you have not input mariadb root password!"
     exit 1
   fi
-  if [[ ! -n "$mariadb_dandelion" ]] ;then
+  if [[ ! -n "$OPENV2X_MARIADB_DANDELION" ]] ;then
     echo "you have not input mariadb dandelion password!"
     exit 1
   fi
-  if [[ ! -n "$emqx_root" ]] ;then
+  if [[ ! -n "$OPENV2X_EMQX_ROOT" ]] ;then
     echo "you have not input emqx root password!"
     exit 1
   fi
@@ -80,31 +80,31 @@ pre_install() {
   cp -f deploy/docker-compose-pre.yaml /tmp/pre/docker-compose-pre.yaml
   cp -f deploy/docker-compose-init.yaml /tmp/init/docker-compose-init.yaml
   cp -f deploy/docker-compose-service.yaml /tmp/service/docker-compose-service.yaml
-  sed -i "s/external_ip/$external_ip/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/redis12345/$redis_root_convert/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/mysql@1234/$mariadb_root_convert/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/abc@1234/$emqx_root_convert/" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s/abc@1234/$emqx_root_convert/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/mysql@1234/$mariadb_root_convert/" /tmp/service/docker-compose-service.yaml
-  sed -i "s/redis12345/$redis_root_convert/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/external_ip/$OPENV2X_EXTERNAL_IP/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/mysql@1234/$MARIADB_ROOT_CONVERT/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/mysql@1234/$MARIADB_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
+  sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
   cp -rf deploy/edgeview /etc/
   cp -rf deploy/centerview /etc/
   cp -rf deploy/dandelion /etc/
-  sed -i "s/redis12345/$redis_root_convert/" /etc/dandelion/dandelion.conf
-  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /etc/dandelion/dandelion.conf
-  sed -i "s/abc@1234/$emqx_root_convert/" /etc/dandelion/dandelion.conf
+  sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
+  sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /etc/dandelion/dandelion.conf
+  sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
   rm -rf /var/log/dandelion && mkdir -p /var/log/dandelion
   rm -rf /openv2x/data && mkdir -pv /openv2x/data
   cp -rf deploy/mysql /openv2x/data/
-  sed -i "s/dandelion123/$mariadb_dandelion_convert/" /openv2x/data/mysql/init/init.sql
+  sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /openv2x/data/mysql/init/init.sql
   touch /var/log/dandelion/dandelion.log
 }
 
 verify_mysql(){
   while true
   do
-    databases=`docker exec mariadb mysql -uroot -p$mariadb_root_verify -e 'show databases;' 2>/dev/null || true`
+    databases=`docker exec mariadb mysql -uroot -p$MARIADB_ROOT_VERIFY -e 'show databases;' 2>/dev/null || true`
     target="dandelion"
     result=$(echo $databases | grep "${target}" || true)
     if [[ "$result" != "" ]]
@@ -157,8 +157,8 @@ verify_install() {
     repository: https://github.com/open-v2x
     portal: https://openv2x.org
 
-  OpenV2X Edge Portal (Edgeview): http://$external_ip
-  OpenV2X Central Portal (Centerview): http://$external_ip:8080
+  OpenV2X Edge Portal (Edgeview): http://$OPENV2X_EXTERNAL_IP
+  OpenV2X Central Portal (Centerview): http://$OPENV2X_EXTERNAL_IP:8080
 
   username: admin
   password: dandelion
@@ -167,13 +167,13 @@ verify_install() {
 }
 
 set_edge_site_config(){
-  token=$(curl -X POST "http://$external_ip/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
-  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
-  curl -X POST "http://$external_ip/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${external_ip}'", "password": "'${emqx_root_convert}'", "port": "1883", "username": "root"} }' 1>/dev/null
+  token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
 clean_garbage_images(){
-  if [[ ${clean_garbage_images} == true ]] ;then
+  if [[ ${OPENV2X_CLEAN_GARBAGE_IMAGES} == true ]] ;then
     docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi -f {}
   fi
 }
