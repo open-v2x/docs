@@ -174,7 +174,13 @@ set_edge_site_config(){
 
 clean_garbage_images(){
   if [[ ${OPENV2X_CLEAN_GARBAGE_IMAGES} == true ]] ;then
-    docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi -f {}
+    # docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi -f {}
+    garbage_images=$(docker images | grep none | awk '{print $3}')
+    for i in $garbage_images
+    do
+      echo Deleting image: $i
+      docker rmi -f $i || true
+    done
   fi
 }
 
