@@ -1,10 +1,10 @@
 ## Introduction
 
-The OpenV2X open source project will realize a V2X edge cloud control platform that supports
+The OpenV2X open source project will realize a OpenV2X edge cloud control platform that supports
 roadside, vehicle and comprehensive data fusion perception analysis, North-South interface of
 transaction data, North-South interface of operation and maintenance management; 52 basic functions
 such as equipment, GIS and comprehensive visualization management will be realized; Openv2x will
-complet 17 typical application scenarios such as intersection collision warning, no pass
+complete 17 typical application scenarios such as intersection collision warning, no pass
 warning,vulnerable traffic participant collision warning, perception data sharing, collaborative
 lane change in the first phase. And will complete 12 typical applications in the second phase such
 as perception data sharing, cooperative lane change, and cooperative merge. The OpenV2X open source
