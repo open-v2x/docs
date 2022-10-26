@@ -46,6 +46,7 @@ services:
   network_mode: 'host'
   environment:
    API_SERVER: 'http://external_ip/api'
+   WEBSOCKET_URL: 'ws://external_ip:8000/ws/127.0.0.1'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
    MQTT_URL: 'mqtt://external_ip:15675'
    MQTT_PATH: '/mqtt'
