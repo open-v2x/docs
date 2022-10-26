@@ -2,6 +2,8 @@
 
 [English](/src/v2x_developer_guide.md) | 简体中文
 
+**参考技术博客：[分分钟搞定 OpenV2X 开发环境](https://openv2x.org/posts/2022-08-27-1/)**
+
 ## Dandelion
 
 如果您想参与 **Dandelion**

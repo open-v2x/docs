@@ -72,11 +72,11 @@ cd src
 
 ```shell
 # 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
-export external_ip=100.100.100.100
-export redis_root=password
-export mariadb_root=password
-export mariadb_dandelion=password
-export emqx_root=password
+export OPENV2X_EXTERNAL_IP=100.100.100.100
+export OPENV2X_REDIS_ROOT=password
+export OPENV2X_MARIADB_ROOT=password
+export OPENV2X_MARIADB_DANDELION=password
+export OPENV2X_EMQX_ROOT=password
 bash ./install.sh
 ```
 
