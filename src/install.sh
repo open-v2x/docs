@@ -200,6 +200,14 @@ set_edge_site_config(){
   curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
+create_demo_camera(){
+  if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true && ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
+    token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+    camera_data='{"name":"Camera01","sn":"CameraID01","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
+    curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 
+  fi
+}
+
 clean_garbage_images(){
   if [[ ${OPENV2X_CLEAN_GARBAGE_IMAGES} == true ]] ;then
     # docker images | grep none | awk '{print $3}' | xargs -I{} docker rmi -f {}
@@ -220,5 +228,6 @@ clean_garbage_images(){
   pre_install
   verify_install
   set_edge_site_config
+  create_demo_camera
   clean_garbage_images
 }
