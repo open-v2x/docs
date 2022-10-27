@@ -204,7 +204,15 @@ create_demo_camera(){
   if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true && ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
     token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
     camera_data='{"name":"Camera01","sn":"CameraID01","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
-    curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 
+    curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+  fi
+}
+
+create_demo_lidar(){
+  if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]] ;then
+    token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+    lidar_data='{"name":"test_lidar","sn":"lidarID01","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12"}'
+    curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
   fi
 }
 
@@ -229,5 +237,6 @@ clean_garbage_images(){
   verify_install
   set_edge_site_config
   create_demo_camera
+  create_demo_lidar
   clean_garbage_images
 }
