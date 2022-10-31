@@ -196,6 +196,13 @@ verify_install() {
 
 set_edge_site_config(){
   token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  count=0
+  while [[ ! $token ]] && [[ $count -lt 5 ]]
+    do
+      sleep 3
+      token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+      count=$[$count+1]
+    done
   curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
   curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
