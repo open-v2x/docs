@@ -215,7 +215,7 @@ create_demo_camera(){
     camera_num=2
     for (( i = 1; i <= $camera_num; i++ ))
       do
-        camera_data='{"name":"Camera_'$i'","sn":"CameraID_'$i'","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
+        camera_data='{"name":"Camera_'$i'","sn":"CameraID_'$i'","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}/cam_${i}.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
         curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
       done
   fi
