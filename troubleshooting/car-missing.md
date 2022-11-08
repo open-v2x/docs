@@ -35,9 +35,9 @@ topic: V2X/RSU/<RSU>/VIR/UP 例如：V2X/RSU/R328328/VIR/UP
 
 #### 1.2 cerebrum订阅消息 见下图标记处
 
-碰撞预警 topic：V2X/RSU/<RSU>/CWM/DOW 例如：V2X/RSU/R328328/CWM/DOW 协同换道 topic：V2X/RSU/<RSU>/CLC/DOWN
+碰撞预警 topic：V2X/RSU/<RSU>/CWM/DOWN 例如：V2X/RSU/R328328/CWM/DOWN 协同换道 topic：V2X/RSU/<RSU>/CLC/DOWN
 例如：V2X/RSU/R328328/CLC/DOWN 逆向超车 topic：V2X/RSU/<RSU>/DNP/DOWN 例如：V2X/RSU/R328328/DNP/DOWN 数据共享
-topic：V2X/RSU/<RSU>/SDS/DOWN 例如：V2X/RSU/R328328/SDS/DOW
+topic：V2X/RSU/<RSU>/SDS/DOWN 例如：V2X/RSU/R328328/SDS/DOWN
 
 ![](images/subscribe_mes.jpg)
 
@@ -45,11 +45,11 @@ topic：V2X/RSU/<RSU>/SDS/DOWN 例如：V2X/RSU/R328328/SDS/DOW
 
 #### 2.1 cerebrum 发布 topic：
 
-V2X/DEVICE/${esu}/PARTICIPANT/NODE${nodeId} 例如：V2X/DEVICE/R328328/PARTICIPANT/NODE4
+V2X/DEVICE/${esu}/PARTICIPANT/NODE${nodeId} 例如：V2X/DEVICE/R328328/PARTICIPANT/NODE1
 
 #### 2.2 centerview 订阅 topic：
 
-V2X/DEVICE/${esu}/PARTICIPANT/NODE${nodeId} 例如： V2X/DEVICE/R328328/PARTICIPANT/NODE4
+V2X/DEVICE/${esu}/PARTICIPANT/NODE${nodeId} 例如： V2X/DEVICE/R328328/PARTICIPANT/NODE1
 
 变量解释以及获取 esu：R328329等 nodeId (边缘站点ID)： master 环境 dandelion 数据库 system_config 数据表中查看 node_id 字段获取
 
