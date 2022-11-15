@@ -42,7 +42,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator)
+  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker websocket)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
@@ -139,6 +139,7 @@ modify_registry(){
   redis=${registry}/openv2x/redis:6.2.4-alpine
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
+  lidar=${registry}/openv2x/lidar:latest
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
@@ -148,11 +149,12 @@ modify_registry(){
   sed -i "s#openv2x/edgeview:latest#$edgeview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
 }
 
 verify_install() {
   registry="registry.cn-shanghai.aliyuncs.com"
-  images=(dandelion cerebrum edgeview centerview roadmocker)
+  images=(dandelion cerebrum edgeview centerview roadmocker lidar)
   if [[ ${OPENV2X_REGION} == cn ]]
   then 
     for i in ${images[@]}; do
