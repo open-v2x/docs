@@ -50,4 +50,22 @@ services:
    - '/openv2x/data/:/data/'
   ports:
    - '6379:6379'
-
+ rtsp_simulator:
+  container_name: 'rtsp_simulator'
+  image: 'openv2x/rtsp_simulator'
+  restart: 'always'
+  environment:
+   SOURCE_URL: '/tmp/workdir/test.mp4'
+  network_mode: 'host'
+  volumes:
+   - '/openv2x/videos/test.mp4:/tmp/workdir/test.mp4'
+ lalserver:
+  container_name: 'lalserver'
+  image: 'openv2x/lal'
+  restart: 'always'
+  command: /lal/bin/lalserver -c /lal/conf/lalserver.conf.json
+  volumes:
+   - '/openv2x/data/lalserver/lalserver.conf.json:/lal/conf/lalserver.conf.json'
+  ports:
+   - '1935:1935'
+   - '7001:8080'

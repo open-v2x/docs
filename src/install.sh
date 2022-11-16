@@ -42,7 +42,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker websocket)
+  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker websocket hippocampus rtsp_simulator lalserver)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
@@ -96,6 +96,7 @@ pre_install() {
   rm -rf /var/log/dandelion && mkdir -p /var/log/dandelion
   rm -rf /openv2x/data && mkdir -pv /openv2x/data
   cp -rf deploy/mysql /openv2x/data/
+  cp -rf deploy/lalserver /openv2x/data/
   sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /openv2x/data/mysql/init/init.sql
   touch /var/log/dandelion/dandelion.log
 }
@@ -136,6 +137,9 @@ modify_registry(){
   dandelion=${registry}/openv2x/dandelion:latest
   edgeview=${registry}/openv2x/edgeview:latest
   roadmocker=${registry}/openv2x/roadmocker:latest
+  hippocampus=${registry}/openv2x/hippocampus:latest
+  rtsp_simulator=${registry}/openv2x/rtsp_simulator:latest
+  lalserver=${registry}/openv2x/lal:latest
   redis=${registry}/openv2x/redis:6.2.4-alpine
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
@@ -144,6 +148,8 @@ modify_registry(){
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#redis:6.2.4-alpine#$redis#" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s#openv2x/rtsp_simulator#$rtsp_simulator#" /tmp/pre/docker-compose-pre.yaml
+  sed -i "s#openv2x/lal#$lalserver#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/cerebrum:latest#$cerebrum#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/edgeview:latest#$edgeview#" /tmp/service/docker-compose-service.yaml
@@ -152,20 +158,26 @@ modify_registry(){
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
 }
 
+launch_hippocampus(){
+  if [[ ${OPENV2X_DISABLE_GPU} == false ]]
+  then
+    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:latest
+  else
+    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:latest
+  fi
+}
+
 verify_install() {
-  registry="registry.cn-shanghai.aliyuncs.com"
-  images=(dandelion cerebrum edgeview centerview roadmocker lidar)
+  registry="docker.io"
   if [[ ${OPENV2X_REGION} == cn ]]
   then 
-    for i in ${images[@]}; do
-      docker pull ${registry}/openv2x/$i:latest
-    done
-    modify_registry
-  else
-    for i in ${images[@]}; do
-      docker pull openv2x/$i:latest
-    done
+    registry="registry.cn-shanghai.aliyuncs.com"
   fi
+  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum edgeview centerview roadmocker lidar)
+  for i in ${images[@]}; do
+    docker pull ${registry}/openv2x/$i:latest
+  done
+  modify_registry
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
@@ -176,6 +188,7 @@ verify_install() {
   docker rm dandelion_bootstrap || true
   args="-f /tmp/service/docker-compose-service.yaml up -d"
   docker-compose $args || docker compose $args
+  launch_hippocampus
   printf "%40s\n" "$(tput setaf 4)
   openv2x has been installed successfully!
                                        ________           
@@ -213,6 +226,8 @@ set_edge_site_config(){
 }
 
 create_demo_camera(){
+  camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"http://58.247.119.251:10101/live/cam_0.flv","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
   if [[ ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
     camera_num=2
     for (( i = 1; i <= $camera_num; i++ ))
