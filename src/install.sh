@@ -159,7 +159,7 @@ modify_registry(){
 }
 
 launch_hippocampus(){
-  if [[ ${OPENV2X_DISABLE_GPU} == true ]]
+  if [[ ${OPENV2X_ENABLE_GPU} == true ]]
   then
     nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:latest
   else
@@ -226,6 +226,8 @@ set_edge_site_config(){
 }
 
 create_demo_camera(){
+  camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
   if [[ ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
     camera_num=2
     for (( i = 1; i <= $camera_num; i++ ))
