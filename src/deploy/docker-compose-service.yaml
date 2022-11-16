@@ -65,3 +65,49 @@ services:
    - '6688:80'
   volumes:
    - '/etc/localtime:/etc/localtime'
+
+ websocket:
+  image: openv2x/lidar:latest
+  container_name: websocket
+  network_mode: host
+  restart: always
+  command: uvicorn main:app --host 0.0.0.0 --port 8000
+  environment:
+   - redis_password=redis12345
+   - host=127.0.0.1
+ worker:
+  image: openv2x/lidar:latest
+  container_name: celery_worker
+  command: celery worker --app=worker.celery -l info
+  network_mode: host
+  restart: always
+  environment:
+   - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
+   - host=127.0.0.1
+   - redis_password=redis12345
+  depends_on:
+   - websocket
+ udp_server:
+  image: openv2x/lidar:latest
+  container_name: udp_server
+  command: python3 udp_server.py
+  network_mode: host
+  restart: always
+  environment:
+   - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
+   - host=127.0.0.1
+   - redis_password=redis12345
+  depends_on:
+   - worker
+ udp_client:
+  image: openv2x/lidar:latest
+  container_name: udp_client
+  command: python3 udp_client.py
+  network_mode: host
+  restart: always
+  environment:
+   - udp_host=127.0.0.1
+   - host=127.0.0.1
+   - redis_password=redis12345
+  depends_on:
+   - udp_server
