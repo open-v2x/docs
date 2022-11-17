@@ -172,12 +172,12 @@ verify_install() {
   if [[ ${OPENV2X_REGION} == cn ]]
   then 
     registry="registry.cn-shanghai.aliyuncs.com"
+    modify_registry
   fi
   images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum edgeview centerview roadmocker lidar)
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
-  modify_registry
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
