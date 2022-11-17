@@ -845,3 +845,39 @@ dandelion)可登录平台。
 设备以及区域，之后点击黄色圆点进入路口场景，最后在大屏上查看协作变道场景下车辆在地图上的行动轨迹，以及协作车辆变道的可视化引导。
 
 ![a](./images/CLC_warning-4.png)
+
+### 10. 查看视频流
+
+#### 10.1 准备视频
+
+在 /openv2x/videos/ 目录下放置视频文件 test.mp4 。 测试视频可以在这里下载：链接:
+https://pan.baidu.com/s/1suMwFqcewUGGEclSj5FZiw 提取码: m2m4
+
+#### 10.2 安装部署 OpenV2X
+
+根据 [快速安装手册](https://github.com/open-v2x/docs/blob/master/docs/v2x-quick-install.md) 部署 OpenV2X。
+
+#### 10.3 登录 OpenV2X 云控中心（OpenV2X Central Portal）
+
+OpenV2X 云控中心网址：http://\<ip-address\>:8080/user/login，输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
+
+#### 10.4 查看云控中心视频流
+
+打开云控中心，选择边缘站点，点击“前往【区域 Edge Portal】”，左上角选择 RSU 设备 R328328 ，之后点击黄色圆点进入路口场景，点击左边摄像头名称，弹窗中播放视频。
+
+![a](./images/view_video-1.png)
+
+### 11. 查看激光雷达点云图
+
+#### 11.1 登录 OpenV2X 云控中心（OpenV2X Central Portal）
+
+OpenV2X 云控中心网址：http://\<ip-address\>:8080/user/login，输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。
+
+#### 11.2 查看点云图
+
+打开云控中心，选择边缘站点，点击“前往【区域 Edge Portal】”，左上角选择 RSU 设备 R328328
+，之后点击黄色圆点进入路口场景，找到激光雷达，点击激光雷达名称，弹窗中播放激光雷达点云图。
+
+![a](./images/view_video-2.png)
