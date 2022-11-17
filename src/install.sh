@@ -132,38 +132,38 @@ verify_bootstrap(){
 }
 
 modify_registry(){
-  cerebrum=${registry}/openv2x/cerebrum:latest
-  centerview=${registry}/openv2x/centerview:latest
-  dandelion=${registry}/openv2x/dandelion:latest
-  edgeview=${registry}/openv2x/edgeview:latest
-  roadmocker=${registry}/openv2x/roadmocker:latest
-  hippocampus=${registry}/openv2x/hippocampus:latest
-  rtsp_simulator=${registry}/openv2x/rtsp_simulator:latest
-  lalserver=${registry}/openv2x/lal:latest
+  cerebrum=${registry}/openv2x/cerebrum:beihai
+  centerview=${registry}/openv2x/centerview:beihai
+  dandelion=${registry}/openv2x/dandelion:beihai
+  edgeview=${registry}/openv2x/edgeview:beihai
+  roadmocker=${registry}/openv2x/roadmocker:beihai
+  hippocampus=${registry}/openv2x/hippocampus:beihai
+  rtsp_simulator=${registry}/openv2x/rtsp_simulator:beihai
+  lalserver=${registry}/openv2x/lal:beihai
   redis=${registry}/openv2x/redis:6.2.4-alpine
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
-  lidar=${registry}/openv2x/lidar:latest
-  sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
+  lidar=${registry}/openv2x/lidar:beihai
+  sed -i "s#openv2x/dandelion:beihai#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#redis:6.2.4-alpine#$redis#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/rtsp_simulator#$rtsp_simulator#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/lal#$lalserver#" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/cerebrum:latest#$cerebrum#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/edgeview:latest#$edgeview#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/dandelion:beihai#$dandelion#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/cerebrum:beihai#$cerebrum#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/edgeview:beihai#$edgeview#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/centerview:beihai#$centerview#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/roadmocker:beihai#$roadmocker#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/lidar:beihai#$lidar#" /tmp/service/docker-compose-service.yaml
 }
 
 launch_hippocampus(){
   if [[ ${OPENV2X_ENABLE_GPU} == true ]]
   then
-    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:latest
+    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:beihai
   else
-    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:latest
+    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:beihai
   fi
 }
 
@@ -172,12 +172,12 @@ verify_install() {
   if [[ ${OPENV2X_REGION} == cn ]]
   then 
     registry="registry.cn-shanghai.aliyuncs.com"
+    modify_registry
   fi
   images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum edgeview centerview roadmocker lidar)
   for i in ${images[@]}; do
-    docker pull ${registry}/openv2x/$i:latest
+    docker pull ${registry}/openv2x/$i:beihai
   done
-  modify_registry
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
