@@ -239,6 +239,8 @@ create_demo_camera(){
 }
 
 create_demo_lidar(){
+  lidar_data='{"name":"Lidar_0","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1"}'
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
   if [[ ${OPENV2X_ENDPOINT_LIDAR} ]] ;then
     lidar_num=2
     for (( i = 1; i <= $lidar_num; i++ ))
