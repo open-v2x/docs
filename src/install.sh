@@ -139,7 +139,7 @@ modify_registry(){
   roadmocker=${registry}/openv2x/roadmocker:beihai
   hippocampus=${registry}/openv2x/hippocampus:beihai
   rtsp_simulator=${registry}/openv2x/rtsp_simulator:beihai
-  lalserver=${registry}/openv2x/lal:beihai
+  lalserver=${registry}/openv2x/lal:latest
   redis=${registry}/openv2x/redis:6.2.4-alpine
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
@@ -174,7 +174,7 @@ verify_install() {
     registry="registry.cn-shanghai.aliyuncs.com"
     modify_registry
   fi
-  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum edgeview centerview roadmocker lidar)
+  images=(hippocampus dandelion cerebrum edgeview centerview roadmocker lidar)
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:beihai
   done
