@@ -10,13 +10,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Build tarball package
         run: |
-          tar czvf openv2x-aio-master.tar.gz src/deploy/ src/install.sh
+          tar czvf openv2x-aio-beihai.tar.gz src/deploy/ src/install.sh
       - name: Upload tarball to OSS
         uses: Yanghanlin/oss-deployment-action@v1
         with:
           oss-endpoint: oss-ap-southeast-1.aliyuncs.com
-          oss-path: oss://openv2x/deploy/master/
+          oss-path: oss://openv2x/deploy/beihai/
           oss-accesskey-id: ${{ secrets.OSS_ACCESSKEY_ID }}
           oss-accesskey-secret: ${{ secrets.OSS_ACCESSKEY_SECRET }}
-          local-path: './openv2x-aio-master.tar.gz'
+          local-path: './openv2x-aio-beihai.tar.gz'
           delete-first: true

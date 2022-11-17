@@ -58,14 +58,14 @@ yum install curl
 ## 5. 下载安装包
 
 ```shell
-rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
-rm -rf src && tar zxvf openv2x-aio-master.tar.gz
+rm -rf openv2x-aio-beihai.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/beihai/openv2x-aio-beihai.tar.gz
+rm -rf src && tar zxvf openv2x-aio-beihai.tar.gz
 cd src
 
 # yum install unzip -y
-# rm -rf master.zip && wget https://gitee.com/open-v2x/docs/repository/archive/master.zip
-# rm -rf docs-master && unzip master.zip
-# cd docs-master/src/
+# rm -rf beihai.zip && wget https://gitee.com/open-v2x/docs/repository/archive/beihai.zip
+# rm -rf docs-beihai && unzip beihai.zip
+# cd docs-beihai/src/
 ```
 
 ## 6. 一键部署服务

@@ -2,7 +2,7 @@ version: '3.1'
 services:
  dandelion:
   container_name: 'dandelion'
-  image: 'openv2x/dandelion:latest'
+  image: 'openv2x/dandelion:beihai'
   restart: 'always'
   network_mode: 'host'
   volumes:
@@ -11,7 +11,7 @@ services:
    - '/var/log/dandelion:/var/log/dandelion'
  cerebrum:
   container_name: 'cerebrum'
-  image: 'openv2x/cerebrum:latest'
+  image: 'openv2x/cerebrum:beihai'
   restart: 'always'
   network_mode: 'host'
   environment:
@@ -28,7 +28,7 @@ services:
    - '/etc/localtime:/etc/localtime'
  edgeview:
   container_name: 'edgeview'
-  image: 'openv2x/edgeview:latest'
+  image: 'openv2x/edgeview:beihai'
   restart: 'always'
   network_mode: 'host'
   environment:
@@ -41,7 +41,7 @@ services:
    - '/openv2x/data/public/uploadData:/var/www/edgeview/uploadData'
  centerview:
   container_name: 'centerview'
-  image: 'openv2x/centerview:latest'
+  image: 'openv2x/centerview:beihai'
   restart: 'always'
   network_mode: 'host'
   environment:
@@ -59,7 +59,7 @@ services:
    - '/openv2x/data/public/uploadData:/var/www/centerview/uploadData'
  rse-simulator:
   container_name: 'rse-simulator'
-  image: 'openv2x/roadmocker:latest'
+  image: 'openv2x/roadmocker:beihai'
   restart: 'always'
   ports:
    - '6688:80'
@@ -67,7 +67,7 @@ services:
    - '/etc/localtime:/etc/localtime'
 
  websocket:
-  image: openv2x/lidar:latest
+  image: openv2x/lidar:beihai
   container_name: websocket
   network_mode: host
   restart: always
@@ -76,7 +76,7 @@ services:
    - redis_password=redis12345
    - host=127.0.0.1
  worker:
-  image: openv2x/lidar:latest
+  image: openv2x/lidar:beihai
   container_name: celery_worker
   command: celery worker --app=worker.celery -l info
   network_mode: host
@@ -88,7 +88,7 @@ services:
   depends_on:
    - websocket
  udp_server:
-  image: openv2x/lidar:latest
+  image: openv2x/lidar:beihai
   container_name: udp_server
   command: python3 udp_server.py
   network_mode: host
@@ -100,7 +100,7 @@ services:
   depends_on:
    - worker
  udp_client:
-  image: openv2x/lidar:latest
+  image: openv2x/lidar:beihai
   container_name: udp_client
   command: python3 udp_client.py
   network_mode: host

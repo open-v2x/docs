@@ -2,7 +2,7 @@ version: '2.4'
 services:
  dandelion_bootstrap:
   container_name: 'dandelion_bootstrap'
-  image: 'openv2x/dandelion:latest'
+  image: 'openv2x/dandelion:beihai'
   environment:
    KOLLA_BOOTSTRAP: '\"\"'
   network_mode: 'host'
