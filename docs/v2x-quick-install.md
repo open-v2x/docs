@@ -11,6 +11,8 @@ OS：CentOS7-2009
 CentOS Linux release 7.9.2009 (Core)
 ```
 
+注：Ubuntu 22.04 也经过测试，但本文仅以 CentOS 7 2009 为例说明
+
 ## 2. kernel 升级
 
 ```shell
@@ -77,6 +79,15 @@ export OPENV2X_REDIS_ROOT=password
 export OPENV2X_MARIADB_ROOT=password
 export OPENV2X_MARIADB_DANDELION=password
 export OPENV2X_EMQX_ROOT=password
+
+export OPENV2X_REGION=cn
+
+export OPENV2X_ENABLE_DEMO_LIDAR=true
+export OPENV2X_ENABLE_GPU=false
+export OPENV2X_ENABLE_DEMO_CAMERA=true
+export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
+export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+
 bash ./install.sh
 ```
 
