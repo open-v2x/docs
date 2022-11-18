@@ -121,8 +121,8 @@ dandelion)可登录平台。
 
 ##### 4.2 新增激光雷达设备
 
-点击进入“设备管理 - 激光雷达设备”，点击“添加激光雷达传感器”，填入激光雷达传感名称、激光雷达传感器序列号、经度、纬度、海拔(m)、朝向(°)、关联 RSU、激光雷达 IP
-、点位、杆位以及描述信息，点击“提交”。
+点击进入“设备管理 - 激光雷达设备”，点击“添加激光雷达传感器”，填入激光雷达传感名称、激光雷达传感器序列号、经度、纬度、海拔(m)、朝向(°)、关联 RSU、激光雷达 IP 、点位、杆位、雷达
+URL 以及描述信息，点击“提交”。
 
 ![a](./images/operate_lidar_device-2.png)
 
@@ -855,7 +855,7 @@ https://pan.baidu.com/s/1suMwFqcewUGGEclSj5FZiw 提取码: m2m4
 
 #### 10.2 安装部署 OpenV2X
 
-根据 [快速安装手册](https://github.com/open-v2x/docs/blob/master/docs/v2x-quick-install.md) 部署 OpenV2X。
+根据 [快速安装手册](./v2x-quick-install.md) 部署 OpenV2X。
 
 #### 10.3 登录 OpenV2X 云控中心（OpenV2X Central Portal）
 
