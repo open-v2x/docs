@@ -4,6 +4,12 @@ set -e
 unalias cp 2>/dev/null || true
 alias docker-compose='docker compose'
 
+OPENV2X_ADMIN_IP=localhost
+OPENV2X_REGISTRY_CN="registry.cn-shanghai.aliyuncs.com"
+arch=$(uname -i)
+[[ $arch == arm* ]] || [[ $arch = aarch64 ]] && OPENV2X_REGISTRY_CN="registry.cn-hangzhou.aliyuncs.com"
+# echo "OPENV2X_REGISTRY_CN=$OPENV2X_REGISTRY_CN"
+
 set_env() {
   [[ ! -n "$OPENV2X_EXTERNAL_IP" ]] && read -p "Enter your openv2x external ip: " OPENV2X_EXTERNAL_IP
   [[ ! -n "$OPENV2X_REDIS_ROOT" ]] && read -p "Enter your redis root password: " OPENV2X_REDIS_ROOT
@@ -159,19 +165,21 @@ modify_registry(){
 }
 
 launch_hippocampus(){
-  if [[ ${OPENV2X_ENABLE_GPU} == true ]]
-  then
-    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:beihai
-  else
-    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:beihai
+  if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]]; then
+    if [[ ${OPENV2X_ENABLE_GPU} == true ]]
+    then
+      nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:beihai
+    else
+      docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:beihai
+    fi
   fi
 }
 
 verify_install() {
   registry="docker.io"
   if [[ ${OPENV2X_REGION} == cn ]]
-  then 
-    registry="registry.cn-shanghai.aliyuncs.com"
+  then
+    registry=$OPENV2X_REGISTRY_CN
     modify_registry
   fi
   images=(hippocampus dandelion cerebrum edgeview centerview roadmocker lidar)
@@ -210,43 +218,49 @@ verify_install() {
 }
 
 get_token(){
-  token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  token=$(curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
   count=0
   while [[ ! $token ]] && [[ $count -lt 5 ]]
     do
       sleep 3
-      token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+      token=$(curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
       count=$[$count+1]
     done
 }
 
 set_edge_site_config(){
-  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
-  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
+  curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
+  curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
 create_demo_camera(){
-  camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
-  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+  if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]]; then
+    camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
+    curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+  fi
+
   if [[ ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
     camera_num=2
     for (( i = 1; i <= $camera_num; i++ ))
       do
         camera_data='{"name":"Camera_'$i'","sn":"CameraID_'$i'","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}/cam_${i}.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1}'
-        curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+        curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
       done
   fi
 }
 
 create_demo_lidar(){
-  lidar_data='{"name":"Lidar_0","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1"}'
-  curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+  if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]]; then
+    lidar_data='{"name":"Lidar_0","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1"}'
+    curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+  fi
+
   if [[ ${OPENV2X_ENDPOINT_LIDAR} ]] ;then
     lidar_num=2
     for (( i = 1; i <= $lidar_num; i++ ))
       do
         lidar_data='{"name":"Lidar_'$i'","sn":"lidarID_'$i'","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"'${OPENV2X_ENDPOINT_LIDAR}'"}'
-        curl -X POST "http://$OPENV2X_EXTERNAL_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+        curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
       done
   fi
 }
