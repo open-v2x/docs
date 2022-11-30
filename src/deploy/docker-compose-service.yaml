@@ -68,7 +68,7 @@ services:
 
  websocket:
   image: openv2x/lidar:latest
-  container_name: websocket
+  container_name: lidar_websocket
   network_mode: host
   restart: always
   command: uvicorn main:app --host 0.0.0.0 --port 8000
