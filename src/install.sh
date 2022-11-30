@@ -189,6 +189,7 @@ verify_install() {
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
+  [[ ${OPENV2X_ENABLE_DEMO_CAMERA} != true ]] && docker stop rtsp_simulator
   verify_mysql
   args="-f /tmp/init/docker-compose-init.yaml up -d"
   docker-compose $args || docker compose $args
