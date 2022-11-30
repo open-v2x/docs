@@ -48,7 +48,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker websocket hippocampus rtsp_simulator lalserver)
+  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
