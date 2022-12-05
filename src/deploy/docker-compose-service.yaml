@@ -9,6 +9,7 @@ services:
    - '/etc/localtime:/etc/localtime'
    - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
    - '/var/log/dandelion:/var/log/dandelion'
+   - '/openv2x/data/bitmap:/openv2x/data/bitmap'
  cerebrum:
   container_name: 'cerebrum'
   image: 'openv2x/cerebrum:latest'
