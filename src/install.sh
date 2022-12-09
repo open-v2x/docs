@@ -48,7 +48,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion edgeview centerview cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
+  containers=(redis emqx mariadb dandelion edgeview centerview omega cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
@@ -96,6 +96,7 @@ pre_install() {
   cp -rf deploy/edgeview /etc/
   cp -rf deploy/centerview /etc/
   cp -rf deploy/dandelion /etc/
+  cp -rf deploy/omega /etc/
   sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
   sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /etc/dandelion/dandelion.conf
   sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
@@ -150,6 +151,7 @@ modify_registry(){
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
   lidar=${registry}/openv2x/lidar:latest
+  omega=${registry}/openv2x/omega:master
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
@@ -162,6 +164,7 @@ modify_registry(){
   sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/omega:master#$omega#" /tmp/service/docker-compose-service.yaml
 }
 
 launch_hippocampus(){
@@ -184,6 +187,7 @@ verify_install() {
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
+  docker pull ${registry}/openv2x/omega:master
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
@@ -209,6 +213,7 @@ verify_install() {
 
   OpenV2X Edge Portal (Edgeview): http://$OPENV2X_EXTERNAL_IP
   OpenV2X Central Portal (Centerview): http://$OPENV2X_EXTERNAL_IP:8080
+  OpenV2X Omega: http://$OPENV2X_EXTERNAL_IP:2288
 
   username: admin
   password: dandelion

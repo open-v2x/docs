@@ -27,6 +27,24 @@ services:
 
   volumes:
    - '/etc/localtime:/etc/localtime'
+   
+ omega:
+  container_name: 'omega'
+  image: 'openv2x/omega:master'
+  restart: 'always'
+  network_mode: 'host'
+  environment:
+   API_SERVER: 'http://external_ip:2288/api'
+   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
+   MQTT_URL: 'mqtt://external_ip:15675'
+   MQTT_PATH: '/mqtt'
+   MQTT_USERNAME: 'root'
+   MQTT_PASSWORD: abc@1234
+  volumes:
+   - '/etc/localtime:/etc/localtime'
+   - '/etc/omega/nginx.conf:/etc/nginx/nginx.conf'
+   - '/etc/omega/omega.conf:/etc/nginx/conf.d/default.conf'
+   - '/openv2x/data/public/uploadData:/var/www/omega/uploadData'
  edgeview:
   container_name: 'edgeview'
   image: 'openv2x/edgeview:latest'
