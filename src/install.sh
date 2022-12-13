@@ -151,7 +151,7 @@ modify_registry(){
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
   lidar=${registry}/openv2x/lidar:latest
-  omega=${registry}/openv2x/omega:master
+  omega=${registry}/openv2x/omega:qiankun
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
@@ -164,7 +164,7 @@ modify_registry(){
   sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/omega:master#$omega#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/omega:qiankun#$omega#" /tmp/service/docker-compose-service.yaml
 }
 
 launch_hippocampus(){
@@ -187,7 +187,7 @@ verify_install() {
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
-  docker pull ${registry}/openv2x/omega:master
+  docker pull ${registry}/openv2x/omega:qiankun
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
