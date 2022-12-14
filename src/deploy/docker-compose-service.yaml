@@ -30,7 +30,7 @@ services:
    
  omega:
   container_name: 'omega'
-  image: 'openv2x/omega:qiankun'
+  image: 'openv2x/omega:master'
   restart: 'always'
   network_mode: 'host'
   environment:
