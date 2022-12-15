@@ -34,7 +34,7 @@ services:
   restart: 'always'
   network_mode: 'host'
   environment:
-   API_SERVER: 'http://external_ip:2288/api'
+   API_SERVER: 'http://external_ip:2288/api/omega'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
    MQTT_URL: 'mqtt://external_ip:15675'
    MQTT_PATH: '/mqtt'
