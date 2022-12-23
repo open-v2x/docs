@@ -166,6 +166,7 @@ modify_registry(){
   sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/omega:master#$omega#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/omega:qiankun#$omega_qiankun#" /tmp/service/docker-compose-service.yaml
 
 }
