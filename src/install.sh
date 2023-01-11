@@ -192,6 +192,7 @@ verify_install() {
     docker pull ${registry}/openv2x/$i:latest
   done
   docker pull ${registry}/openv2x/omega:master
+  docker pull ${registry}/openv2x/omega:qiankun
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
