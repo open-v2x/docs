@@ -54,7 +54,7 @@ services:
   environment:
    API_SERVER: 'http://external_ip:2299/api/omega'
    MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-   MQTT_URL: 'external_ip:15675'
+   MQTT_URL: 'external_ip:2299'
    MQTT_PATH: '/mqtt'
    MQTT_USERNAME: 'root'
    MQTT_PASSWORD: abc@1234
