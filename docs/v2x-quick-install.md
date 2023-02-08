@@ -1,6 +1,23 @@
-# OpenV2X All-in-One 部署文档
+# OpenV2X 部署文档
 
-## 1. 基本环境
+## 1. 部署架构
+
+### 1.1 All-in-One 架构
+
+![](/docs/images/openv2x-deployment-aio.png)
+
+### 1.2 多节点部署架构
+
+![](/docs/images/openv2x-deployment-multinodes.png)
+
+未来：
+
+1. 主站点部分可以缩容，只保留 omega 和 dandelion（仅云端模块）
+2. 视频流和点云图应该可以走反向代理，而不是直接让客户端浏览器访问
+
+## 2. All-in-One 部署
+
+### 2.1 基本环境
 
 硬件：4Core / 8G / 100G
 
@@ -13,7 +30,7 @@ CentOS Linux release 7.9.2009 (Core)
 
 注：Ubuntu 22.04 也经过测试，但本文仅以 CentOS 7 2009 为例说明
 
-## 2. kernel 升级
+### 2.2 kernel 升级
 
 ```shell
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
@@ -36,7 +53,7 @@ reboot
 Linux v2x-release 5.4.203-1.el7.elrepo.x86_64 #1 SMP Fri Jul 1 09:00:33 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-## 3. docker 升级
+## 2.3 docker 升级
 
 ```shell
 yum remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
@@ -51,13 +68,13 @@ docker version
 docker-compose version
 ```
 
-## 4. 安装 curl
+## 2.4 安装 curl
 
 ```shell
 yum install curl
 ```
 
-## 5. 下载安装包
+## 2.5 下载安装包
 
 ```shell
 rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
@@ -70,7 +87,7 @@ cd src
 # cd docs-master/src/
 ```
 
-## 6. 一键部署服务
+## 2.6 一键部署服务
 
 ```shell
 # 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
