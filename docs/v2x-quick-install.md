@@ -4,11 +4,11 @@
 
 ### 1.1 All-in-One 架构
 
-![](/docs/images/openv2x-deployment-aio.png)
+![](/docs/images/openv2x-deployment-aio.drawio.svg)
 
 ### 1.2 多节点部署架构
 
-![](/docs/images/openv2x-deployment-multinodes.png)
+![](/docs/images/openv2x-deployment-mutlinodes.drawio.svg)
 
 未来：
 
