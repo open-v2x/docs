@@ -16,3 +16,4 @@ and other typical application scenarios, enabling autonomous driving and autonom
 
 - [lidar requirements document](/spec/lidar.md)
 - [camera requirements document](https://github.com/open-v2x/docs/issues/101)
+- [Algorithm_Management document](/spec/Algorithm_Management.md)
