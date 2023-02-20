@@ -1,151 +1,120 @@
 version: '3.1'
 services:
- dandelion:
-  container_name: 'dandelion'
-  image: 'openv2x/dandelion:latest'
-  restart: 'always'
-  network_mode: 'host'
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
-   - '/var/log/dandelion:/var/log/dandelion'
-   - '/openv2x/data/bitmap:/openv2x/data/bitmap'
- cerebrum:
-  container_name: 'cerebrum'
-  image: 'openv2x/cerebrum:latest'
-  restart: 'always'
-  network_mode: 'host'
-  environment:
-   redis_host: '127.0.0.1'
-   mqtt_host: '127.0.0.1'
-   mysql_host: '127.0.0.1'
-   cloud_url: 'http://127.0.0.1:28300/api/v1'
-   mysql_user: 'root'
-   mysql_password: mysql@1234
-   emqx_password: abc@1234
-   redis_password: redis12345
+  dandelion:
+    container_name: 'dandelion'
+    image: 'openv2x/dandelion:latest'
+    restart: 'always'
+    network_mode: 'host'
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+      - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
+      - '/var/log/dandelion:/var/log/dandelion'
+      - '/openv2x/data/bitmap:/openv2x/data/bitmap'
+  cerebrum:
+    container_name: 'cerebrum'
+    image: 'openv2x/cerebrum:latest'
+    restart: 'always'
+    network_mode: 'host'
+    environment:
+      redis_host: '127.0.0.1'
+      mqtt_host: '127.0.0.1'
+      mysql_host: '127.0.0.1'
+      cloud_url: 'http://127.0.0.1:28300/api/v1'
+      mysql_user: 'root'
+      mysql_password: mysql@1234
+      emqx_password: abc@1234
+      redis_password: redis12345
 
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   
- omega:
-  container_name: 'omega'
-  image: 'openv2x/omega:latest'
-  restart: 'always'
-  network_mode: 'host'
-  environment:
-   API_SERVER: 'http://external_ip:2288/api/omega'
-   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-   MQTT_URL: 'mqtt://external_ip:15675'
-   MQTT_PATH: '/mqtt'
-   MQTT_USERNAME: 'root'
-   MQTT_PASSWORD: abc@1234
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   - '/etc/omega/nginx.conf:/etc/nginx/nginx.conf'
-   - '/etc/omega/omega.conf:/etc/nginx/conf.d/default.conf'
-   - '/openv2x/data/public/uploadData:/var/www/omega/uploadData'
+    volumes:
+      - '/etc/localtime:/etc/localtime'
 
- omega-qiankun:
-  container_name: 'omega-qiankun'
-  image: 'openv2x/omega:qiankun'
-  restart: 'always'
-  network_mode: 'host'
-  environment:
-   API_SERVER: 'http://external_ip:2299/api/omega'
-   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-   MQTT_URL: 'external_ip:2299'
-   MQTT_PATH: '/mqtt'
-   MQTT_USERNAME: 'root'
-   MQTT_PASSWORD: abc@1234
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   - '/etc/omega-qiankun/nginx.conf:/etc/nginx/nginx.conf'
-   - '/etc/omega-qiankun/omega-qiankun.conf:/etc/nginx/conf.d/default.conf'
-   - '/openv2x/data/public/uploadData:/var/www/omega-qiankun/uploadData'
-   
- edgeview:
-  container_name: 'edgeview'
-  image: 'openv2x/edgeview:latest'
-  restart: 'always'
-  network_mode: 'host'
-  environment:
-   API_SERVER: 'http://external_ip/api'
-   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   - '/etc/edgeview/nginx.conf:/etc/nginx/nginx.conf'
-   - '/etc/edgeview/edgeview.conf:/etc/nginx/conf.d/default.conf'
-   - '/openv2x/data/public/uploadData:/var/www/edgeview/uploadData'
- centerview:
-  container_name: 'centerview'
-  image: 'openv2x/centerview:latest'
-  restart: 'always'
-  network_mode: 'host'
-  environment:
-   API_SERVER: 'http://external_ip/api'
-   WEBSOCKET_URL: 'ws://external_ip:8000/ws/127.0.0.1'
-   MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-   MQTT_URL: 'mqtt://external_ip:15675'
-   MQTT_PATH: '/mqtt'
-   MQTT_USERNAME: 'root'
-   MQTT_PASSWORD: abc@1234
-  volumes:
-   - '/etc/localtime:/etc/localtime'
-   - '/etc/centerview/nginx.conf:/etc/nginx/nginx.conf'
-   - '/etc/centerview/centerview.conf:/etc/nginx/conf.d/default.conf'
-   - '/openv2x/data/public/uploadData:/var/www/centerview/uploadData'
- rse-simulator:
-  container_name: 'rse-simulator'
-  image: 'openv2x/roadmocker:latest'
-  restart: 'always'
-  ports:
-   - '6688:80'
-  volumes:
-   - '/etc/localtime:/etc/localtime'
+  omega:
+    container_name: 'omega'
+    image: 'openv2x/omega:latest'
+    restart: 'always'
+    network_mode: 'host'
+    environment:
+      API_SERVER: 'http://external_ip:2288/api/omega'
+      MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
+      MQTT_URL: 'mqtt://external_ip:15675'
+      MQTT_PATH: '/mqtt'
+      MQTT_USERNAME: 'root'
+      MQTT_PASSWORD: abc@1234
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+      - '/etc/omega/nginx.conf:/etc/nginx/nginx.conf'
+      - '/etc/omega/omega.conf:/etc/nginx/conf.d/default.conf'
+      - '/openv2x/data/public/uploadData:/var/www/omega/uploadData'
 
- websocket:
-  image: openv2x/lidar:latest
-  container_name: lidar_websocket
-  network_mode: host
-  restart: always
-  command: uvicorn main:app --host 0.0.0.0 --port 8000
-  environment:
-   - redis_password=redis12345
-   - host=127.0.0.1
- worker:
-  image: openv2x/lidar:latest
-  container_name: celery_worker
-  command: celery worker --app=worker.celery -l info
-  network_mode: host
-  restart: always
-  environment:
-   - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
-   - host=127.0.0.1
-   - redis_password=redis12345
-  depends_on:
-   - websocket
- udp_server:
-  image: openv2x/lidar:latest
-  container_name: udp_server
-  command: python3 udp_server.py
-  network_mode: host
-  restart: always
-  environment:
-   - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
-   - host=127.0.0.1
-   - redis_password=redis12345
-  depends_on:
-   - worker
- udp_client:
-  image: openv2x/lidar:latest
-  container_name: udp_client
-  command: python3 udp_client.py
-  network_mode: host
-  restart: always
-  environment:
-   - udp_host=127.0.0.1
-   - host=127.0.0.1
-   - redis_password=redis12345
-  depends_on:
-   - udp_server
+  omega-qiankun:
+    container_name: 'omega-qiankun'
+    image: 'openv2x/omega:qiankun'
+    restart: 'always'
+    network_mode: 'host'
+    environment:
+      API_SERVER: 'http://external_ip:2299/api/omega'
+      MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
+      MQTT_URL: 'external_ip:2299'
+      MQTT_PATH: '/mqtt'
+      MQTT_USERNAME: 'root'
+      MQTT_PASSWORD: abc@1234
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+      - '/etc/omega-qiankun/nginx.conf:/etc/nginx/nginx.conf'
+      - '/etc/omega-qiankun/omega-qiankun.conf:/etc/nginx/conf.d/default.conf'
+      - '/openv2x/data/public/uploadData:/var/www/omega-qiankun/uploadData'
+
+  rse-simulator:
+    container_name: 'rse-simulator'
+    image: 'openv2x/roadmocker:latest'
+    restart: 'always'
+    ports:
+      - '6688:80'
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+
+  websocket:
+    image: openv2x/lidar:latest
+    container_name: lidar_websocket
+    network_mode: host
+    restart: always
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - redis_password=redis12345
+      - host=127.0.0.1
+  worker:
+    image: openv2x/lidar:latest
+    container_name: celery_worker
+    command: celery worker --app=worker.celery -l info
+    network_mode: host
+    restart: always
+    environment:
+      - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
+      - host=127.0.0.1
+      - redis_password=redis12345
+    depends_on:
+      - websocket
+  udp_server:
+    image: openv2x/lidar:latest
+    container_name: udp_server
+    command: python3 udp_server.py
+    network_mode: host
+    restart: always
+    environment:
+      - CELERY_BROKER_URL=redis://:redis12345@127.0.0.1:6379/0
+      - host=127.0.0.1
+      - redis_password=redis12345
+    depends_on:
+      - worker
+  udp_client:
+    image: openv2x/lidar:latest
+    container_name: udp_client
+    command: python3 udp_client.py
+    network_mode: host
+    restart: always
+    environment:
+      - udp_host=127.0.0.1
+      - host=127.0.0.1
+      - redis_password=redis12345
+    depends_on:
+      - udp_server

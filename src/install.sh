@@ -48,7 +48,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion edgeview centerview omega omega-qiankun cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
+  containers=(redis emqx mariadb dandelion omega omega-qiankun cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
@@ -93,8 +93,6 @@ pre_install() {
   sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
   sed -i "s/mysql@1234/$MARIADB_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
   sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
-  cp -rf deploy/edgeview /etc/
-  cp -rf deploy/centerview /etc/
   cp -rf deploy/dandelion /etc/
   cp -rf deploy/omega /etc/
   cp -rf deploy/omega-qiankun /etc/
@@ -141,9 +139,7 @@ verify_bootstrap(){
 
 modify_registry(){
   cerebrum=${registry}/openv2x/cerebrum:latest
-  centerview=${registry}/openv2x/centerview:latest
   dandelion=${registry}/openv2x/dandelion:latest
-  edgeview=${registry}/openv2x/edgeview:latest
   roadmocker=${registry}/openv2x/roadmocker:latest
   hippocampus=${registry}/openv2x/hippocampus:latest
   rtsp_simulator=${registry}/openv2x/rtsp_simulator:latest
@@ -162,8 +158,6 @@ modify_registry(){
   sed -i "s#openv2x/lal#$lalserver#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/cerebrum:latest#$cerebrum#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/edgeview:latest#$edgeview#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/centerview:latest#$centerview#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/omega:latest#$omega#" /tmp/service/docker-compose-service.yaml
@@ -187,7 +181,7 @@ verify_install() {
     registry=$OPENV2X_REGISTRY_CN
     modify_registry
   fi
-  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum edgeview centerview omega roadmocker lidar)
+  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum omega roadmocker lidar)
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
@@ -215,8 +209,6 @@ verify_install() {
     repository: https://github.com/open-v2x
     portal: https://openv2x.org
 
-  OpenV2X Edge Portal (Edgeview): http://$OPENV2X_EXTERNAL_IP
-  OpenV2X Central Portal (Centerview): http://$OPENV2X_EXTERNAL_IP:8080
   OpenV2X Omega: http://$OPENV2X_EXTERNAL_IP:2288
 
   username: admin
