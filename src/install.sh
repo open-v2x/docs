@@ -218,25 +218,25 @@ verify_install() {
 }
 
 get_token(){
-  token=$(curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  token=$(curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
   count=0
   while [[ ! $token ]] && [[ $count -lt 5 ]]
     do
       sleep 3
-      token=$(curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+      token=$(curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
       count=$[$count+1]
     done
 }
 
 set_edge_site_config(){
-  curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
-  curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
+  curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
+  curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
 create_demo_camera(){
   if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]]; then
     camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1,"intersectionCode":"32010601"}'
-    curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+    curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
   fi
 
   if [[ ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
@@ -244,7 +244,7 @@ create_demo_camera(){
     for (( i = 1; i <= $camera_num; i++ ))
       do
         camera_data='{"name":"Camera_'$i'","sn":"CameraID_'$i'","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}/cam_${i}.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1,"intersectionCode":"32010601"}'
-        curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+        curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
       done
   fi
 }
@@ -252,7 +252,7 @@ create_demo_camera(){
 create_demo_lidar(){
   if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]]; then
     lidar_data='{"name":"Lidar_0","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1","intersectionCode":"32010601"}'
-    curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+    curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
   fi
 
   if [[ ${OPENV2X_ENDPOINT_LIDAR} ]] ;then
@@ -260,7 +260,7 @@ create_demo_lidar(){
     for (( i = 1; i <= $lidar_num; i++ ))
       do
         lidar_data='{"name":"Lidar_'$i'","sn":"lidarID_'$i'","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"'${OPENV2X_ENDPOINT_LIDAR}'","intersectionCode":"32010601"}'
-        curl -X POST "http://$OPENV2X_ADMIN_IP/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+        curl -X POST "http://$OPENV2X_ADMIN_IP:2288/api/omega/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
       done
   fi
 }
