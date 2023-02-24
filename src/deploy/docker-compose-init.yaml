@@ -9,4 +9,5 @@ services:
   volumes:
    - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
    - '/var/log/dandelion:/var/log/dandelion'
+   - '/openv2x/data/bitmap:/openv2x/data/bitmap'
    
