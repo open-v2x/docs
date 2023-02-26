@@ -12,6 +12,7 @@
 
 # Drawio tmp files
 *.drawio.bkp
+*.drawio.dtmp
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
