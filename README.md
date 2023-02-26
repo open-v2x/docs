@@ -53,6 +53,7 @@ application scenarios, enabling autonomous driving and autonomous transportation
 ## Documents
 
 - [OpenV2X Algorithm Documents](docs/v2x-algorithm.md)
+- [OpenV2X Algorithm Test Cases](docs/v2x-algorithm-testcase.md)
 
 ## Contributing
 
