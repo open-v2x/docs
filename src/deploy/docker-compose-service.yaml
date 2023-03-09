@@ -5,6 +5,8 @@ services:
     image: 'openv2x/dandelion:latest'
     restart: 'always'
     network_mode: 'host'
+    environment:
+      OPENV2X_EXTERNAL_IP: 'external_ip'
     volumes:
       - '/etc/localtime:/etc/localtime'
       - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
