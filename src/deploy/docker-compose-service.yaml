@@ -47,6 +47,9 @@ services:
       - '/etc/omega/nginx.conf:/etc/nginx/nginx.conf'
       - '/etc/omega/omega.conf:/etc/nginx/conf.d/default.conf'
       - '/openv2x/data/public/uploadData:/var/www/omega/uploadData'
+      - '/etc/omega/globals.yml:/var/www/omega/assets/file/globals.yml'
+      - '/etc/omega/login_full_image.png:/var/www/omega/assets/img/login_full_image.png'
+      - '/etc/omega/logo.png:/var/www/omega/assets/img/logo.png'
 
   omega-qiankun:
     container_name: 'omega-qiankun'
