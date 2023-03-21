@@ -233,35 +233,28 @@ set_edge_site_config(){
   curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
+create_demo_rsu_model(){
+    rsu_model_data='{"name":"demoRsuModel","manufacturer":"华为","desc":"RSU1的描述"}'
+    rsu_model_id=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/rsu_models" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_model_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
+
+}
+
+create_demo_rsu(){
+    rsu_data='{"rsuId":"45348","rsuEsn":"R328328","rsuName":"demoRsu","rsuIP":"192.168.0.102","lat":"31.9348466377","lon":"118.8213963998","rsuModelId":'$rsu_model_id'}'
+    rsu_id=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/rsus" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
+}
+
 create_demo_camera(){
   if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]]; then
-    camera_data='{"name":"Camera_0","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1,"intersectionCode":"32010601"}'
+    camera_data='{"name":"demoCamera","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":'$rsu_id',"intersectionCode":"32010601"}'
     curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
-  fi
-
-  if [[ ${OPENV2X_ENDPOINT_HTTP_FLV} ]] ;then
-    camera_num=2
-    for (( i = 1; i <= $camera_num; i++ ))
-      do
-        camera_data='{"name":"Camera_'$i'","sn":"CameraID_'$i'","streamUrl":"'${OPENV2X_ENDPOINT_HTTP_FLV}/cam_${i}.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":1,"intersectionCode":"32010601"}'
-        curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
-      done
   fi
 }
 
 create_demo_lidar(){
   if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]]; then
-    lidar_data='{"name":"Lidar_0","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1","intersectionCode":"32010601"}'
+    lidar_data='{"name":"demoLidar","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":'$rsu_id',"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1","intersectionCode":"32010601"}'
     curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
-  fi
-
-  if [[ ${OPENV2X_ENDPOINT_LIDAR} ]] ;then
-    lidar_num=2
-    for (( i = 1; i <= $lidar_num; i++ ))
-      do
-        lidar_data='{"name":"Lidar_'$i'","sn":"lidarID_'$i'","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":1,"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"'${OPENV2X_ENDPOINT_LIDAR}'","intersectionCode":"32010601"}'
-        curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
-      done
   fi
 }
 
@@ -286,6 +279,8 @@ clean_garbage_images(){
   verify_install
   get_token
   set_edge_site_config
+  create_demo_rsu_model
+  create_demo_rsu
   create_demo_camera
   create_demo_lidar
   clean_garbage_images
