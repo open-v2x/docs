@@ -6,7 +6,7 @@ services:
     restart: 'always'
     network_mode: 'host'
     environment:
-      OPENV2X_EXTERNAL_IP: 'external_ip'
+      OPENV2X_ADMIN_IP: 'admin_ip'
     volumes:
       - '/etc/localtime:/etc/localtime'
       - '/etc/dandelion/dandelion.conf:/etc/dandelion/dandelion.conf'
@@ -36,9 +36,9 @@ services:
     restart: 'always'
     network_mode: 'host'
     environment:
-      API_SERVER: 'http://external_ip:2288/api/omega'
+      API_SERVER: 'http://admin_ip:2288/api/omega'
       MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-      MQTT_URL: 'mqtt://external_ip:15675'
+      MQTT_URL: 'mqtt://admin_ip:15675'
       MQTT_PATH: '/mqtt'
       MQTT_USERNAME: 'root'
       MQTT_PASSWORD: abc@1234
@@ -57,9 +57,9 @@ services:
     restart: 'always'
     network_mode: 'host'
     environment:
-      API_SERVER: 'http://external_ip:2299/api/omega'
+      API_SERVER: 'http://admin_ip:2299/api/omega'
       MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-      MQTT_URL: 'external_ip:2299'
+      MQTT_URL: 'admin_ip:2299'
       MQTT_PATH: '/mqtt'
       MQTT_USERNAME: 'root'
       MQTT_PASSWORD: abc@1234
