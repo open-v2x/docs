@@ -90,8 +90,11 @@ cd src
 ## 2.6 一键部署服务
 
 ```shell
-# 这里的外部 IP 地址要确保客户端可以访问，用于后续 centerview 和 edgeview portal 访问
+# 这里的外部 IP 地址要确保客户端可以访问，该 IP 用于访问边缘路口上的 Portal 和各类 Web 服务。
 export OPENV2X_EXTERNAL_IP=100.100.100.100
+# 这里的中心 IP 地址要确保客户端可以访问，该 IP 用于访问中心云端的 Portal 页面。 
+export OPENV2X_CENTER_IP=100.100.100.100
+export OPENV2X_IS_CENTER=true
 export OPENV2X_REDIS_ROOT=password
 export OPENV2X_MARIADB_ROOT=password
 export OPENV2X_MARIADB_DANDELION=password
@@ -125,16 +128,134 @@ bash ./install.sh
     repository: https://github.com/open-v2x
     portal: https://openv2x.org
 
-  OpenV2X Edge Portal (Edgeview): http://100.100.100.100
-  OpenV2X Central Portal (Centerview): http://100.100.100.100:8080
+  OpenV2X Central Omega Portal: http://100.100.100.100:2288
 
   username: admin
   password: dandelion
 ```
 
-上述提示中包含了 Edge Portal 和 Central Portal 的访问路径，以及用户名密码。此时可以从客户端，通过 Chrome 浏览器（其它浏览器未测试）访问试用。
+上述提示中包含了 Central Omega Portal 的访问路径，以及用户名密码。此时可以从客户端，通过 Chrome 浏览器（其它浏览器未测试）访问试用。
 
 欢迎试用～，参考：[快速入门](v2x-quick-start.md)。
 
 如果遇到问题，欢迎在 github 提交
 issue：<https://github.com/open-v2x/docs/issues/new/choose>，参考：[提交注意事项](v2x_contribution-zh_CN.md)。
+
+## 3. 多节点部署
+
+### 3.1 基本环境
+
+3 台服务器，一台作为中心站点，两台作为边缘站点
+
+硬件：2Core / 4G / 100G
+
+OS：ubuntu20.04
+
+### 3.2 安装 docker 和 docker compose
+
+确认每台服务器都安装好了 docker 和 docker compose
+
+安装 docker
+
+```shell
+curl -sSL https://get.daocloud.io/docker | sh
+```
+
+安装 docker compose。 如果不想要 v2.2.2 版本，可以进入最新发行的版本地址：https://github.com/docker/compose/releases 查看版本号。
+
+```shell
+curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker version
+docker-compose version
+```
+
+### 3.3 下载安装包
+
+在每台服务器上下载安装包
+
+```shell
+rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
+rm -rf src && tar zxvf openv2x-aio-master.tar.gz
+cd src
+```
+
+## 3.4 部署服务
+
+### 3.4.1 部署中心站点
+
+在中心站点执行以下 shell
+
+```shell
+# 这里的外部 IP 地址要确保客户端可以访问，该 IP 用于访问边缘路口上的 Portal 和各类 Web 服务。
+export OPENV2X_EXTERNAL_IP=100.100.100.100
+# 这里的中心 IP 地址要确保客户端可以访问，该 IP 用于访问中心云端的 Portal 页面。
+export OPENV2X_CENTER_IP=100.100.100.100
+export OPENV2X_IS_CENTER=true
+export OPENV2X_REDIS_ROOT=password
+export OPENV2X_MARIADB_ROOT=password
+export OPENV2X_MARIADB_DANDELION=password
+export OPENV2X_EMQX_ROOT=password
+
+export OPENV2X_REGION=cn
+
+export OPENV2X_ENABLE_DEMO_LIDAR=true
+export OPENV2X_ENABLE_GPU=false
+export OPENV2X_ENABLE_DEMO_CAMERA=true
+export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
+export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+
+bash ./install.sh
+```
+
+### 3.4.2 部署边缘站点
+
+在每台边缘站点服务器上执行以下 shell
+
+```shell
+# 这里的外部 IP 地址要确保客户端可以访问，该 IP 用于访问边缘路口上的 Portal 和各类 Web 服务。
+export OPENV2X_EXTERNAL_IP=100.100.100.100
+# 这里的中心 IP 地址要确保客户端可以访问，该 IP 用于访问中心云端的 Portal 页面。
+export OPENV2X_CENTER_IP=101.101.101.101
+export OPENV2X_IS_CENTER=false
+export OPENV2X_REDIS_ROOT=password
+export OPENV2X_MARIADB_ROOT=password
+export OPENV2X_MARIADB_DANDELION=password
+export OPENV2X_EMQX_ROOT=password
+
+export OPENV2X_REGION=cn
+
+export OPENV2X_ENABLE_DEMO_LIDAR=true
+export OPENV2X_ENABLE_GPU=false
+export OPENV2X_ENABLE_DEMO_CAMERA=true
+export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
+export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+
+bash ./install.sh
+```
+
+安装效果如下：
+
+```console
+[root@v2x-demo src]# bash ./install.sh 
+
+...
+
+  openv2x has been installed successfully!
+                                       ________           
+  ____  ______    ____    ____ ___  __\_____  \ ___  ___ 
+ /  _ \ \____ \ _/ __ \  /    \  \/ / /  ____/ \  \/  / 
+(  <_> )|  |_> >\  ___/ |   |  \   / /       \  >    <  
+ \____/ |   __/  \___  >|___|  / \_/  \_______ \/__/\_ \ 
+        |__|         \/      \/               \/      \/ 
+    repository: https://github.com/open-v2x
+    portal: https://openv2x.org
+
+  OpenV2X Central Omega Portal: http://101.101.101.101:2288
+
+  username: admin
+  password: dandelion
+```
+
+上述提示中包含了 Central Omega Portal 的访问路径，以及用户名密码。此时可以从客户端，通过 Chrome 浏览器（其它浏览器未测试）访问试用。

@@ -4,7 +4,6 @@ set -e
 unalias cp 2>/dev/null || true
 alias docker-compose='docker compose'
 
-OPENV2X_ADMIN_IP=localhost
 OPENV2X_REGISTRY_CN="registry.cn-shanghai.aliyuncs.com"
 arch=$(uname -i)
 [[ $arch == arm* ]] || [[ $arch = aarch64 ]] && OPENV2X_REGISTRY_CN="registry.cn-hangzhou.aliyuncs.com"
@@ -12,12 +11,14 @@ arch=$(uname -i)
 
 set_env() {
   [[ ! -n "$OPENV2X_EXTERNAL_IP" ]] && read -p "Enter your openv2x external ip: " OPENV2X_EXTERNAL_IP
+  [[ ! -n "$OPENV2X_CENTER_IP" ]] && read -p "Enter your openv2x center ip: " OPENV2X_CENTER_IP
   [[ ! -n "$OPENV2X_REDIS_ROOT" ]] && read -p "Enter your redis root password: " OPENV2X_REDIS_ROOT
   [[ ! -n "$OPENV2X_MARIADB_ROOT" ]] && read -p "Enter your mariadb root password: " OPENV2X_MARIADB_ROOT
   [[ ! -n "$OPENV2X_MARIADB_DANDELION" ]] && read -p "Enter your mariadb dandelion password: " OPENV2X_MARIADB_DANDELION
   [[ ! -n "$OPENV2X_EMQX_ROOT" ]] && read -p "Enter your emqx root password: " OPENV2X_EMQX_ROOT
 
   echo "export OPENV2X_EXTERNAL_IP=$OPENV2X_EXTERNAL_IP"
+  echo "export OPENV2X_CENTER_IP=$OPENV2X_CENTER_IP"
   echo "export OPENV2X_REDIS_ROOT=$OPENV2X_REDIS_ROOT"
   echo "export OPENV2X_MARIADB_ROOT=$OPENV2X_MARIADB_ROOT"
   echo "export OPENV2X_MARIADB_DANDELION=$OPENV2X_MARIADB_DANDELION"
@@ -27,6 +28,10 @@ set_env() {
 verify_input() {
   if [[ ! -n "$OPENV2X_EXTERNAL_IP" ]] ;then
     echo "you have not input openv2x external ip!"
+    exit 1
+  fi
+  if [[ ! -n "$OPENV2X_CENTER_IP" ]] ;then
+    echo "you have not input openv2x center ip!"
     exit 1
   fi
   if [[ ! -n "$OPENV2X_REDIS_ROOT" ]] ;then
@@ -198,6 +203,7 @@ verify_install() {
   args="-f /tmp/service/docker-compose-service.yaml up -d"
   docker-compose $args || docker compose $args
   [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]] && launch_hippocampus
+  [[ ${OPENV2X_IS_CENTER} != true ]] && docker stop omega 1>/dev/null
   printf "%40s\n" "$(tput setaf 4)
   openv2x has been installed successfully!
                                        ________           
@@ -209,8 +215,8 @@ verify_install() {
     repository: https://github.com/open-v2x
     portal: https://openv2x.org
 
-  OpenV2X Omega: http://$OPENV2X_EXTERNAL_IP:2288
-
+  OpenV2X Central Omega Portal: http://$OPENV2X_CENTER_IP:2288
+  
   username: admin
   password: dandelion
 
@@ -218,43 +224,43 @@ verify_install() {
 }
 
 get_token(){
-  token=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
   count=0
   while [[ ! $token ]] && [[ $count -lt 5 ]]
     do
       sleep 3
-      token=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+      token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
       count=$[$count+1]
     done
 }
 
 set_edge_site_config(){
-  curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "mqtt"}' 1>/dev/null
-  curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{ "mqtt_config": {"host": "'${OPENV2X_EXTERNAL_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
+  mqtt_name=$(hostname)
+  curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "'${mqtt_name}-${OPENV2X_EXTERNAL_IP}'","local_ip":"'${OPENV2X_EXTERNAL_IP}'","mqtt_config": {"host": "'${OPENV2X_CENTER_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
 }
 
 create_demo_rsu_model(){
     rsu_model_data='{"name":"demoRsuModel","manufacturer":"华为","desc":"RSU1的描述"}'
-    rsu_model_id=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/rsu_models" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_model_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
+    rsu_model_id=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/rsu_models" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_model_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
 
 }
 
 create_demo_rsu(){
     rsu_data='{"rsuId":"45348","rsuEsn":"R328328","rsuName":"demoRsu","rsuIP":"192.168.0.102","lat":"31.9348466377","lon":"118.8213963998","rsuModelId":'$rsu_model_id'}'
-    rsu_id=$(curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/rsus" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
+    rsu_id=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/rsus" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$rsu_data" | sed 's/,/\n/g' | grep "id" | sed 's/:/\n/g' | sed '1d' | sed 's/}//g')
 }
 
 create_demo_camera(){
   if [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]]; then
-    camera_data='{"name":"demoCamera","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":'$rsu_id',"intersectionCode":"32010601"}'
-    curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
+    camera_data='{"name":"demoCamera","sn":"CameraID_0","streamUrl":"'http://$OPENV2X_EXTERNAL_IP:7001/live/cam_0.flv'","lng":"123","lat":"12","elevation":2,"towards":2,"rsuId":'$rsu_id'}'
+    curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/cameras" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$camera_data" 1>/dev/null
   fi
 }
 
 create_demo_lidar(){
   if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]]; then
-    lidar_data='{"name":"demoLidar","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":'$rsu_id',"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1","intersectionCode":"32010601"}'
-    curl -X POST "http://$OPENV2X_ADMIN_IP:28300/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
+    lidar_data='{"name":"demoLidar","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":'$rsu_id',"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1"}'
+    curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
   fi
 }
 
