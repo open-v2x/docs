@@ -236,7 +236,15 @@ get_token(){
 
 set_edge_site_config(){
   mqtt_name=$(hostname)
-  curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "'${mqtt_name}-${OPENV2X_EXTERNAL_IP}'","local_ip":"'${OPENV2X_EXTERNAL_IP}'","mqtt_config": {"host": "'${OPENV2X_CENTER_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }' 1>/dev/null
+  message="MQTT Connection failed"
+  count=0
+  result=0
+  while [[ "$result" != "" ]] && [[ $count -lt 3 ]]
+  do
+    response=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "'${mqtt_name}-${OPENV2X_EXTERNAL_IP}'","local_ip":"'${OPENV2X_EXTERNAL_IP}'","mqtt_config": {"host": "'${OPENV2X_CENTER_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }')
+    result=$(echo $response | grep "${message}" || true)
+    count=$[$count+1]
+  done
 }
 
 create_demo_rsu_model(){
