@@ -101,6 +101,7 @@ pre_install() {
   cp -rf deploy/dandelion /etc/
   cp -rf deploy/omega /etc/
   cp -rf deploy/omega-qiankun /etc/
+  sed -i "s/127.0.0.1/$OPENV2X_EXTERNAL_IP/" /etc/dandelion/dandelion.conf
   sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
   sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /etc/dandelion/dandelion.conf
   sed -i "s/abc@1234/$EMQX_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
@@ -224,24 +225,25 @@ verify_install() {
 }
 
 get_token(){
-  token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+  token=$(curl -X POST "http://$1:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
   count=0
   while [[ ! $token ]] && [[ $count -lt 5 ]]
     do
       sleep 3
-      token=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
+      token=$(curl -X POST "http://$1:28300/api/v1/login" --header 'Content-Type: application/json' --data '{"username": "admin","password": "dandelion"}' | awk -F"[,:}]" '{for(i=1;i<=NF;i++){print $(i+1)}}' | tr -d '"' | sed -n 1p)
       count=$[$count+1]
     done
 }
 
 set_edge_site_config(){
+  get_token $OPENV2X_CENTER_IP
   mqtt_name=$(hostname)
   message="MQTT Connection failed"
   count=0
   result=0
   while [[ "$result" != "" ]] && [[ $count -lt 3 ]]
   do
-    response=$(curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/system_configs" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "'${mqtt_name}-${OPENV2X_EXTERNAL_IP}'","local_ip":"'${OPENV2X_EXTERNAL_IP}'","mqtt_config": {"host": "'${OPENV2X_CENTER_IP}'", "password": "'${EMQX_ROOT_CONVERT}'", "port": "1883", "username": "root"} }')
+    response=$(curl -X POST "http://$OPENV2X_CENTER_IP:28300/api/v1/edge_site" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data '{"name": "'${mqtt_name}-${OPENV2X_EXTERNAL_IP}'","edgeSiteDandelionEndpoint":"http://'${OPENV2X_EXTERNAL_IP}':28300/","areaCode": "320115","desc":"","centerDandelionEndpoint":"http://'${OPENV2X_CENTER_IP}':28300" }')
     result=$(echo $response | grep "${message}" || true)
     count=$[$count+1]
   done
@@ -291,8 +293,8 @@ clean_garbage_images(){
   verify_uninstall
   pre_install
   verify_install
-  get_token
   set_edge_site_config
+  get_token $OPENV2X_EXTERNAL_IP
   create_demo_rsu_model
   create_demo_rsu
   create_demo_camera
