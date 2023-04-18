@@ -1,15 +1,17 @@
-# OpenV2X 边缘云控平台用户快速操作手册
+# OpenV2X 中心云控平台用户快速操作手册
 
-## 1. 登录 OpenV2X 边缘云控平台（OpenV2X Edge Portal）
+## 1. 登录 OpenV2X 中心云控平台（Central Omega Portal）
 
-OpenV2X 边缘云控平台网址：`http://{host}:80/user/login` 输入正确的用户名、密码(username: admin password:
-dandelion)可登录平台。
+OpenV2X 中心云控平台网址：`http://{center-node-host}:2288/user/login` 输入正确的用户名、密码(username: admin password:
+dandelion)可登录平台。下拉框内选择任意边缘站点：
+
+![a](images/EdgeNodes.png)
 
 ## 2. RSU 的快速注册和配置
 
-本部分主要描述如果将部署好的 RSU 设备接入 OpenV2X 边缘云控平台，以及接入后可对 RSU 设备进行相关配置等操作。
+本部分主要描述如果将部署好的 RSU 设备接入 OpenV2X 中心云控平台，以及接入后可对 RSU 设备进行相关配置等操作。
 
-若您尚未实际部署 RSU 设备，仅仅是想体验 OpenV2X 边缘云控平台系统，您也可以直接下拉到‘RSE 模拟器操作’部分，我们为您提供了 RSE 模拟器，您可通过模拟器体验 RSU
+若您尚未实际部署 RSU 设备，仅仅是想体验 OpenV2X 中心云控平台系统，您也可以直接下拉到‘RSE 模拟器操作’部分，我们为您提供了 RSE 模拟器，您可通过模拟器体验 RSU
 设备的一些数据上传、下发的操作及数据展示信息。
 
 ### 2.1 RSU 设备快速接入
@@ -21,7 +23,7 @@ dandelion)可登录平台。
 
 如果您想使用 RSE 模拟器部署一个虚拟 RSU，可以通过以下步骤实现:
 
-1. 打开 RSE 模拟器: `http://{host}:6688`
+1. 打开 RSE 模拟器: `http://{edge-node-host}:6688`
 
 2. 在 Connection 模块，点击 ‘Connect’，连接 MQTT 服务器。
 
@@ -67,8 +69,8 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
 | Retain  | 消息是否会被保存               |
 | Message | 消息内容，需符合新四跨协议          |
 
-5. 查看边缘云控平台RSU设备，此时在设备管理页面 RSU 设备中查看，应能发现新增未注册 RSU 数据。可以通过一键注册按钮进行注册，并仅需填入或选择：安装区域、具体位置、RSU
-   IP、这三个必要信息。录入信息后，点击一键注册，注册成功后，会在设备管理页面中查看到注册成功的提示。
+5. 查看中心云控平台 RSU 设备，此时在设备管理页面 RSU 设备中查看，应能发现新增未注册 RSU 数据。可以通过一键注册按钮进行注册，并仅需填入：经度、纬度、IP
+   这三个必要信息。录入信息后，点击提交，注册成功后，会在设备管理页面中查看到注册成功的提示。
 
 ![a](images/not_registered_rsu.png)
 
@@ -91,7 +93,7 @@ Connection：该部分主要为 MQTT 服务器的相关信息，若您自己有�
 
 RSU 接入步骤：
 
-1. 进入 OpenV2X 边缘云控平台，在左侧栏选择“设备管理-RSU 设备->添加 RSU”。
+1. 进入 OpenV2X 中心云控平台，在左侧栏选择“设备管理-RSU 设备->添加 RSU”。
 
 ![a](images/RSU.png)
 
@@ -107,9 +109,9 @@ RSU 接入步骤：
 
 - “RSU IP”：输入RSU的实际 IP 号。
 
-- “安装区域”：该 RSU 实际部署位置的区域，下拉选择省-市-区。
+- “经度”：该 RSU 实际部署位置的经度。
 
-- “具体位置”：该 RSU 实际部署的位置描述。
+- “纬度”：该 RSU 实际部署位置的纬度。
 
 - “RSU 型号”：下拉列表，选择新增的 RSU 设备的型号。型号选择数据需要提前在设备类型配置中进行 RSU 类型配置。
 
@@ -121,7 +123,7 @@ RSU 接入步骤：
 
 添加参数模板：
 
-1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 业务配置->添加配置”；
+1. 进入 OpenV2X 中心云控平台，点击“运维管理-> RSU 业务配置->添加配置”；
 
 ![a](images/RSUService.png)
 
@@ -179,7 +181,7 @@ SpatConfig(信号灯消息配置)：
 
 可对设备进行远程配置，包括心跳上报频率、运行状态上报频率等。
 
-1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 运维配置->运维列表->操作‘编辑’”；
+1. 进入 OpenV2X 中心云控平台，点击“运维管理-> RSU 运维配置->运维列表->操作‘编辑’”；
 
 ![a](images/RSUfunction.png)
 
@@ -207,7 +209,7 @@ SpatConfig(信号灯消息配置)：
 
 添加下发配置：
 
-1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 日志下发配置->添加配置”
+1. 进入 OpenV2X 中心云控平台，点击“运维管理-> RSU 日志上报配置下发->添加配置”
 
 ![a](images/RSULogdistribution.png)
 
@@ -229,7 +231,7 @@ SpatConfig(信号灯消息配置)：
 
 ### 2.5 RSU 信息查询
 
-1. 进入 OpenV2X 边缘云控平台，点击“运维管理-> RSU 信息查询->查询指令”
+1. 进入 OpenV2X 中心云控平台，点击“运维管理-> RSU 信息查询->查询指令”
 
 ![a](images/RSUInformationService.png)
 
@@ -245,35 +247,15 @@ SpatConfig(信号灯消息配置)：
 
 3. 点击“确定”，完成查询指令的下发。回到信息查询列表中，在列表的操作栏点击‘详情’，可查看对应设备响应的信息。
 
-## 3. EdgePortal 和 CentralPortal 的快速联动
+## 3. 进入交通大屏
 
-1. 登录 OpenV2X Edge Portal 平台后，在左侧栏选择“系统配置-边缘站点配置”。
+1. 进入 OpenV2X 中心云控平台，点击“交通大屏”
 
-![a](images/EdgeSite.png)
+![a](images/TrafficScreen.png)
 
-2. 支持修改边缘站点名称，点击‘修改’，在弹出的对话框中输入统一规划的边缘站点名称。
+![a](images/Intersection.png)
 
-![a](images/EdgeSite1.png)
-
-- 请尽量完善边缘站点的名称，并方便辨识，这将方便您在 OpenV2X Central Portal 平台中进行边缘站点的选择查看。
-
-3. 配置云控中心连接信息，点击‘配置’，在弹出的对话框中输入 MQTT 服务器的相关信息，这里 Port 为 1883。
-
-![a](images/EdgeSite2.png)
-
-- 必须配置云控中心连接信息，否则该边缘站点信息及数据您无法自动上报至 OpenV2X Central Portal 平台，也无法在 V2X Central Portal 平台中搜索到该区域 Edge
-  Portal 的信息。
-
-4. 在 OpenV2X Edge Portal 平台将边缘站点信息配置完成后，可前往 OpenV2X Central Portal 平台。
-
-- OpenV2X Central Portal 平台链接：`http://{host}:8080/cloud`
-
-5. 登录 OpenV2X Central Portal 平台，在边缘站点列表页，选择您需要查看的边缘站点的路口信息，在该边缘站点右侧点击‘前往【区域Edge
-   Portal】’，即可查看该区域的路况信息。
-
-![a](images/EdgeSite3.png)
-
-6. 使用 RSE 模拟器发送交通信息，在 RSE 模拟器的 DataSet 模块中，主要模拟的是 RSU 设备采集到的交通路口车辆协同、碰撞等信息上传至 OpenV2X
+2. 使用 RSE 模拟器发送交通信息，在 RSE 模拟器的 DataSet 模块中，主要模拟的是 RSU 设备采集到的交通路口车辆协同、碰撞等信息上传至 OpenV2X
    云控平台后的展示。我们已为您内置了一些数据集信息（暂不支持修改），您可点击‘Preview’ 进行预览；也可选择一些数据，点击 ‘Publish’，发送消息。
 
 勾选需要模拟的车辆轨迹数据，可在 OpenV2X 云控中心平台查看模拟的车辆行驶轨迹展示。具体路径： 步骤1：勾选车辆轨迹模拟数据，如`CLC_track`、`msg_VIR_CLC`等；
@@ -281,15 +263,11 @@ SpatConfig(信号灯消息配置)：
 
 ![a](images/Simulator7.png)
 
-步骤3：点击路口标志（黄色图标）；
-
-![a](images/Simulator9.png)
-
-步骤4：进入路口页面，查看车辆轨迹模拟展示。
+步骤3：进入交通大屏，查看车辆轨迹模拟展示。
 
 ![a](images/Simulator12.png)
 
-步骤5：在 Send Messages 模块，可查看发送消息的代码。
+步骤4：在 Send Messages 模块，可查看发送消息的代码。
 
 ![a](images/Simulator10.png)
 
