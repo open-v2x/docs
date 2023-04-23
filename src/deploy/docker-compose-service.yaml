@@ -24,7 +24,8 @@ services:
       mysql_password: mysql@1234
       emqx_password: abc@1234
       redis_password: redis12345
-
+    depends_on:
+      - dandelion
     volumes:
       - '/etc/localtime:/etc/localtime'
 
