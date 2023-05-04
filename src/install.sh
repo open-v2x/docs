@@ -53,7 +53,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion omega omega-qiankun cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver)
+  containers=(redis emqx mariadb dandelion omega omega-qiankun cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver cerebrum_overspeed_external_service)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
