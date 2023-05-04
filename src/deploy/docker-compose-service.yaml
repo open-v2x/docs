@@ -29,6 +29,15 @@ services:
     volumes:
       - '/etc/localtime:/etc/localtime'
 
+  cerebrum_overspeed_external_service:
+    container_name: 'cerebrum_overspeed_external_service'
+    image: 'openv2x/cerebrum:latest'
+    restart: 'always'
+    network_mode: 'host'
+    command: python overspeed_warning_service/main.py
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+
   omega:
     container_name: 'omega'
     image: 'openv2x/omega:latest'
