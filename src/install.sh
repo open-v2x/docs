@@ -180,6 +180,15 @@ launch_hippocampus(){
   fi
 }
 
+launch_lidar(){
+  docker pull ${registry}/openv2x/lidar:latest
+  wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/data/lidar/velo.tar.gz \
+  && tar zxvf velo.tar.gz \
+  && rm -rf velo.tar.gz
+  nvidia-docker run --name openpcdet -d --restart=always -e mqtt_host=$OPENV2X_EXTERNAL_IP -e mqtt_password=$OPENV2X_EMQX_ROOT -p 28300:28300 -p 57142:57142 --net=host --gpus all registry.cn-shanghai.aliyuncs.com/openv2x/lidar:latest
+  docker run --name udp_client -d --restart=always -e udp_host=127.0.0.1  -v $(pwd)/velo:/root/OpenPCDet/data/points -e dir_path=/root/OpenPCDet/data/points --net=host registry.cn-shanghai.aliyuncs.com/openv2x/lidar:latest python /root/OpenPCDet/svc/udp_client.py
+}
+
 verify_install() {
   registry="docker.io"
   if [[ ${OPENV2X_REGION} == cn ]]
@@ -187,7 +196,7 @@ verify_install() {
     registry=$OPENV2X_REGISTRY_CN
     modify_registry
   fi
-  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum omega roadmocker lidar)
+  images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum omega roadmocker)
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
@@ -204,6 +213,7 @@ verify_install() {
   args="-f /tmp/service/docker-compose-service.yaml up -d"
   docker-compose $args || docker compose $args
   [[ ${OPENV2X_ENABLE_DEMO_CAMERA} == true ]] && launch_hippocampus
+  [[ ${OPENV2X_RUN_LIDAR} == true ]] && launch_lidar
   [[ ${OPENV2X_IS_CENTER} != true ]] && docker stop omega 1>/dev/null
   printf "%40s\n" "$(tput setaf 4)
   openv2x has been installed successfully!
