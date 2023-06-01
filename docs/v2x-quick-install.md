@@ -77,14 +77,14 @@ yum install curl
 ## 2.5 下载安装包
 
 ```shell
-rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
-rm -rf src && tar zxvf openv2x-aio-master.tar.gz
+rm -rf openv2x-aio-columbia.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/columbia/openv2x-aio-columbia.tar.gz
+rm -rf src && tar zxvf openv2x-aio-columbia.tar.gz
 cd src
 
 # yum install unzip -y
-# rm -rf master.zip && wget https://gitee.com/open-v2x/docs/repository/archive/master.zip
-# rm -rf docs-master && unzip master.zip
-# cd docs-master/src/
+# rm -rf columbia.zip && wget https://gitee.com/open-v2x/docs/repository/archive/columbia.zip
+# rm -rf docs-columbia && unzip columbia.zip
+# cd docs-columbia/src/
 ```
 
 ## 2.6 一键部署服务
@@ -106,7 +106,7 @@ export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```
@@ -158,7 +158,7 @@ OS：ubuntu20.04
 安装 docker
 
 ```shell
-curl -sSL https://get.daocloud.io/docker | sh
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
 
 安装 docker compose。 如果不想要 v2.2.2 版本，可以进入最新发行的版本地址：https://github.com/docker/compose/releases 查看版本号。
@@ -176,8 +176,8 @@ docker-compose version
 在每台服务器上下载安装包
 
 ```shell
-rm -rf openv2x-aio-master.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/master/openv2x-aio-master.tar.gz
-rm -rf src && tar zxvf openv2x-aio-master.tar.gz
+rm -rf openv2x-aio-columbia.tar.gz && wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/deploy/columbia/openv2x-aio-columbia.tar.gz
+rm -rf src && tar zxvf openv2x-aio-columbia.tar.gz
 cd src
 ```
 
@@ -204,7 +204,7 @@ export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```
@@ -230,7 +230,7 @@ export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```

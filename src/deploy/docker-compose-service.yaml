@@ -2,7 +2,7 @@ version: '3.1'
 services:
   dandelion:
     container_name: 'dandelion'
-    image: 'openv2x/dandelion:latest'
+    image: 'openv2x/dandelion:columbia'
     restart: 'always'
     network_mode: 'host'
     volumes:
@@ -12,7 +12,7 @@ services:
       - '/openv2x/data/bitmap:/openv2x/data/bitmap'
   cerebrum:
     container_name: 'cerebrum'
-    image: 'openv2x/cerebrum:latest'
+    image: 'openv2x/cerebrum:columbia'
     restart: 'always'
     network_mode: 'host'
     environment:
@@ -31,7 +31,7 @@ services:
 
   cerebrum_overspeed_external_service:
     container_name: 'cerebrum_overspeed_external_service'
-    image: 'openv2x/cerebrum:latest'
+    image: 'openv2x/cerebrum:columbia'
     restart: 'always'
     network_mode: 'host'
     command: python overspeed_warning_service/main.py
@@ -40,7 +40,7 @@ services:
 
   cerebrum_reverse_external_service:
     container_name: 'cerebrum_reverse_external_service'
-    image: 'openv2x/cerebrum:latest'
+    image: 'openv2x/cerebrum:columbia'
     restart: 'always'
     network_mode: 'host'
     command: python reverse_driving_service/main.py
@@ -49,7 +49,7 @@ services:
 
   omega:
     container_name: 'omega'
-    image: 'openv2x/omega:latest'
+    image: 'openv2x/omega:columbia'
     restart: 'always'
     network_mode: 'host'
     environment:
@@ -70,7 +70,7 @@ services:
 
   rse-simulator:
     container_name: 'rse-simulator'
-    image: 'openv2x/roadmocker:latest'
+    image: 'openv2x/roadmocker:columbia'
     restart: 'always'
     ports:
       - '6688:80'
