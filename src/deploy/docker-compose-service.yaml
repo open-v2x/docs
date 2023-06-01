@@ -38,6 +38,15 @@ services:
     volumes:
       - '/etc/localtime:/etc/localtime'
 
+  cerebrum_reverse_external_service:
+    container_name: 'cerebrum_reverse_external_service'
+    image: 'openv2x/cerebrum:latest'
+    restart: 'always'
+    network_mode: 'host'
+    command: python reverse_driving_service/main.py
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+
   omega:
     container_name: 'omega'
     image: 'openv2x/omega:latest'
@@ -58,24 +67,6 @@ services:
       - '/etc/omega/globals.yml:/var/www/omega/assets/file/globals.yml'
       - '/etc/omega/login_full_image.png:/var/www/omega/assets/img/login_full_image.png'
       - '/etc/omega/logo.png:/var/www/omega/assets/img/logo.png'
-
-  omega-qiankun:
-    container_name: 'omega-qiankun'
-    image: 'openv2x/omega:qiankun'
-    restart: 'always'
-    network_mode: 'host'
-    environment:
-      API_SERVER: 'http://external_ip:2299/api/omega'
-      MAP_KEY: 'a7a90e05a37d3f6bf76d4a9032fc9129'
-      MQTT_URL: 'external_ip:2299'
-      MQTT_PATH: '/mqtt'
-      MQTT_USERNAME: 'root'
-      MQTT_PASSWORD: abc@1234
-    volumes:
-      - '/etc/localtime:/etc/localtime'
-      - '/etc/omega-qiankun/nginx.conf:/etc/nginx/nginx.conf'
-      - '/etc/omega-qiankun/omega-qiankun.conf:/etc/nginx/conf.d/default.conf'
-      - '/openv2x/data/public/uploadData:/var/www/omega-qiankun/uploadData'
 
   rse-simulator:
     container_name: 'rse-simulator'

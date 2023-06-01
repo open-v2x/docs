@@ -53,7 +53,7 @@ verify_input() {
 }
 
 verify_uninstall() {
-  containers=(redis emqx mariadb dandelion omega omega-qiankun cerebrum rse-simulator udp_client udp_server celery_worker lidar_websocket hippocampus rtsp_simulator lalserver cerebrum_overspeed_external_service)
+  containers=(redis emqx mariadb dandelion omega omega-qiankun cerebrum rse-simulator hippocampus rtsp_simulator udp_client openpcdet lalserver cerebrum_overspeed_external_service cerebrum_reverse_external_service)
   for i in ${containers[@]}; do
     docker stop $i 2>/dev/null || true
     docker rm $i 2>/dev/null || true
@@ -100,7 +100,6 @@ pre_install() {
   sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /tmp/service/docker-compose-service.yaml
   cp -rf deploy/dandelion /etc/
   cp -rf deploy/omega /etc/
-  cp -rf deploy/omega-qiankun /etc/
   sed -i "s/127.0.0.1/$OPENV2X_EXTERNAL_IP/" /etc/dandelion/dandelion.conf
   sed -i "s/redis12345/$REDIS_ROOT_CONVERT/" /etc/dandelion/dandelion.conf
   sed -i "s/dandelion123/$MARIADB_DANDELION_CONVERT/" /etc/dandelion/dandelion.conf
@@ -155,7 +154,6 @@ modify_registry(){
   mariadb=${registry}/openv2x/mariadb:10.5.5
   lidar=${registry}/openv2x/lidar:latest
   omega=${registry}/openv2x/omega:latest
-  omega_qiankun=${registry}/openv2x/omega:qiankun
   sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
@@ -167,7 +165,6 @@ modify_registry(){
   sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
   sed -i "s#openv2x/omega:latest#$omega#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/omega:qiankun#$omega_qiankun#" /tmp/service/docker-compose-service.yaml
 
 }
 
@@ -185,8 +182,8 @@ launch_lidar(){
   wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/data/lidar/velo.tar.gz \
   && tar zxvf velo.tar.gz \
   && rm -rf velo.tar.gz
-  nvidia-docker run --name openpcdet -d --restart=always -e mqtt_host=$OPENV2X_EXTERNAL_IP -e mqtt_password=$OPENV2X_EMQX_ROOT -p 28300:28300 -p 57142:57142 --net=host --gpus all registry.cn-shanghai.aliyuncs.com/openv2x/lidar:latest
-  docker run --name udp_client -d --restart=always -e udp_host=127.0.0.1  -v $(pwd)/velo:/root/OpenPCDet/data/points -e dir_path=/root/OpenPCDet/data/points --net=host registry.cn-shanghai.aliyuncs.com/openv2x/lidar:latest python /root/OpenPCDet/svc/udp_client.py
+  nvidia-docker run --name openpcdet -d --restart=always -e mqtt_host=$OPENV2X_EXTERNAL_IP -e mqtt_password=$OPENV2X_EMQX_ROOT -p 28300:28300 -p 57142:57142 --net=host --gpus all ${registry}/openv2x/lidar:latest
+  docker run --name udp_client -d --restart=always -e udp_host=127.0.0.1  -v $(pwd)/velo:/root/OpenPCDet/data/points -e dir_path=/root/OpenPCDet/data/points --net=host ${registry}/openv2x/lidar:latest python /root/OpenPCDet/svc/udp_client.py
 }
 
 verify_install() {
@@ -200,7 +197,6 @@ verify_install() {
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:latest
   done
-  docker pull ${registry}/openv2x/omega:qiankun
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
@@ -279,7 +275,7 @@ create_demo_camera(){
 
 create_demo_lidar(){
   if [[ ${OPENV2X_ENABLE_DEMO_LIDAR} == true ]]; then
-    lidar_data='{"name":"demoLidar","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":'$rsu_id',"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://'$OPENV2X_EXTERNAL_IP':8000/ws/127.0.0.1"}'
+    lidar_data='{"name":"demoLidar","sn":"lidarID_0","lng":"12","lat":"12","elevation":12,"towards":12,"rsuId":'$rsu_id',"lidarIP":"100.100.100.100","point":"12","pole":"12","wsUrl":"ws://172.16.151.70:28300/ws/127.0.0.1"}'
     curl -X POST "http://$OPENV2X_EXTERNAL_IP:28300/api/v1/lidars" --header 'Authorization: '"bearer $token" --header 'Content-Type: application/json' --data "$lidar_data" 1>/dev/null
   fi
 }
