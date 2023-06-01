@@ -143,47 +143,47 @@ verify_bootstrap(){
 }
 
 modify_registry(){
-  cerebrum=${registry}/openv2x/cerebrum:latest
-  dandelion=${registry}/openv2x/dandelion:latest
-  roadmocker=${registry}/openv2x/roadmocker:latest
-  hippocampus=${registry}/openv2x/hippocampus:latest
-  rtsp_simulator=${registry}/openv2x/rtsp_simulator:latest
+  cerebrum=${registry}/openv2x/cerebrum:columbia
+  dandelion=${registry}/openv2x/dandelion:columbia
+  roadmocker=${registry}/openv2x/roadmocker:columbia
+  hippocampus=${registry}/openv2x/hippocampus:columbia
+  rtsp_simulator=${registry}/openv2x/rtsp_simulator:columbia
   lalserver=${registry}/openv2x/lal:latest
   redis=${registry}/openv2x/redis:6.2.4-alpine
   emqx=${registry}/openv2x/emqx:4.3.0
   mariadb=${registry}/openv2x/mariadb:10.5.5
-  lidar=${registry}/openv2x/lidar:latest
-  omega=${registry}/openv2x/omega:latest
-  sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/init/docker-compose-init.yaml
+  lidar=${registry}/openv2x/lidar:columbia
+  omega=${registry}/openv2x/omega:columbia
+  sed -i "s#openv2x/dandelion:columbia#$dandelion#" /tmp/init/docker-compose-init.yaml
   sed -i "s#mariadb:10.5.5#$mariadb#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#emqx/emqx:4.3.0#$emqx#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#redis:6.2.4-alpine#$redis#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/rtsp_simulator#$rtsp_simulator#" /tmp/pre/docker-compose-pre.yaml
   sed -i "s#openv2x/lal#$lalserver#" /tmp/pre/docker-compose-pre.yaml
-  sed -i "s#openv2x/dandelion:latest#$dandelion#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/cerebrum:latest#$cerebrum#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/roadmocker:latest#$roadmocker#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/lidar:latest#$lidar#" /tmp/service/docker-compose-service.yaml
-  sed -i "s#openv2x/omega:latest#$omega#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/dandelion:columbia#$dandelion#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/cerebrum:columbia#$cerebrum#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/roadmocker:columbia#$roadmocker#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/lidar:columbia#$lidar#" /tmp/service/docker-compose-service.yaml
+  sed -i "s#openv2x/omega:columbia#$omega#" /tmp/service/docker-compose-service.yaml
 
 }
 
 launch_hippocampus(){
   if [[ ${OPENV2X_ENABLE_GPU} == true ]]
   then
-    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:latest
+    nvidia-docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --gpus all --net=host ${registry}/openv2x/hippocampus:columbia
   else
-    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:latest
+    docker run -d --restart=always --name=hippocampus -e camera_id=cam_0 -e rtsp=rtsp://localhost:8554/mystream --net=host ${registry}/openv2x/hippocampus:columbia
   fi
 }
 
 launch_lidar(){
-  docker pull ${registry}/openv2x/lidar:latest
+  docker pull ${registry}/openv2x/lidar:columbia
   wget https://openv2x.oss-ap-southeast-1.aliyuncs.com/data/lidar/velo.tar.gz \
   && tar zxvf velo.tar.gz \
   && rm -rf velo.tar.gz
-  nvidia-docker run --name openpcdet -d --restart=always -e mqtt_host=$OPENV2X_EXTERNAL_IP -e mqtt_password=$OPENV2X_EMQX_ROOT -p 28300:28300 -p 57142:57142 --net=host --gpus all ${registry}/openv2x/lidar:latest
-  docker run --name udp_client -d --restart=always -e udp_host=127.0.0.1  -v $(pwd)/velo:/root/OpenPCDet/data/points -e dir_path=/root/OpenPCDet/data/points --net=host ${registry}/openv2x/lidar:latest python /root/OpenPCDet/svc/udp_client.py
+  nvidia-docker run --name openpcdet -d --restart=always -e mqtt_host=$OPENV2X_EXTERNAL_IP -e mqtt_password=$OPENV2X_EMQX_ROOT -p 28300:28300 -p 57142:57142 --net=host --gpus all ${registry}/openv2x/lidar:columbia
+  docker run --name udp_client -d --restart=always -e udp_host=127.0.0.1  -v $(pwd)/velo:/root/OpenPCDet/data/points -e dir_path=/root/OpenPCDet/data/points --net=host ${registry}/openv2x/lidar:columbia python /root/OpenPCDet/svc/udp_client.py
 }
 
 verify_install() {
@@ -195,7 +195,7 @@ verify_install() {
   fi
   images=(hippocampus-base hippocampus rtsp_simulator lal dandelion cerebrum omega roadmocker)
   for i in ${images[@]}; do
-    docker pull ${registry}/openv2x/$i:latest
+    docker pull ${registry}/openv2x/$i:columbia
   done
 
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
