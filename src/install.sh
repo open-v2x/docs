@@ -193,11 +193,13 @@ verify_install() {
     registry=$OPENV2X_REGISTRY_CN
     modify_registry
   fi
-  images=( hippocampus rtsp_simulator lal dandelion cerebrum omega roadmocker)
+  images=( hippocampus rtsp_simulator dandelion cerebrum omega roadmocker)
   for i in ${images[@]}; do
     docker pull ${registry}/openv2x/$i:columbia
   done
     docker pull ${registry}/openv2x/hippocampus-base:latest
+    docker pull ${registry}/openv2x/lal:latest
+
   args="-f /tmp/pre/docker-compose-pre.yaml up -d"
   docker-compose $args || docker compose $args
   [[ ${OPENV2X_ENABLE_DEMO_CAMERA} != true ]] && docker stop rtsp_simulator
