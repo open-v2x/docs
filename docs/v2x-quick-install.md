@@ -104,9 +104,10 @@ export OPENV2X_REGION=cn
 
 export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
+export OPENV2X_RUN_LIDAR=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```
@@ -158,7 +159,7 @@ OS：ubuntu20.04
 安装 docker
 
 ```shell
-curl -sSL https://get.daocloud.io/docker | sh
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
 
 安装 docker compose。 如果不想要 v2.2.2 版本，可以进入最新发行的版本地址：https://github.com/docker/compose/releases 查看版本号。
@@ -202,9 +203,10 @@ export OPENV2X_REGION=cn
 
 export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
+export OPENV2X_RUN_LIDAR=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```
@@ -228,9 +230,10 @@ export OPENV2X_REGION=cn
 
 export OPENV2X_ENABLE_DEMO_LIDAR=true
 export OPENV2X_ENABLE_GPU=false
+export OPENV2X_RUN_LIDAR=false
 export OPENV2X_ENABLE_DEMO_CAMERA=true
 export OPENV2X_ENDPOINT_HTTP_FLV=http://<HippoCampus-GPU-服务器-IP>:10101/live
-export OPENV2X_ENDPOINT_LIDAR=ws://${OPENV2X_EXTERNAL_IP}:8000/ws/127.0.0.1
+export OPENV2X_ENDPOINT_LIDAR=ws://<Lidar-GPU-服务器-IP>:28300/ws/127.0.0.1
 
 bash ./install.sh
 ```
