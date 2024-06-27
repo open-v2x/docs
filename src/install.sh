@@ -1,8 +1,8 @@
 #!/bin/sh
-set -e
+set -ex
 
 unalias cp 2>/dev/null || true
-alias docker-compose='docker compose'
+# alias docker-compose='docker compose'
 
 OPENV2X_REGISTRY_CN="registry.cn-shanghai.aliyuncs.com"
 arch=$(uname -i)
